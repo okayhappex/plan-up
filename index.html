@@ -43,11 +43,10 @@
         .card-header .icon { font-size: 1.6em; margin-right: 12px; }
         .card-header h2 { margin: 0; font-size: 1.15em; font-weight: 600; color: var(--primary-color); }
         .project-card .date { font-size: 0.85em; font-weight: 600; color: #555; margin-bottom: 10px; padding: 4px 10px; background-color: #f0f0f0; border-radius: 20px; align-self: flex-start; }
-        .project-card h3 { margin-top: 0; margin-bottom: 8px; font-size: 1.1em; }
-        .project-card p { flex-grow: 1; margin: 0 0 15px 0; color: #666; font-size: 0.9em; }
+        .project-card h3 { margin-top: 0; margin-bottom: 15px; font-size: 1.1em; flex-grow: 1; }
         
         .countdown-timer { padding: 6px 10px; border-radius: 8px; font-weight: 600; text-align: center; margin-bottom: 15px; transition: background-color 0.5s ease; color: white; font-size: 1em; }
-        .countdown-green { background-color: var(--green); }
+        .countdown-green, .countdown-orange, .countdown-red, .countdown-over { background-color: var(--green); }
         .countdown-orange { background-color: var(--orange); }
         .countdown-red { background-color: var(--red); }
         .countdown-over { background-color: #7f8c8d; }
@@ -55,51 +54,61 @@
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
         .pulsing { animation: pulse 1.5s infinite ease-in-out; }
         
-        /* Conteneur pour les boutons en bas de la carte */
-        .card-actions {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end; /* Aligne les boutons à droite */
-            gap: 10px; /* Espace entre les boutons */
-            margin-top: auto; /* Pousse le conteneur en bas */
-        }
-
+        .card-actions { display: flex; flex-direction: column; align-items: flex-end; gap: 10px; margin-top: auto; }
         .reminder-btn { background: linear-gradient(90deg, var(--primary-color), var(--secondary-color)); color: white; border: none; padding: 10px 18px; font-size: 0.9em; border-radius: 25px; cursor: pointer; font-weight: 600; transition: transform 0.2s ease, filter 0.2s ease; }
         .reminder-btn:hover { transform: scale(1.05); }
         .reminder-btn:active { transform: scale(0.98); filter: brightness(0.9); }
 
-        /* --- NOUVEAUTÉ : Style simple pour le bouton Gemini --- */
-        .gemini-help-btn {
-            display: inline-flex;
-            align-items: center;
-            background-color: transparent;
-            color: var(--primary-color);
-            border: 2px solid var(--primary-color);
-            padding: 8px 16px;
-            font-size: 0.85em;
-            font-weight: 600;
-            border-radius: 25px;
-            cursor: pointer;
-            text-decoration: none;
-            transition: background-color 0.2s ease, color 0.2s ease;
-        }
-
-        .gemini-help-btn:hover {
-            background-color: var(--primary-color);
-            color: white;
-        }
-        /* --- FIN NOUVEAUTÉ --- */
+        .gemini-help-btn { display: inline-flex; align-items: center; background-color: transparent; color: var(--primary-color); border: 2px solid var(--primary-color); padding: 8px 16px; font-size: 0.85em; font-weight: 600; border-radius: 25px; cursor: pointer; text-decoration: none; transition: background-color 0.2s ease, color 0.2s ease; }
+        .gemini-help-btn:hover { background-color: var(--primary-color); color: white; }
         
         .hidden { display: none; }
-        .work-in-progress { text-align: center; padding: 80px 40px; background-color: var(--card-background); border-radius: 15px; box-shadow: 0 8px 20px var(--shadow-color); max-width: 600px; margin: 40px auto; }
+        
+        /* MODIFICATION : Style de la page "en construction" */
+        .placeholder-content {
+            text-align: center;
+            padding: 80px 20px;
+            color: #999;
+        }
+        .placeholder-content h2 {
+            font-size: 1.8em;
+            color: #aaa;
+            margin: 0;
+        }
         
         /* ... (styles de la modale inchangés) ... */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.6); display: flex; justify-content: center; align-items: center; z-index: 1000; opacity: 0; transition: opacity 0.3s ease; pointer-events: none; }
         .modal-overlay:not(.hidden) { opacity: 1; pointer-events: auto; }
-        .modal-content { background: white; padding: 30px; border-radius: 15px; width: 90%; max-width: 400px; text-align: center; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); transform: scale(0.95); transition: transform 0.3s ease; }
+        .modal-content { background: white; padding: 25px; border-radius: 15px; width: 90%; max-width: 400px; text-align: center; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); transform: scale(0.95); transition: transform 0.3s ease; }
         .modal-overlay:not(.hidden) .modal-content { transform: scale(1); }
         
         footer { text-align: center; margin-top: 50px; color: #aaa; }
+
+        /* NOUVEAUTÉ : Styles pour le bouton "Ajouter à l'accueil" */
+        #add-to-home-btn {
+            display: none; /* Caché par défaut */
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 0.9em;
+            font-weight: 600;
+            color: var(--primary-color);
+            background-color: transparent;
+            border: 2px solid var(--primary-color);
+            border-radius: 25px;
+            cursor: pointer;
+        }
+
+        /* NOUVEAUTÉ : Styles pour la modale d'instructions */
+        .instructions-list { text-align: left; margin-top: 20px; padding-left: 0; list-style-position: inside; }
+        .instructions-list li { margin-bottom: 15px; font-size: 1.1em; }
+        .instructions-list .icon { font-size: 1.5em; vertical-align: middle; margin-right: 5px; }
+
+        @media (max-width: 768px) {
+            #add-to-home-btn {
+                display: inline-block; /* Affiché sur mobile */
+            }
+        }
+
         @media (max-width: 600px) {
             body { padding: 10px; }
             nav { max-width: 100%; gap: 5px; }
@@ -125,7 +134,7 @@
         </main>
 
     <main id="homework-page" class="hidden">
-        <div class="work-in-progress">
+        <div class="placeholder-content">
             <h2>🚧 Page en construction 🚧</h2>
         </div>
     </main>
@@ -141,30 +150,52 @@
         </div>
     </div>
 
+    <div id="a2hs-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <h3>Ajouter à l'écran d'accueil</h3>
+            <div id="ios-instructions" class="hidden">
+                <p>Pour ajouter ce site à votre écran d'accueil, suivez ces étapes :</p>
+                <ol class="instructions-list">
+                    <li>Appuyez sur l'icône de Partage <span class="icon">􀈂</span> en bas de votre écran.</li>
+                    <li>Faites défiler vers le bas.</li>
+                    <li>Sélectionnez "Sur l'écran d'accueil".</li>
+                </ol>
+            </div>
+            <div id="android-instructions" class="hidden">
+                <p>Pour ajouter ce site à votre écran d'accueil, suivez ces étapes :</p>
+                <ol class="instructions-list">
+                    <li>Appuyez sur les trois points <span class="icon">􀋁</span> en haut à droite.</li>
+                    <li>Sélectionnez "Installer l'application" ou "Ajouter à l'écran d'accueil".</li>
+                </ol>
+            </div>
+            <button id="close-a2hs-modal-btn" class="close-btn">Fermer</button>
+        </div>
+    </div>
+
     <footer>
         <p>Créé avec ❤️ pour les étudiants MMI</p>
+        <button id="add-to-home-btn">📲 Ajouter à l'écran d'accueil</button>
     </footer>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
 
             const projects = [
-                { id: 'ppp_group', category: 'P.P.P', icon: '🧠', date: '2025-11-11', title: 'Rendu du travail de groupe', details: 'IA, répertoire des prompts, bibliographie, etc.' },
-                { id: 'ppp_pres', category: 'P.P.P', icon: '🎤', date: '2025-11-13', title: 'Présentation du projet', details: '' },
-                { id: 'ppp_interview', category: 'P.P.P', icon: '💼', date: '2026-01-11', title: 'Interview d’un professionnel', details: 'Rendu final de l\'interview.' },
-                { id: 'english_model', category: 'Anglais', icon: '🇬🇧', date: '2025-10-20', title: 'Maquette à rendre', details: 'CV + vidéo à prévoir également.' },
-                { id: 'gp_pub', category: 'Gestion de projet', icon: '📊', date: '2025-11-09', title: 'Projet de pub « à l’envers »', details: 'À rendre sur le FTP MMI 1.' },
-                { id: 'com_portrait', category: 'Communication', icon: '💬', date: '2025-10-16', title: 'Portrait à faire', details: 'Semble déjà presque fait ou rendu.' },
-                { id: 'art_mood', category: 'Art', icon: '🎨', date: '2025-10-24', title: 'Moodboard à finir', details: '' },
-                { id: 'mkt_company', category: 'Marketing', icon: '📈', date: '2025-11-17', title: 'Projet d’entreprise à rendre', details: '' },
-                { id: 'html_sae', category: 'HTML / Intégration Web', icon: '💻', date: '2025-11-02', time: '23:59', title: 'SAE à rendre', details: '.zip sur eCampus + lien Google Sheets.' },
-                { id: 'html_ds', category: 'HTML / Intégration Web', icon: '✍️', date: '2025-11-03', title: 'DS sur l\'intégration web', details: 'Contrôle sur la partie intégration.' }
+                { id: 'ppp_group', category: 'P.P.P', icon: '📂', date: '2025-11-11', title: 'Rendu du travail de groupe' },
+                { id: 'ppp_pres', category: 'P.P.P', icon: '🎤', date: '2025-11-13', title: 'Présentation du projet' },
+                { id: 'ppp_interview', category: 'P.P.P', icon: '💼', date: '2026-01-11', title: 'Interview d’un professionnel' },
+                { id: 'english_model', category: 'Anglais', icon: '🇬🇧', date: '2025-10-20', title: 'Maquette à rendre' },
+                { id: 'gp_pub', category: 'Gestion de projet', icon: '📊', date: '2025-11-09', title: 'Projet de pub « à l’envers »' },
+                { id: 'com_portrait', category: 'Communication', icon: '💬', date: '2025-10-16', title: 'Portrait à faire' },
+                { id: 'art_mood', category: 'Art', icon: '🎨', date: '2025-10-24', title: 'Moodboard à finir' },
+                { id: 'mkt_company', category: 'Marketing', icon: '📈', date: '2025-11-17', title: 'Projet d’entreprise à rendre' },
+                { id: 'html_sae', category: 'HTML / Intégration Web', icon: '💻', date: '2025-11-02', time: '23:59', title: 'SAE à rendre' },
+                { id: 'html_ds', category: 'HTML / Intégration Web', icon: '✍️', date: '2025-11-03', title: 'DS sur l\'intégration web' }
             ];
 
             const projectList = document.getElementById('project-list');
             projects.sort((a, b) => new Date(a.date) - new Date(b.date));
 
-            // Affiche tous les projets
             projects.forEach((project, index) => {
                 const card = createProjectCard(project);
                 card.style.animationDelay = `${index * 100}ms`;
@@ -175,67 +206,35 @@
                 const card = document.createElement('div');
                 card.className = 'project-card';
                 const formattedDate = new Date(project.date).toLocaleDateString('fr-FR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
-                
-                // NOUVEAUTÉ : Ajout du conteneur d'actions et du bouton Gemini
-                card.innerHTML = `
-                    <div class="card-header"><span class="icon">${project.icon}</span><h2>${project.category}</h2></div>
-                    <span class="date">${formattedDate} ${project.time ? `à ${project.time}` : ''}</span>
-                    <h3>${project.title}</h3>
-                    <div id="countdown-${project.id}" class="countdown-timer">Calcul...</div>
-                    <p>${project.details || 'Aucun détail supplémentaire.'}</p>
-                    <div class="card-actions">
-                        <a id="gemini-${project.id}" href="https://gemini.google.com/" target="_blank" class="gemini-help-btn" style="display: none;">✨ S'aider de Gemini</a>
-                        <button class="reminder-btn">Créer un rappel</button>
-                    </div>
-                `;
-                
+                card.innerHTML = `<div class="card-header"><span class="icon">${project.icon}</span><h2>${project.category}</h2></div><span class="date">${formattedDate} ${project.time ? `à ${project.time}` : ''}</span><h3>${project.title}</h3><div id="countdown-${project.id}" class="countdown-timer">Calcul...</div><div class="card-actions"><a id="gemini-${project.id}" href="https://gemini.google.com/" target="_blank" class="gemini-help-btn" style="display: none;">✨ S'aider de Gemini</a><button class="reminder-btn">Créer un rappel</button></div>`;
                 card.querySelector('.reminder-btn').onclick = () => window.openReminderChoice(project);
                 return card;
             }
 
             function updateAllCountdowns() {
                 const fortyEightHoursInSeconds = 48 * 60 * 60;
-
                 projects.forEach(project => {
                     const countdownElement = document.getElementById(`countdown-${project.id}`);
-                    // NOUVEAUTÉ : Récupération du bouton Gemini
                     const geminiButton = document.getElementById(`gemini-${project.id}`);
-
                     if (!countdownElement || !geminiButton) return;
-                    
                     let deadlineString = project.date + (project.time ? `T${project.time}:00` : `T23:59:59`);
                     const deadline = new Date(deadlineString);
                     const totalSeconds = (deadline - new Date()) / 1000;
-
-                    // NOUVEAUTÉ : Logique pour afficher/cacher le bouton Gemini
-                    if (totalSeconds > 0 && totalSeconds < fortyEightHoursInSeconds) {
-                        geminiButton.style.display = 'inline-flex';
-                    } else {
-                        geminiButton.style.display = 'none';
-                    }
-
+                    geminiButton.style.display = (totalSeconds > 0 && totalSeconds < fortyEightHoursInSeconds) ? 'inline-flex' : 'none';
                     if (totalSeconds < 0) {
                         countdownElement.innerHTML = 'Échéance dépassée';
                         countdownElement.className = 'countdown-timer countdown-over';
                         countdownElement.classList.remove('pulsing');
                         return;
                     }
-
                     const days = Math.floor(totalSeconds / 3600 / 24);
                     const hours = Math.floor(totalSeconds / 3600) % 24;
                     const minutes = Math.floor(totalSeconds / 60) % 60;
                     countdownElement.innerHTML = days > 0 ? `Temps restant : ${days}j ${hours}h ${minutes}m` : `Temps restant : ${hours}h ${minutes}m ${Math.floor(totalSeconds) % 60}s`;
-                    
-                    if (days < 3) { // La pulsation est conservée pour les < 3 jours
-                        countdownElement.className = 'countdown-timer countdown-red';
-                        countdownElement.classList.add('pulsing');
-                    } else if (days < 7) {
-                        countdownElement.className = 'countdown-timer countdown-orange';
-                        countdownElement.classList.remove('pulsing');
-                    } else {
-                        countdownElement.className = 'countdown-timer countdown-green';
-                        countdownElement.classList.remove('pulsing');
-                    }
+                    countdownElement.classList.toggle('pulsing', days < 3);
+                    if (days < 3) countdownElement.className = 'countdown-timer countdown-red pulsing';
+                    else if (days < 7) countdownElement.className = 'countdown-timer countdown-orange';
+                    else countdownElement.className = 'countdown-timer countdown-green';
                 });
             }
             setInterval(updateAllCountdowns, 1000);
@@ -253,6 +252,33 @@
             const closeModal = () => { modal.classList.add('hidden'); activeProject = null; };
             document.getElementById('close-modal-btn').addEventListener('click', closeModal);
             modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+
+            // NOUVEAUTÉ : Logique pour le bouton "Ajouter à l'accueil"
+            const a2hsBtn = document.getElementById('add-to-home-btn');
+            const a2hsModal = document.getElementById('a2hs-modal');
+            const closeA2hsModalBtn = document.getElementById('close-a2hs-modal-btn');
+            const iosInstructions = document.getElementById('ios-instructions');
+            const androidInstructions = document.getElementById('android-instructions');
+
+            a2hsBtn.addEventListener('click', () => {
+                // Détecte le système d'exploitation
+                const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+                if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+                    iosInstructions.classList.remove('hidden');
+                    androidInstructions.classList.add('hidden');
+                } else {
+                    androidInstructions.classList.remove('hidden');
+                    iosInstructions.classList.add('hidden');
+                }
+                a2hsModal.classList.remove('hidden');
+            });
+
+            const closeA2hsModal = () => a2hsModal.classList.add('hidden');
+            closeA2hsModalBtn.addEventListener('click', closeA2hsModal);
+            a2hsModal.addEventListener('click', (e) => { if (e.target === a2hsModal) closeA2hsModal(); });
+
+
+            // Reste du JS pour les rappels
             document.getElementById('google-calendar-btn').addEventListener('click', () => { if (!activeProject) return; const startTime = new Date(activeProject.date).toISOString().replace(/-|:|\.\d\d\d/g, ""); let url = `https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent('Rendu: ' + activeProject.title)}&dates=${startTime}/${startTime}&details=${encodeURIComponent(activeProject.details || '')}`; window.open(url, '_blank'); closeModal(); });
             document.getElementById('apple-reminder-btn').addEventListener('click', () => { if (!activeProject) return; createICSFile(activeProject); closeModal(); });
             function createICSFile(project) { const date = new Date(project.date); if (project.time) { const [h, m] = project.time.split(':'); date.setUTCHours(h, m, 0); } else { date.setUTCHours(9, 0, 0); } const icsDate = date.toISOString().replace(/-|:|\.\d{3}/g, '').slice(0, -1); const icsContent = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'BEGIN:VTODO', `UID:${Date.now()}@mmi.fr`, `SUMMARY:${project.title}`, `DTSTAMP:${icsDate}Z`, `DUE;VALUE=DATE-TIME:${icsDate}Z`, `DESCRIPTION:${(project.details || '').replace(/\n/g, '\\n')}`, 'STATUS:NEEDS-ACTION', 'END:VTODO', 'END:VCALENDAR'].join('\n'); const link = document.createElement('a'); link.href = URL.createObjectURL(new Blob([icsContent], { type: 'text/calendar;charset=utf-8' })); link.download = `rappel_${project.title.replace(/ /g, "_")}.ics`; document.body.appendChild(link); link.click(); document.body.removeChild(link); }
