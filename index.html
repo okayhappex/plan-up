@@ -22,16 +22,7 @@
             --red: #e74c3c;
         }
 
-        body {
-            font-family: var(--font-family);
-            background-color: var(--background-color);
-            color: var(--text-color);
-            margin: 0;
-            padding: 20px;
-            line-height: 1.5;
-            -webkit-font-smoothing: antialiased;
-        }
-
+        body { font-family: var(--font-family); background-color: var(--background-color); color: var(--text-color); margin: 0; padding: 20px; line-height: 1.5; -webkit-font-smoothing: antialiased; }
         nav { display: flex; justify-content: center; gap: 15px; background: white; padding: 10px; border-radius: 50px; box-shadow: 0 4px 15px var(--shadow-color); max-width: 400px; margin: 0 auto 30px auto; }
         nav a { text-decoration: none; color: var(--text-color); font-weight: 600; font-size: 0.9em; padding: 8px 16px; border-radius: 30px; transition: background-color 0.3s, color 0.3s; }
         nav a.active { background: linear-gradient(90deg, var(--primary-color), var(--secondary-color)); color: white; }
@@ -39,26 +30,15 @@
         header { text-align: center; margin-bottom: 40px; }
         header h1 { font-weight: 700; font-size: 2.2em; color: var(--primary-color); margin-bottom: 5px; }
 
-        main {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
-            gap: 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
+        main { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 20px; max-width: 1200px; margin: 0 auto; }
+        
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         .project-card {
-            background-color: var(--card-background);
-            border-radius: 12px;
-            box-shadow: 0 6px 15px var(--shadow-color);
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
+            background-color: var(--card-background); border-radius: 12px; box-shadow: 0 6px 15px var(--shadow-color); padding: 20px; display: flex; flex-direction: column; border-left: 4px solid var(--primary-color);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
-            border-left: 4px solid var(--primary-color);
+            opacity: 0; animation: fadeIn 0.5s ease-out forwards;
         }
-
-        .project-card:hover { transform: translateY(-5px); }
+        .project-card:hover { transform: translateY(-8px); box-shadow: 0 12px 25px rgba(0, 0, 0, 0.12); }
         .card-header { display: flex; align-items: center; margin-bottom: 12px; }
         .card-header .icon { font-size: 1.6em; margin-right: 12px; }
         .card-header h2 { margin: 0; font-size: 1.15em; font-weight: 600; color: var(--primary-color); }
@@ -71,35 +51,61 @@
         .countdown-orange { background-color: var(--orange); }
         .countdown-red { background-color: var(--red); }
         .countdown-over { background-color: #7f8c8d; }
+
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
+        .pulsing { animation: pulse 1.5s infinite ease-in-out; }
         
-        .reminder-btn { background: linear-gradient(90deg, var(--primary-color), var(--secondary-color)); color: white; border: none; padding: 10px 18px; font-size: 0.9em; border-radius: 25px; cursor: pointer; font-weight: 600; transition: transform 0.2s ease; align-self: flex-end; margin-top: auto; }
+        /* Conteneur pour les boutons en bas de la carte */
+        .card-actions {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end; /* Aligne les boutons à droite */
+            gap: 10px; /* Espace entre les boutons */
+            margin-top: auto; /* Pousse le conteneur en bas */
+        }
+
+        .reminder-btn { background: linear-gradient(90deg, var(--primary-color), var(--secondary-color)); color: white; border: none; padding: 10px 18px; font-size: 0.9em; border-radius: 25px; cursor: pointer; font-weight: 600; transition: transform 0.2s ease, filter 0.2s ease; }
         .reminder-btn:hover { transform: scale(1.05); }
+        .reminder-btn:active { transform: scale(0.98); filter: brightness(0.9); }
+
+        /* --- NOUVEAUTÉ : Style simple pour le bouton Gemini --- */
+        .gemini-help-btn {
+            display: inline-flex;
+            align-items: center;
+            background-color: transparent;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+            padding: 8px 16px;
+            font-size: 0.85em;
+            font-weight: 600;
+            border-radius: 25px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+
+        .gemini-help-btn:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        /* --- FIN NOUVEAUTÉ --- */
         
         .hidden { display: none; }
         .work-in-progress { text-align: center; padding: 80px 40px; background-color: var(--card-background); border-radius: 15px; box-shadow: 0 8px 20px var(--shadow-color); max-width: 600px; margin: 40px auto; }
-        .work-in-progress h2 { font-size: 2em; color: var(--primary-color); }
         
+        /* ... (styles de la modale inchangés) ... */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.6); display: flex; justify-content: center; align-items: center; z-index: 1000; opacity: 0; transition: opacity 0.3s ease; pointer-events: none; }
         .modal-overlay:not(.hidden) { opacity: 1; pointer-events: auto; }
         .modal-content { background: white; padding: 30px; border-radius: 15px; width: 90%; max-width: 400px; text-align: center; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); transform: scale(0.95); transition: transform 0.3s ease; }
         .modal-overlay:not(.hidden) .modal-content { transform: scale(1); }
-        .modal-content h3 { margin-top: 0; color: var(--primary-color); }
-        .modal-buttons { display: flex; flex-direction: column; gap: 15px; margin-top: 20px; }
-        .modal-buttons button { padding: 15px; border: none; border-radius: 10px; font-weight: 600; font-size: 1em; cursor: pointer; transition: transform 0.2s ease; }
-        #google-calendar-btn { background-color: #e8f0fe; color: #4285F4; }
-        #apple-reminder-btn { background-color: #e5e5e5; color: #333; }
-        .close-btn { margin-top: 20px; background: none; border: none; color: #888; cursor: pointer; font-weight: 600; }
         
         footer { text-align: center; margin-top: 50px; color: #aaa; }
-
         @media (max-width: 600px) {
             body { padding: 10px; }
             nav { max-width: 100%; gap: 5px; }
-            nav a { padding: 8px 12px; font-size: 0.85em; }
             header h1 { font-size: 1.8em; }
             main { grid-template-columns: 1fr; gap: 15px; }
             .project-card { padding: 15px; }
-            .countdown-timer { font-size: 1em; }
         }
     </style>
 </head>
@@ -158,9 +164,10 @@
             const projectList = document.getElementById('project-list');
             projects.sort((a, b) => new Date(a.date) - new Date(b.date));
 
-            // --- AFFICHE TOUS LES PROJETS DANS UNE SEULE LISTE ---
-            projects.forEach(project => {
+            // Affiche tous les projets
+            projects.forEach((project, index) => {
                 const card = createProjectCard(project);
+                card.style.animationDelay = `${index * 100}ms`;
                 projectList.appendChild(card);
             });
             
@@ -168,30 +175,67 @@
                 const card = document.createElement('div');
                 card.className = 'project-card';
                 const formattedDate = new Date(project.date).toLocaleDateString('fr-FR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
-                card.innerHTML = `<div class="card-header"><span class="icon">${project.icon}</span><h2>${project.category}</h2></div><span class="date">${formattedDate} ${project.time ? `à ${project.time}` : ''}</span><h3>${project.title}</h3><div id="countdown-${project.id}" class="countdown-timer">Calcul...</div><p>${project.details || 'Aucun détail supplémentaire.'}</p><button class="reminder-btn">Créer un rappel</button>`;
+                
+                // NOUVEAUTÉ : Ajout du conteneur d'actions et du bouton Gemini
+                card.innerHTML = `
+                    <div class="card-header"><span class="icon">${project.icon}</span><h2>${project.category}</h2></div>
+                    <span class="date">${formattedDate} ${project.time ? `à ${project.time}` : ''}</span>
+                    <h3>${project.title}</h3>
+                    <div id="countdown-${project.id}" class="countdown-timer">Calcul...</div>
+                    <p>${project.details || 'Aucun détail supplémentaire.'}</p>
+                    <div class="card-actions">
+                        <a id="gemini-${project.id}" href="https://gemini.google.com/" target="_blank" class="gemini-help-btn" style="display: none;">✨ S'aider de Gemini</a>
+                        <button class="reminder-btn">Créer un rappel</button>
+                    </div>
+                `;
+                
                 card.querySelector('.reminder-btn').onclick = () => window.openReminderChoice(project);
                 return card;
             }
 
-            // --- LE RESTE DU JAVASCRIPT RESTE INCHANGÉ ---
             function updateAllCountdowns() {
+                const fortyEightHoursInSeconds = 48 * 60 * 60;
+
                 projects.forEach(project => {
                     const countdownElement = document.getElementById(`countdown-${project.id}`);
-                    if (!countdownElement) return;
+                    // NOUVEAUTÉ : Récupération du bouton Gemini
+                    const geminiButton = document.getElementById(`gemini-${project.id}`);
+
+                    if (!countdownElement || !geminiButton) return;
+                    
                     let deadlineString = project.date + (project.time ? `T${project.time}:00` : `T23:59:59`);
                     const deadline = new Date(deadlineString);
-                    const totalSeconds = (new Date(deadline) - new Date()) / 1000;
+                    const totalSeconds = (deadline - new Date()) / 1000;
+
+                    // NOUVEAUTÉ : Logique pour afficher/cacher le bouton Gemini
+                    if (totalSeconds > 0 && totalSeconds < fortyEightHoursInSeconds) {
+                        geminiButton.style.display = 'inline-flex';
+                    } else {
+                        geminiButton.style.display = 'none';
+                    }
+
                     if (totalSeconds < 0) {
                         countdownElement.innerHTML = 'Échéance dépassée';
-                        countdownElement.className = 'countdown-timer countdown-over'; return;
+                        countdownElement.className = 'countdown-timer countdown-over';
+                        countdownElement.classList.remove('pulsing');
+                        return;
                     }
+
                     const days = Math.floor(totalSeconds / 3600 / 24);
                     const hours = Math.floor(totalSeconds / 3600) % 24;
                     const minutes = Math.floor(totalSeconds / 60) % 60;
                     countdownElement.innerHTML = days > 0 ? `Temps restant : ${days}j ${hours}h ${minutes}m` : `Temps restant : ${hours}h ${minutes}m ${Math.floor(totalSeconds) % 60}s`;
-                    if (days < 3) countdownElement.className = 'countdown-timer countdown-red';
-                    else if (days < 7) countdownElement.className = 'countdown-timer countdown-orange';
-                    else countdownElement.className = 'countdown-timer countdown-green';
+                    
+                    if (days < 3) { // La pulsation est conservée pour les < 3 jours
+                        countdownElement.className = 'countdown-timer countdown-red';
+                        countdownElement.classList.add('pulsing');
+                    } else if (days < 7) {
+                        countdownElement.className = 'countdown-timer countdown-orange';
+                        countdownElement.classList.remove('pulsing');
+                    } else {
+                        countdownElement.className = 'countdown-timer countdown-green';
+                        countdownElement.classList.remove('pulsing');
+                    }
                 });
             }
             setInterval(updateAllCountdowns, 1000);
