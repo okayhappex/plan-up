@@ -46,7 +46,7 @@
         .project-card h3 { margin-top: 0; margin-bottom: 15px; font-size: 1.1em; flex-grow: 1; }
         
         .countdown-timer { padding: 6px 10px; border-radius: 8px; font-weight: 600; text-align: center; margin-bottom: 15px; transition: background-color 0.5s ease; color: white; font-size: 1em; }
-        .countdown-green, .countdown-orange, .countdown-red, .countdown-over { background-color: var(--green); }
+        .countdown-green { background-color: var(--green); }
         .countdown-orange { background-color: var(--orange); }
         .countdown-red { background-color: var(--red); }
         .countdown-over { background-color: #7f8c8d; }
@@ -56,58 +56,35 @@
         
         .card-actions { display: flex; flex-direction: column; align-items: flex-end; gap: 10px; margin-top: auto; }
         .reminder-btn { background: linear-gradient(90deg, var(--primary-color), var(--secondary-color)); color: white; border: none; padding: 10px 18px; font-size: 0.9em; border-radius: 25px; cursor: pointer; font-weight: 600; transition: transform 0.2s ease, filter 0.2s ease; }
-        .reminder-btn:hover { transform: scale(1.05); }
-        .reminder-btn:active { transform: scale(0.98); filter: brightness(0.9); }
-
-        .gemini-help-btn { display: inline-flex; align-items: center; background-color: transparent; color: var(--primary-color); border: 2px solid var(--primary-color); padding: 8px 16px; font-size: 0.85em; font-weight: 600; border-radius: 25px; cursor: pointer; text-decoration: none; transition: background-color 0.2s ease, color 0.2s ease; }
-        .gemini-help-btn:hover { background-color: var(--primary-color); color: white; }
+        
+        .gemini-help-btn { display: inline-flex; align-items: center; gap: 8px; background-color: transparent; color: var(--primary-color); border: 2px solid transparent; background-image: linear-gradient(white, white), linear-gradient(to right, var(--secondary-color), var(--primary-color)); background-origin: border-box; background-clip: padding-box, border-box; padding: 8px 16px; font-size: 0.85em; font-weight: 600; border-radius: 25px; cursor: pointer; text-decoration: none; transition: all 0.3s ease; }
+        .gemini-help-btn:hover { background-image: linear-gradient(to right, var(--secondary-color), var(--primary-color)), linear-gradient(to right, var(--secondary-color), var(--primary-color)); color: white; transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
         
         .hidden { display: none; }
         
-        /* MODIFICATION : Style de la page "en construction" */
-        .placeholder-content {
-            text-align: center;
-            padding: 80px 20px;
-            color: #999;
+        /* Styles pour le tour guidé */
+        #tour-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.7); z-index: 2000;
         }
-        .placeholder-content h2 {
-            font-size: 1.8em;
-            color: #aaa;
-            margin: 0;
+        .tour-highlight {
+            position: relative; z-index: 2001;
+            box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.7); /* Inverse le halo */
+            border-radius: 12px;
+            transition: box-shadow 0.3s ease;
         }
-        
-        /* ... (styles de la modale inchangés) ... */
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.6); display: flex; justify-content: center; align-items: center; z-index: 1000; opacity: 0; transition: opacity 0.3s ease; pointer-events: none; }
-        .modal-overlay:not(.hidden) { opacity: 1; pointer-events: auto; }
-        .modal-content { background: white; padding: 25px; border-radius: 15px; width: 90%; max-width: 400px; text-align: center; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); transform: scale(0.95); transition: transform 0.3s ease; }
-        .modal-overlay:not(.hidden) .modal-content { transform: scale(1); }
+        .tour-step {
+            position: absolute; background-color: white; padding: 20px; border-radius: 10px;
+            width: calc(100% - 60px); max-width: 320px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2); z-index: 2002;
+            box-sizing: border-box;
+        }
+        .tour-step h4 { margin-top: 0; color: var(--primary-color); }
+        .tour-navigation { display: flex; justify-content: space-between; align-items: center; margin-top: 15px; }
+        .tour-navigation button { background: var(--primary-color); color: white; border: none; padding: 8px 15px; border-radius: 20px; cursor: pointer; }
+        .tour-navigation .skip-btn { background: none; color: #888; }
         
         footer { text-align: center; margin-top: 50px; color: #aaa; }
-
-        /* NOUVEAUTÉ : Styles pour le bouton "Ajouter à l'accueil" */
-        #add-to-home-btn {
-            display: none; /* Caché par défaut */
-            margin-top: 20px;
-            padding: 10px 20px;
-            font-size: 0.9em;
-            font-weight: 600;
-            color: var(--primary-color);
-            background-color: transparent;
-            border: 2px solid var(--primary-color);
-            border-radius: 25px;
-            cursor: pointer;
-        }
-
-        /* NOUVEAUTÉ : Styles pour la modale d'instructions */
-        .instructions-list { text-align: left; margin-top: 20px; padding-left: 0; list-style-position: inside; }
-        .instructions-list li { margin-bottom: 15px; font-size: 1.1em; }
-        .instructions-list .icon { font-size: 1.5em; vertical-align: middle; margin-right: 5px; }
-
-        @media (max-width: 768px) {
-            #add-to-home-btn {
-                display: inline-block; /* Affiché sur mobile */
-            }
-        }
 
         @media (max-width: 600px) {
             body { padding: 10px; }
@@ -131,50 +108,33 @@
     </header>
 
     <main id="project-list">
-        </main>
+    </main>
 
     <main id="homework-page" class="hidden">
-        <div class="placeholder-content">
-            <h2>🚧 Page en construction 🚧</h2>
+        <div style="text-align: center; padding: 80px 20px; color: #999;">
+            <h2 style="font-size: 1.8em; color: #aaa; margin: 0;">🚧 Page en construction 🚧</h2>
         </div>
     </main>
 
     <div id="choice-modal" class="modal-overlay hidden">
-        <div class="modal-content">
-            <h3>Où ajouter le rappel ?</h3>
-            <div class="modal-buttons">
-                <button id="google-calendar-btn">📅 Google Calendar</button>
-                <button id="apple-reminder-btn">📱 Rappel Apple (iPhone)</button>
-            </div>
-            <button id="close-modal-btn" class="close-btn">Annuler</button>
-        </div>
     </div>
 
-    <div id="a2hs-modal" class="modal-overlay hidden">
-        <div class="modal-content">
-            <h3>Ajouter à l'écran d'accueil</h3>
-            <div id="ios-instructions" class="hidden">
-                <p>Pour ajouter ce site à votre écran d'accueil, suivez ces étapes :</p>
-                <ol class="instructions-list">
-                    <li>Appuyez sur l'icône de Partage <span class="icon">􀈂</span> en bas de votre écran.</li>
-                    <li>Faites défiler vers le bas.</li>
-                    <li>Sélectionnez "Sur l'écran d'accueil".</li>
-                </ol>
+    <div id="tour-overlay" class="hidden">
+        <div id="tour-step-box" class="tour-step hidden">
+            <h4 id="tour-title"></h4>
+            <p id="tour-content"></p>
+            <div class="tour-navigation">
+                <button id="tour-skip" class="skip-btn">Passer</button>
+                <div>
+                    <button id="tour-prev" class="hidden">Précédent</button>
+                    <button id="tour-next">Suivant</button>
+                </div>
             </div>
-            <div id="android-instructions" class="hidden">
-                <p>Pour ajouter ce site à votre écran d'accueil, suivez ces étapes :</p>
-                <ol class="instructions-list">
-                    <li>Appuyez sur les trois points <span class="icon">􀋁</span> en haut à droite.</li>
-                    <li>Sélectionnez "Installer l'application" ou "Ajouter à l'écran d'accueil".</li>
-                </ol>
-            </div>
-            <button id="close-a2hs-modal-btn" class="close-btn">Fermer</button>
         </div>
     </div>
 
     <footer>
         <p>Créé avec ❤️ pour les étudiants MMI</p>
-        <button id="add-to-home-btn">📲 Ajouter à l'écran d'accueil</button>
     </footer>
 
     <script>
@@ -250,38 +210,112 @@
             let activeProject = null;
             window.openReminderChoice = (project) => { activeProject = project; modal.classList.remove('hidden'); };
             const closeModal = () => { modal.classList.add('hidden'); activeProject = null; };
-            document.getElementById('close-modal-btn').addEventListener('click', closeModal);
+            document.getElementById('close-modal-btn')?.addEventListener('click', closeModal);
             modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+            document.getElementById('google-calendar-btn')?.addEventListener('click', () => { if (!activeProject) return; const startTime = new Date(activeProject.date).toISOString().replace(/-|:|\.\d\d\d/g, ""); let url = `https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent('Rendu: ' + activeProject.title)}&dates=${startTime}/${startTime}&details=${encodeURIComponent(activeProject.details || '')}`; window.open(url, '_blank'); closeModal(); });
+            document.getElementById('apple-reminder-btn')?.addEventListener('click', () => { if (!activeProject) return; createICSFile(activeProject); closeModal(); });
+            function createICSFile(project) { const date = new Date(project.date); if (project.time) { const [h, m] = project.time.split(':'); date.setUTCHours(h, m, 0); } else { date.setUTCHours(9, 0, 0); } const icsDate = date.toISOString().replace(/-|:|\.\d{3}/g, '').slice(0, -1); const icsContent = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'BEGIN:VTODO', `UID:${Date.now()}@mmi.fr`, `SUMMARY:${project.title}`, `DTSTAMP:${icsDate}Z`, `DUE;VALUE=DATE-TIME:${icsDate}Z`, `DESCRIPTION:${(project.details || '').replace(/\n/g, '\\n')}`, 'STATUS:NEEDS-ACTION', 'END:VTODO', 'END:VCALENDAR'].join('\n'); const link = document.createElement('a'); link.href = URL.createObjectURL(new Blob([icsContent], { type: 'text/calendar;charset=utf-8' })); link.download = `rappel_${project.title.replace(/ /g, "_")}.ics`; document.body.appendChild(link); link.click(); document.body.removeChild(link); }
+            
+            // --- Logique du tour guidé ---
+            const tourOverlay = document.getElementById('tour-overlay');
+            const tourStepBox = document.getElementById('tour-step-box');
+            const tourTitle = document.getElementById('tour-title');
+            const tourContent = document.getElementById('tour-content');
+            const tourPrev = document.getElementById('tour-prev');
+            const tourNext = document.getElementById('tour-next');
+            const tourSkip = document.getElementById('tour-skip');
+            let currentHighlight = null;
 
-            // NOUVEAUTÉ : Logique pour le bouton "Ajouter à l'accueil"
-            const a2hsBtn = document.getElementById('add-to-home-btn');
-            const a2hsModal = document.getElementById('a2hs-modal');
-            const closeA2hsModalBtn = document.getElementById('close-a2hs-modal-btn');
-            const iosInstructions = document.getElementById('ios-instructions');
-            const androidInstructions = document.getElementById('android-instructions');
-
-            a2hsBtn.addEventListener('click', () => {
-                // Détecte le système d'exploitation
-                const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-                if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
-                    iosInstructions.classList.remove('hidden');
-                    androidInstructions.classList.add('hidden');
-                } else {
-                    androidInstructions.classList.remove('hidden');
-                    iosInstructions.classList.add('hidden');
+            const tourSteps = [
+                {
+                    element: '.project-card:first-of-type',
+                    title: '👋 Bienvenue sur votre tableau de bord !',
+                    content: 'Ce site vous aide à suivre tous vos projets et leurs dates limites.'
+                },
+                {
+                    element: '.project-card:first-of-type .countdown-timer',
+                    title: 'Compte à rebours',
+                    content: 'Chaque projet a un compte à rebours qui change de couleur à mesure que l\'échéance approche.'
+                },
+                {
+                    element: '.project-card:first-of-type .reminder-btn',
+                    title: 'Créer un rappel',
+                    content: 'Cliquez ici pour ajouter un rappel directement dans votre calendrier Google ou Apple.'
+                },
+                {
+                    element: 'nav',
+                    title: 'Navigation',
+                    content: 'Utilisez ces onglets pour naviguer entre les différentes sections du site.'
                 }
-                a2hsModal.classList.remove('hidden');
+            ];
+            let currentStepIndex = 0;
+
+            function startTour() {
+                tourOverlay.classList.remove('hidden');
+                tourStepBox.classList.remove('hidden');
+                showStep(currentStepIndex);
+            }
+
+            function endTour() {
+                tourOverlay.classList.add('hidden');
+                if (currentHighlight) currentHighlight.classList.remove('tour-highlight');
+                localStorage.setItem('mmiDashboardVisited', 'true');
+            }
+
+            function showStep(index) {
+                if (currentHighlight) currentHighlight.classList.remove('tour-highlight');
+                const step = tourSteps[index];
+                const targetElement = document.querySelector(step.element);
+                if (!targetElement) { endTour(); return; }
+
+                currentHighlight = targetElement;
+                targetElement.classList.add('tour-highlight');
+                targetElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+                tourTitle.textContent = step.title;
+                tourContent.textContent = step.content;
+                
+                // Positionnement intelligent de la bulle
+                setTimeout(() => {
+                    const targetRect = targetElement.getBoundingClientRect();
+                    let top = targetRect.bottom + 15;
+                    let left = targetRect.left + (targetRect.width / 2) - (tourStepBox.offsetWidth / 2);
+
+                    // Si la bulle dépasse en bas, on la met au-dessus
+                    if (top + tourStepBox.offsetHeight > window.innerHeight) {
+                        top = targetRect.top - tourStepBox.offsetHeight - 15;
+                    }
+                    
+                    // Empêche la bulle de sortir sur les côtés
+                    if (left < 10) left = 10;
+                    if (left + tourStepBox.offsetWidth > window.innerWidth - 10) {
+                        left = window.innerWidth - tourStepBox.offsetWidth - 10;
+                    }
+
+                    tourStepBox.style.top = `${top}px`;
+                    tourStepBox.style.left = `${left}px`;
+                }, 300); // Léger délai pour attendre le scroll
+
+                tourPrev.classList.toggle('hidden', index === 0);
+                tourNext.textContent = (index === tourSteps.length - 1) ? 'Terminer' : 'Suivant';
+            }
+
+            tourNext.addEventListener('click', () => {
+                currentStepIndex++;
+                if (currentStepIndex >= tourSteps.length) { endTour(); } 
+                else { showStep(currentStepIndex); }
             });
 
-            const closeA2hsModal = () => a2hsModal.classList.add('hidden');
-            closeA2hsModalBtn.addEventListener('click', closeA2hsModal);
-            a2hsModal.addEventListener('click', (e) => { if (e.target === a2hsModal) closeA2hsModal(); });
+            tourPrev.addEventListener('click', () => {
+                currentStepIndex--;
+                showStep(currentStepIndex);
+            });
 
+            tourSkip.addEventListener('click', endTour);
 
-            // Reste du JS pour les rappels
-            document.getElementById('google-calendar-btn').addEventListener('click', () => { if (!activeProject) return; const startTime = new Date(activeProject.date).toISOString().replace(/-|:|\.\d\d\d/g, ""); let url = `https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent('Rendu: ' + activeProject.title)}&dates=${startTime}/${startTime}&details=${encodeURIComponent(activeProject.details || '')}`; window.open(url, '_blank'); closeModal(); });
-            document.getElementById('apple-reminder-btn').addEventListener('click', () => { if (!activeProject) return; createICSFile(activeProject); closeModal(); });
-            function createICSFile(project) { const date = new Date(project.date); if (project.time) { const [h, m] = project.time.split(':'); date.setUTCHours(h, m, 0); } else { date.setUTCHours(9, 0, 0); } const icsDate = date.toISOString().replace(/-|:|\.\d{3}/g, '').slice(0, -1); const icsContent = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'BEGIN:VTODO', `UID:${Date.now()}@mmi.fr`, `SUMMARY:${project.title}`, `DTSTAMP:${icsDate}Z`, `DUE;VALUE=DATE-TIME:${icsDate}Z`, `DESCRIPTION:${(project.details || '').replace(/\n/g, '\\n')}`, 'STATUS:NEEDS-ACTION', 'END:VTODO', 'END:VCALENDAR'].join('\n'); const link = document.createElement('a'); link.href = URL.createObjectURL(new Blob([icsContent], { type: 'text/calendar;charset=utf-8' })); link.download = `rappel_${project.title.replace(/ /g, "_")}.ics`; document.body.appendChild(link); link.click(); document.body.removeChild(link); }
+            if (!localStorage.getItem('mmiDashboardVisited')) {
+                setTimeout(startTour, 1200); // On attend que les animations d'entrée se terminent
+            }
         });
     </script>
 </body>
