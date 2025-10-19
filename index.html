@@ -15,7 +15,7 @@
             --background-color: #f4f7f6;
             --card-background: #ffffff;
             --text-color: #333;
-            --shadow-color: rgba(0, 0, 0, 0.1);
+            --shadow-color: rgba(0, 0, 0, 0.08); /* Ombre plus subtile */
             --font-family: 'Poppins', sans-serif;
             --green: #2ecc71;
             --orange: #f39c12;
@@ -28,15 +28,16 @@
             color: var(--text-color);
             margin: 0;
             padding: 20px;
-            line-height: 1.6;
+            line-height: 1.5; /* Ligne légèrement plus compacte */
+            -webkit-font-smoothing: antialiased;
         }
 
         nav {
             display: flex;
             justify-content: center;
-            gap: 20px;
+            gap: 15px;
             background: white;
-            padding: 15px;
+            padding: 10px;
             border-radius: 50px;
             box-shadow: 0 4px 15px var(--shadow-color);
             max-width: 400px;
@@ -47,6 +48,7 @@
             text-decoration: none;
             color: var(--text-color);
             font-weight: 600;
+            font-size: 0.9em;
             padding: 8px 16px;
             border-radius: 30px;
             transition: background-color 0.3s, color 0.3s;
@@ -64,28 +66,30 @@
 
         header h1 {
             font-weight: 700;
-            font-size: 2.5em;
+            font-size: 2.2em; /* Titre principal légèrement réduit */
             color: var(--primary-color);
             margin-bottom: 5px;
         }
         
         main {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 25px;
+            /* MODIFICATION : Largeur minimale des cartes réduite à 290px */
+            grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+            gap: 20px; /* Espace entre les cartes réduit */
             max-width: 1200px;
             margin: 0 auto;
         }
 
         .project-card {
             background-color: var(--card-background);
-            border-radius: 15px;
-            box-shadow: 0 8px 20px var(--shadow-color);
-            padding: 25px;
+            border-radius: 12px; /* Bords moins arrondis */
+            box-shadow: 0 6px 15px var(--shadow-color);
+            /* MODIFICATION : Padding réduit pour un bloc plus petit */
+            padding: 20px;
             display: flex;
             flex-direction: column;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
-            border-left: 5px solid var(--primary-color);
+            border-left: 4px solid var(--primary-color); /* Bordure plus fine */
         }
 
         .project-card:hover {
@@ -95,28 +99,28 @@
         .card-header {
             display: flex;
             align-items: center;
-            margin-bottom: 15px;
+            margin-bottom: 12px; /* Espace réduit */
         }
 
         .card-header .icon {
-            font-size: 1.8em;
-            margin-right: 15px;
+            font-size: 1.6em; /* Icône légèrement plus petite */
+            margin-right: 12px;
         }
 
         .card-header h2 {
             margin: 0;
-            font-size: 1.3em;
+            font-size: 1.15em; /* Titre de catégorie réduit */
             font-weight: 600;
             color: var(--primary-color);
         }
 
         .project-card .date {
-            font-size: 1em;
+            font-size: 0.85em; /* Date plus discrète */
             font-weight: 600;
             color: #555;
             margin-bottom: 10px;
-            padding: 5px 10px;
-            background-color: #eeeeee;
+            padding: 4px 10px;
+            background-color: #f0f0f0;
             border-radius: 20px;
             align-self: flex-start;
         }
@@ -124,55 +128,51 @@
         .project-card h3 {
              margin-top: 0;
              margin-bottom: 8px;
+             font-size: 1.1em; /* Titre du projet réduit */
         }
 
         .project-card p {
             flex-grow: 1;
-            margin: 0 0 20px 0;
+            margin: 0 0 15px 0; /* Espace réduit */
             color: #666;
-            font-size: 0.95em;
+            font-size: 0.9em; /* Texte de description réduit */
         }
 
-        /* --- NOUVEAUX STYLES POUR LE COMPTE À REBOURS --- */
         .countdown-timer {
-            padding: 8px 12px;
+            padding: 6px 10px; /* Compte à rebours plus fin */
             border-radius: 8px;
             font-weight: 600;
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 15px; /* Espace réduit */
             transition: background-color 0.5s ease;
             color: white;
-            font-size: 1.1em;
+            font-size: 1em; /* Texte du timer réduit */
         }
 
         .countdown-green { background-color: var(--green); }
         .countdown-orange { background-color: var(--orange); }
         .countdown-red { background-color: var(--red); }
-        .countdown-over { background-color: #7f8c8d; } /* Gris pour les dates passées */
-        /* --- FIN DES NOUVEAUX STYLES --- */
-
+        .countdown-over { background-color: #7f8c8d; }
+        
         .reminder-btn {
             background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
             color: white;
             border: none;
-            padding: 12px 20px;
+            /* MODIFICATION : Bouton plus petit */
+            padding: 10px 18px;
+            font-size: 0.9em;
             border-radius: 25px;
             cursor: pointer;
             font-weight: 600;
             transition: transform 0.2s ease;
-            align-self: flex-end; /* Changé pour aligner à droite */
-            margin-top: auto; /* Pousse le bouton en bas */
+            align-self: flex-end;
+            margin-top: auto;
         }
         
-        .reminder-btn:hover {
-            transform: scale(1.05);
-        }
-        
+        .reminder-btn:hover { transform: scale(1.05); }
         .hidden { display: none; }
         .work-in-progress { text-align: center; padding: 80px 40px; background-color: var(--card-background); border-radius: 15px; box-shadow: 0 8px 20px var(--shadow-color); max-width: 600px; margin: 40px auto; }
         .work-in-progress h2 { font-size: 2em; color: var(--primary-color); }
-        
-        /* --- Styles pour la modale (inchangés) --- */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.6); display: flex; justify-content: center; align-items: center; z-index: 1000; opacity: 0; transition: opacity 0.3s ease; pointer-events: none; }
         .modal-overlay:not(.hidden) { opacity: 1; pointer-events: auto; }
         .modal-content { background: white; padding: 30px; border-radius: 15px; width: 90%; max-width: 400px; text-align: center; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); transform: scale(0.95); transition: transform 0.3s ease; }
@@ -183,8 +183,18 @@
         #google-calendar-btn { background-color: #e8f0fe; color: #4285F4; }
         #apple-reminder-btn { background-color: #e5e5e5; color: #333; }
         .close-btn { margin-top: 20px; background: none; border: none; color: #888; cursor: pointer; font-weight: 600; }
-        
         footer { text-align: center; margin-top: 50px; color: #aaa; }
+
+        @media (max-width: 600px) {
+            body { padding: 10px; }
+            nav { max-width: 100%; gap: 5px; }
+            nav a { padding: 8px 12px; font-size: 0.85em; }
+            header h1 { font-size: 1.8em; }
+            header p { font-size: 1em; }
+            main { grid-template-columns: 1fr; gap: 15px; }
+            .project-card { padding: 15px; } /* Moins de padding dans les cartes sur mobile */
+            .countdown-timer { font-size: 1em; }
+        }
     </style>
 </head>
 <body>
@@ -242,13 +252,11 @@
             const projectList = document.getElementById('project-list');
             projects.sort((a, b) => new Date(a.date) - new Date(b.date));
 
-            // Création des cartes de projet
             projects.forEach(project => {
                 const card = document.createElement('div');
                 card.className = 'project-card';
                 const formattedDate = new Date(project.date).toLocaleDateString('fr-FR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
                 
-                // Ajout d'un placeholder pour le compte à rebours
                 card.innerHTML = `
                     <div class="card-header">
                         <span class="icon">${project.icon}</span>
@@ -265,60 +273,36 @@
                 projectList.appendChild(card);
             });
 
-            // --- NOUVELLE FONCTION POUR METTRE À JOUR LES COMPTES À REBOURS ---
             function updateAllCountdowns() {
                 const now = new Date();
-
                 projects.forEach(project => {
                     const countdownElement = document.getElementById(`countdown-${project.id}`);
                     if (!countdownElement) return;
-
-                    let deadlineString = project.date;
-                    if (project.time) {
-                        deadlineString += `T${project.time}:00`;
-                    } else {
-                        deadlineString += `T23:59:59`; // Fin de journée par défaut
-                    }
+                    let deadlineString = project.date + (project.time ? `T${project.time}:00` : `T23:59:59`);
                     const deadline = new Date(deadlineString);
-
                     const totalSeconds = (deadline - now) / 1000;
-
                     if (totalSeconds < 0) {
                         countdownElement.innerHTML = 'Échéance dépassée';
                         countdownElement.className = 'countdown-timer countdown-over';
                         return;
                     }
-
                     const days = Math.floor(totalSeconds / 3600 / 24);
                     const hours = Math.floor(totalSeconds / 3600) % 24;
                     const minutes = Math.floor(totalSeconds / 60) % 60;
-
-                    // Affichage du compte à rebours
                     if (days > 0) {
                         countdownElement.innerHTML = `Temps restant : ${days}j ${hours}h ${minutes}m`;
                     } else {
                         const seconds = Math.floor(totalSeconds) % 60;
                         countdownElement.innerHTML = `Temps restant : ${hours}h ${minutes}m ${seconds}s`;
                     }
-
-                    // Mise à jour de la couleur
-                    if (days < 3) {
-                        countdownElement.className = 'countdown-timer countdown-red';
-                    } else if (days < 7) {
-                        countdownElement.className = 'countdown-timer countdown-orange';
-                    } else {
-                        countdownElement.className = 'countdown-timer countdown-green';
-                    }
+                    if (days < 3) countdownElement.className = 'countdown-timer countdown-red';
+                    else if (days < 7) countdownElement.className = 'countdown-timer countdown-orange';
+                    else countdownElement.className = 'countdown-timer countdown-green';
                 });
             }
-
-            // Lancer la mise à jour toutes les secondes
             setInterval(updateAllCountdowns, 1000);
-            // Lancer une première fois au chargement
             updateAllCountdowns();
 
-
-            // --- Gestion de la navigation et de la modale (inchangée) ---
             const navProjects = document.getElementById('nav-projects');
             const navHomework = document.getElementById('nav-homework');
             const projectPage = document.getElementById('project-list');
@@ -337,7 +321,6 @@
             modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
             googleBtn.addEventListener('click', () => { if (!activeProject) return; const startTime = new Date(activeProject.date).toISOString().replace(/-|:|\.\d\d\d/g, ""); let url = `https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent('Rendu: ' + activeProject.title)}&dates=${startTime}/${startTime}&details=${encodeURIComponent(activeProject.details || '')}`; window.open(url, '_blank'); closeModal(); });
             appleBtn.addEventListener('click', () => { if (!activeProject) return; createICSFile(activeProject); closeModal(); });
-
             function createICSFile(project) {
                 const date = new Date(project.date);
                 if (project.time) { const [h, m] = project.time.split(':'); date.setUTCHours(h, m, 0); } else { date.setUTCHours(9, 0, 0); }
