@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tableau de Bord MMI</title>
+    <title>PlanUp - Tableau de Bord MMI</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -46,7 +46,7 @@
         .project-card h3 { margin-top: 0; margin-bottom: 15px; font-size: 1.1em; flex-grow: 1; }
         
         .countdown-timer { padding: 6px 10px; border-radius: 8px; font-weight: 600; text-align: center; margin-bottom: 15px; transition: background-color 0.5s ease; color: white; font-size: 1em; }
-        .countdown-green, .countdown-orange, .countdown-red, .countdown-over { background-color: var(--green); }
+        .countdown-green { background-color: var(--green); }
         .countdown-orange { background-color: var(--orange); }
         .countdown-red { background-color: var(--red); }
         .countdown-over { background-color: #7f8c8d; }
@@ -56,69 +56,79 @@
         
         .card-actions { display: flex; flex-direction: column; align-items: flex-end; gap: 10px; margin-top: auto; }
         .reminder-btn { background: linear-gradient(90deg, var(--primary-color), var(--secondary-color)); color: white; border: none; padding: 10px 18px; font-size: 0.9em; border-radius: 25px; cursor: pointer; font-weight: 600; transition: transform 0.2s ease, filter 0.2s ease; }
-        .reminder-btn:hover { transform: scale(1.05); }
-        .reminder-btn:active { transform: scale(0.98); filter: brightness(0.9); }
-
-        .gemini-help-btn { display: inline-flex; align-items: center; background-color: transparent; color: var(--primary-color); border: 2px solid var(--primary-color); padding: 8px 16px; font-size: 0.85em; font-weight: 600; border-radius: 25px; cursor: pointer; text-decoration: none; transition: background-color 0.2s ease, color 0.2s ease; }
-        .gemini-help-btn:hover { background-color: var(--primary-color); color: white; }
+        
+        .gemini-help-btn { display: inline-flex; align-items: center; gap: 8px; background-color: transparent; color: var(--primary-color); border: 2px solid transparent; background-image: linear-gradient(white, white), linear-gradient(to right, var(--secondary-color), var(--primary-color)); background-origin: border-box; background-clip: padding-box, border-box; padding: 8px 16px; font-size: 0.85em; font-weight: 600; border-radius: 25px; cursor: pointer; text-decoration: none; transition: all 0.3s ease; }
+        .gemini-help-btn:hover { background-image: linear-gradient(to right, var(--secondary-color), var(--primary-color)), linear-gradient(to right, var(--secondary-color), var(--primary-color)); color: white; transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
         
         .hidden { display: none; }
         
-        /* MODIFICATION : Style de la page "en construction" */
-        .placeholder-content {
-            text-align: center;
-            padding: 80px 20px;
-            color: #999;
-        }
-        .placeholder-content h2 {
-            font-size: 1.8em;
-            color: #aaa;
-            margin: 0;
-        }
-        
-        /* ... (styles de la modale inchangés) ... */
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.6); display: flex; justify-content: center; align-items: center; z-index: 1000; opacity: 0; transition: opacity 0.3s ease; pointer-events: none; }
-        .modal-overlay:not(.hidden) { opacity: 1; pointer-events: auto; }
-        .modal-content { background: white; padding: 25px; border-radius: 15px; width: 90%; max-width: 400px; text-align: center; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); transform: scale(0.95); transition: transform 0.3s ease; }
-        .modal-overlay:not(.hidden) .modal-content { transform: scale(1); }
+        #welcome-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); z-index: 9999; display: flex; align-items: center; justify-content: center; transition: opacity 0.5s ease-out; color: white; text-align: center; padding: 20px; box-sizing: border-box; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        .welcome-content h1, .welcome-content p, #enter-site-btn { animation: fadeInUp 0.8s ease-out forwards; opacity: 0; }
+        .welcome-content h1 { font-size: 2.8em; margin-bottom: 10px; text-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+        .welcome-content p { font-size: 1.2em; max-width: 500px; margin: 0 auto 30px auto; opacity: 0; animation-delay: 0.2s; }
+        #enter-site-btn { background: white; color: var(--primary-color); border: none; border-radius: 50px; padding: 12px 30px; font-size: 1.1em; font-weight: 600; cursor: pointer; transition: transform 0.2s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.2); opacity: 0; animation-delay: 0.4s; }
+        #enter-site-btn:hover { transform: scale(1.05); }
+        #welcome-overlay.fade-out { opacity: 0; pointer-events: none; }
         
         footer { text-align: center; margin-top: 50px; color: #aaa; }
 
-        /* NOUVEAUTÉ : Styles pour le bouton "Ajouter à l'accueil" */
-        #add-to-home-btn {
-            display: none; /* Caché par défaut */
-            margin-top: 20px;
-            padding: 10px 20px;
-            font-size: 0.9em;
-            font-weight: 600;
-            color: var(--primary-color);
-            background-color: transparent;
-            border: 2px solid var(--primary-color);
-            border-radius: 25px;
-            cursor: pointer;
-        }
-
-        /* NOUVEAUTÉ : Styles pour la modale d'instructions */
-        .instructions-list { text-align: left; margin-top: 20px; padding-left: 0; list-style-position: inside; }
-        .instructions-list li { margin-bottom: 15px; font-size: 1.1em; }
-        .instructions-list .icon { font-size: 1.5em; vertical-align: middle; margin-right: 5px; }
-
-        @media (max-width: 768px) {
-            #add-to-home-btn {
-                display: inline-block; /* Affiché sur mobile */
-            }
-        }
-
+        /* --- NOUVEAUTÉ : Améliorations pour l'interface mobile --- */
         @media (max-width: 600px) {
             body { padding: 10px; }
             nav { max-width: 100%; gap: 5px; }
+            nav a { padding: 8px 12px; font-size: 0.85em; }
             header h1 { font-size: 1.8em; }
-            main { grid-template-columns: 1fr; gap: 15px; }
-            .project-card { padding: 15px; }
+            main { grid-template-columns: 1fr; gap: 12px; } /* Espace entre cartes réduit */
+
+            .project-card {
+                padding: 15px; /* Moins d'espace intérieur */
+            }
+            .card-header {
+                margin-bottom: 10px;
+            }
+            .card-header .icon {
+                font-size: 1.4em; /* Icône plus petite */
+            }
+            .card-header h2 {
+                font-size: 1em; /* Titre de catégorie plus petit */
+            }
+            .project-card h3 {
+                font-size: 1.05em; /* Titre de projet plus petit */
+                margin-bottom: 12px;
+            }
+            .project-card .date {
+                font-size: 0.8em;
+                padding: 3px 8px;
+            }
+            .countdown-timer {
+                font-size: 0.9em;
+                padding: 5px 10px;
+                margin-bottom: 12px;
+            }
+            .reminder-btn {
+                padding: 9px 16px;
+                font-size: 0.85em;
+            }
+            .gemini-help-btn {
+                padding: 7px 14px;
+                font-size: 0.8em;
+            }
+            .welcome-content h1 { font-size: 2.2em; }
+            .welcome-content p { font-size: 1.1em; }
         }
+        /* --- FIN NOUVEAUTÉ --- */
     </style>
 </head>
 <body>
+
+    <div id="welcome-overlay">
+        <div class="welcome-content">
+            <h1>Bienvenue sur PlanUp !</h1>
+            <p>Votre nouvel assistant pour ne plus jamais manquer une date limite. Visualisez tous vos projets, suivez les échéances en temps réel et restez organisé.</p>
+            <button id="enter-site-btn">Commencer</button>
+        </div>
+    </div>
 
     <nav>
         <a href="#" id="nav-projects" class="active">Projets Notés</a>
@@ -131,54 +141,37 @@
     </header>
 
     <main id="project-list">
-        </main>
-
-    <main id="homework-page" class="hidden">
-        <div class="placeholder-content">
-            <h2>🚧 Page en construction 🚧</h2>
-        </div>
     </main>
 
+    <main id="homework-page" class="hidden">
+        <div style="text-align: center; padding: 80px 20px; color: #999;">
+            <h2 style="font-size: 1.8em; color: #aaa; margin: 0;">🚧 Page en construction 🚧</h2>
+        </div>
+    </main>
+    
     <div id="choice-modal" class="modal-overlay hidden">
-        <div class="modal-content">
-            <h3>Où ajouter le rappel ?</h3>
-            <div class="modal-buttons">
-                <button id="google-calendar-btn">📅 Google Calendar</button>
-                <button id="apple-reminder-btn">📱 Rappel Apple (iPhone)</button>
-            </div>
-            <button id="close-modal-btn" class="close-btn">Annuler</button>
-        </div>
-    </div>
-
-    <div id="a2hs-modal" class="modal-overlay hidden">
-        <div class="modal-content">
-            <h3>Ajouter à l'écran d'accueil</h3>
-            <div id="ios-instructions" class="hidden">
-                <p>Pour ajouter ce site à votre écran d'accueil, suivez ces étapes :</p>
-                <ol class="instructions-list">
-                    <li>Appuyez sur l'icône de Partage <span class="icon">􀈂</span> en bas de votre écran.</li>
-                    <li>Faites défiler vers le bas.</li>
-                    <li>Sélectionnez "Sur l'écran d'accueil".</li>
-                </ol>
-            </div>
-            <div id="android-instructions" class="hidden">
-                <p>Pour ajouter ce site à votre écran d'accueil, suivez ces étapes :</p>
-                <ol class="instructions-list">
-                    <li>Appuyez sur les trois points <span class="icon">􀋁</span> en haut à droite.</li>
-                    <li>Sélectionnez "Installer l'application" ou "Ajouter à l'écran d'accueil".</li>
-                </ol>
-            </div>
-            <button id="close-a2hs-modal-btn" class="close-btn">Fermer</button>
-        </div>
     </div>
 
     <footer>
         <p>Créé avec ❤️ pour les étudiants MMI</p>
-        <button id="add-to-home-btn">📲 Ajouter à l'écran d'accueil</button>
     </footer>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+
+            const welcomeOverlay = document.getElementById('welcome-overlay');
+            const enterSiteBtn = document.getElementById('enter-site-btn');
+            if (localStorage.getItem('mmiDashboardVisited')) {
+                welcomeOverlay.style.display = 'none';
+            } else {
+                enterSiteBtn.addEventListener('click', () => {
+                    localStorage.setItem('mmiDashboardVisited', 'true');
+                    welcomeOverlay.classList.add('fade-out');
+                    setTimeout(() => {
+                        welcomeOverlay.style.display = 'none';
+                    }, 500);
+                });
+            }
 
             const projects = [
                 { id: 'ppp_group', category: 'P.P.P', icon: '📂', date: '2025-11-11', title: 'Rendu du travail de groupe' },
@@ -190,7 +183,8 @@
                 { id: 'art_mood', category: 'Art', icon: '🎨', date: '2025-10-24', title: 'Moodboard à finir' },
                 { id: 'mkt_company', category: 'Marketing', icon: '📈', date: '2025-11-17', title: 'Projet d’entreprise à rendre' },
                 { id: 'html_sae', category: 'HTML / Intégration Web', icon: '💻', date: '2025-11-02', time: '23:59', title: 'SAE à rendre' },
-                { id: 'html_ds', category: 'HTML / Intégration Web', icon: '✍️', date: '2025-11-03', title: 'DS sur l\'intégration web' }
+                { id: 'html_ds', category: 'HTML / Intégration Web', icon: '✍️', date: '2025-11-03', title: 'DS sur l\'intégration web' },
+                { id: 'english_ds', category: 'Anglais', icon: '🇬🇧', date: '2025-11-03', title: 'Contrôle en anglais' }
             ];
 
             const projectList = document.getElementById('project-list');
@@ -250,37 +244,10 @@
             let activeProject = null;
             window.openReminderChoice = (project) => { activeProject = project; modal.classList.remove('hidden'); };
             const closeModal = () => { modal.classList.add('hidden'); activeProject = null; };
-            document.getElementById('close-modal-btn').addEventListener('click', closeModal);
+            document.getElementById('close-modal-btn')?.addEventListener('click', closeModal);
             modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
-
-            // NOUVEAUTÉ : Logique pour le bouton "Ajouter à l'accueil"
-            const a2hsBtn = document.getElementById('add-to-home-btn');
-            const a2hsModal = document.getElementById('a2hs-modal');
-            const closeA2hsModalBtn = document.getElementById('close-a2hs-modal-btn');
-            const iosInstructions = document.getElementById('ios-instructions');
-            const androidInstructions = document.getElementById('android-instructions');
-
-            a2hsBtn.addEventListener('click', () => {
-                // Détecte le système d'exploitation
-                const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-                if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
-                    iosInstructions.classList.remove('hidden');
-                    androidInstructions.classList.add('hidden');
-                } else {
-                    androidInstructions.classList.remove('hidden');
-                    iosInstructions.classList.add('hidden');
-                }
-                a2hsModal.classList.remove('hidden');
-            });
-
-            const closeA2hsModal = () => a2hsModal.classList.add('hidden');
-            closeA2hsModalBtn.addEventListener('click', closeA2hsModal);
-            a2hsModal.addEventListener('click', (e) => { if (e.target === a2hsModal) closeA2hsModal(); });
-
-
-            // Reste du JS pour les rappels
-            document.getElementById('google-calendar-btn').addEventListener('click', () => { if (!activeProject) return; const startTime = new Date(activeProject.date).toISOString().replace(/-|:|\.\d\d\d/g, ""); let url = `https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent('Rendu: ' + activeProject.title)}&dates=${startTime}/${startTime}&details=${encodeURIComponent(activeProject.details || '')}`; window.open(url, '_blank'); closeModal(); });
-            document.getElementById('apple-reminder-btn').addEventListener('click', () => { if (!activeProject) return; createICSFile(activeProject); closeModal(); });
+            document.getElementById('google-calendar-btn')?.addEventListener('click', () => { if (!activeProject) return; const startTime = new Date(activeProject.date).toISOString().replace(/-|:|\.\d\d\d/g, ""); let url = `https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent('Rendu: ' + activeProject.title)}&dates=${startTime}/${startTime}&details=${encodeURIComponent(activeProject.details || '')}`; window.open(url, '_blank'); closeModal(); });
+            document.getElementById('apple-reminder-btn')?.addEventListener('click', () => { if (!activeProject) return; createICSFile(activeProject); closeModal(); });
             function createICSFile(project) { const date = new Date(project.date); if (project.time) { const [h, m] = project.time.split(':'); date.setUTCHours(h, m, 0); } else { date.setUTCHours(9, 0, 0); } const icsDate = date.toISOString().replace(/-|:|\.\d{3}/g, '').slice(0, -1); const icsContent = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'BEGIN:VTODO', `UID:${Date.now()}@mmi.fr`, `SUMMARY:${project.title}`, `DTSTAMP:${icsDate}Z`, `DUE;VALUE=DATE-TIME:${icsDate}Z`, `DESCRIPTION:${(project.details || '').replace(/\n/g, '\\n')}`, 'STATUS:NEEDS-ACTION', 'END:VTODO', 'END:VCALENDAR'].join('\n'); const link = document.createElement('a'); link.href = URL.createObjectURL(new Blob([icsContent], { type: 'text/calendar;charset=utf-8' })); link.download = `rappel_${project.title.replace(/ /g, "_")}.ics`; document.body.appendChild(link); link.click(); document.body.removeChild(link); }
         });
     </script>
