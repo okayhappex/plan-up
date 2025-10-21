@@ -34,7 +34,7 @@
             padding: 10px;
             border-radius: 50px;
             box-shadow: 0 4px 15px var(--shadow-color);
-            max-width: 400px;
+            max-width: 550px; /* MODIFIÉ - Élargi pour le nouveau lien */
             margin: 0 auto 30px auto;
         }
 
@@ -48,6 +48,7 @@
             padding: 8px 16px;
             border-radius: 30px;
             transition: color 0.3s ease; /* Transition pour la couleur du texte */
+            white-space: nowrap; /* Empêche le texte de passer à la ligne */
         }
         
         /* Couleur du texte quand l'onglet est actif */
@@ -128,7 +129,7 @@
 
         @media (max-width: 600px) {
             body { padding: 10px; }
-            nav { max-width: 100%; gap: 5px; }
+            nav { max-width: 100%; gap: 5px; flex-wrap: wrap; } /* Flex-wrap ajouté pour mobile */
             nav a { padding: 8px 12px; font-size: 0.85em; }
             header h1 { font-size: 1.8em; }
             main { grid-template-columns: 1fr; gap: 12px; }
@@ -160,6 +161,7 @@
         <span id="nav-indicator"></span>
         <a href="#" id="nav-projects" class="active">Projets Notés</a>
         <a href="#" id="nav-homework">Devoirs à venir</a>
+        <a href="#" id="nav-gemini">✨ Offre Gemini</a>
     </nav>
 
     <header>
@@ -180,6 +182,30 @@
              <h3>Dessin perspective (Groupe A1)</h3>
              <p style="color: var(--orange); font-weight: bold; margin-top: auto;">Non noté</p>
         </div>
+    </main>
+    
+    <main id="gemini-page" class="hidden" style="text-align: center; max-width: 700px; margin: 0 auto; grid-template-columns: 1fr;">
+         <div class="project-card" style="border-left-color: var(--secondary-color); animation-delay: 0s; opacity: 1; transform: none;">
+             <div class="card-header" style="justify-content: center;">
+                 <span class="icon">✨</span>
+                 <h2 style="color: var(--secondary-color);">Offre Spéciale Gemini Étudiant</h2>
+             </div>
+             <h3 style="font-size: 1.6em; margin-bottom: 15px; flex-grow: 0;">1 AN GRATUIT</h3>
+             <p style="font-size: 1.1em; line-height: 1.6;">
+                 Parce que nous soutenons votre réussite, les étudiants MMI bénéficient d'un an d'abonnement gratuit à <strong>PlanUp Advanced (powered by Gemini)</strong>.
+             </p>
+             <p style="margin-top: 15px;">Profitez de tous les avantages :</p>
+             <ul style="text-align: left; display: inline-block; margin-top: 10px; margin-bottom: 20px; padding-left: 20px;">
+                 <li style="list-style: '✅ '; padding-left: 5px;">Analyse IA de vos projets</li>
+                 <li style="list-style: '✅ '; padding-left: 5px;">Suggestions de planning</li>
+                 <li style="list-style: '✅ '; padding-left: 5px;">Rappels intelligents</li>
+                 <li style="list-style: '✅ '; padding-left: 5px;">Tous les avantages Pro</li>
+             </ul>
+             
+             <div class="card-actions" style="align-items: center;">
+                 <a href="https://gemini.google/fr/students/?hl=fr" target="_blank" class="reminder-btn" style="text-decoration: none;">Activer mon année gratuite</a>
+             </div>
+         </div>
     </main>
     
     <div id="choice-modal" class="modal-overlay hidden">
@@ -301,38 +327,71 @@
             setInterval(updateAllCountdowns, 1000);
             updateAllCountdowns();
 
+            // --- SECTION NAVIGATION MODIFIÉE ET CORRIGÉE ---
+            
+            // Sélection des éléments de navigation et des pages
             const navProjects = document.getElementById('nav-projects');
             const navHomework = document.getElementById('nav-homework');
+            const navGemini = document.getElementById('nav-gemini'); 
+            
+            // projectList est déjà déclaré plus haut
             const homeworkPage = document.getElementById('homework-page');
-            const navIndicator = document.getElementById('nav-indicator'); // NOUVEAUTÉ
+            const geminiPage = document.getElementById('gemini-page'); 
+            
+            const navIndicator = document.getElementById('nav-indicator');
 
-            // --- NOUVEAUTÉ : Fonction pour mettre à jour l'indicateur ---
+            // Fonction pour mettre à jour l'indicateur
             function updateNavIndicator(activeTab) {
-                if (!activeTab) return; // Sécurité si aucun onglet n'est actif
+                if (!activeTab) return; 
                 navIndicator.style.width = `${activeTab.offsetWidth}px`;
                 navIndicator.style.left = `${activeTab.offsetLeft}px`;
             }
 
+            // Clic sur "Projets Notés"
             navProjects.addEventListener('click', (e) => { 
                 e.preventDefault(); 
                 projectList.classList.remove('hidden'); 
                 homeworkPage.classList.add('hidden'); 
+                geminiPage.classList.add('hidden');
+                
                 navProjects.classList.add('active'); 
                 navHomework.classList.remove('active'); 
-                updateNavIndicator(navProjects); // Met à jour l'indicateur
+                navGemini.classList.remove('active');
+                
+                updateNavIndicator(navProjects);
             });
+
+            // Clic sur "Devoirs à venir"
             navHomework.addEventListener('click', (e) => { 
                 e.preventDefault(); 
                 homeworkPage.classList.remove('hidden'); 
                 projectList.classList.add('hidden'); 
+                geminiPage.classList.add('hidden');
+                
                 navHomework.classList.add('active'); 
                 navProjects.classList.remove('active'); 
-                updateNavIndicator(navHomework); // Met à jour l'indicateur
+                navGemini.classList.remove('active');
+
+                updateNavIndicator(navHomework);
+            });
+            
+            // Clic sur "Offre Gemini"
+            navGemini.addEventListener('click', (e) => { 
+                e.preventDefault(); 
+                geminiPage.classList.remove('hidden'); 
+                projectList.classList.add('hidden'); 
+                homeworkPage.classList.add('hidden'); 
+                
+                navGemini.classList.add('active'); 
+                navProjects.classList.remove('active'); 
+                navHomework.classList.remove('active'); 
+                
+                updateNavIndicator(navGemini);
             });
             
             // Met à jour l'indicateur au chargement initial
             updateNavIndicator(document.querySelector('nav a.active')); 
-            // --- FIN NOUVEAUTÉ ---
+            // --- FIN SECTION NAVIGATION MODIFIÉE ---
             
             const closeModal = () => { modal.classList.add('hidden'); activeProject = null; };
             document.getElementById('close-modal-btn')?.addEventListener('click', closeModal);
