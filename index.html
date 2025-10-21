@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -74,51 +73,25 @@
         
         footer { text-align: center; margin-top: 50px; color: #aaa; }
 
-        /* --- NOUVEAUTÉ : Améliorations pour l'interface mobile --- */
         @media (max-width: 600px) {
             body { padding: 10px; }
             nav { max-width: 100%; gap: 5px; }
             nav a { padding: 8px 12px; font-size: 0.85em; }
             header h1 { font-size: 1.8em; }
-            main { grid-template-columns: 1fr; gap: 12px; } /* Espace entre cartes réduit */
+            main { grid-template-columns: 1fr; gap: 12px; }
 
-            .project-card {
-                padding: 15px; /* Moins d'espace intérieur */
-            }
-            .card-header {
-                margin-bottom: 10px;
-            }
-            .card-header .icon {
-                font-size: 1.4em; /* Icône plus petite */
-            }
-            .card-header h2 {
-                font-size: 1em; /* Titre de catégorie plus petit */
-            }
-            .project-card h3 {
-                font-size: 1.05em; /* Titre de projet plus petit */
-                margin-bottom: 12px;
-            }
-            .project-card .date {
-                font-size: 0.8em;
-                padding: 3px 8px;
-            }
-            .countdown-timer {
-                font-size: 0.9em;
-                padding: 5px 10px;
-                margin-bottom: 12px;
-            }
-            .reminder-btn {
-                padding: 9px 16px;
-                font-size: 0.85em;
-            }
-            .gemini-help-btn {
-                padding: 7px 14px;
-                font-size: 0.8em;
-            }
+            .project-card { padding: 15px; }
+            .card-header { margin-bottom: 10px; }
+            .card-header .icon { font-size: 1.4em; }
+            .card-header h2 { font-size: 1em; }
+            .project-card h3 { font-size: 1.05em; margin-bottom: 12px; }
+            .project-card .date { font-size: 0.8em; padding: 3px 8px; }
+            .countdown-timer { font-size: 0.9em; padding: 5px 10px; margin-bottom: 12px; }
+            .reminder-btn { padding: 9px 16px; font-size: 0.85em; }
+            .gemini-help-btn { padding: 7px 14px; font-size: 0.8em; }
             .welcome-content h1 { font-size: 2.2em; }
             .welcome-content p { font-size: 1.1em; }
         }
-        /* --- FIN NOUVEAUTÉ --- */
     </style>
 </head>
 <body>
@@ -142,15 +115,27 @@
     </header>
 
     <main id="project-list">
-    </main>
+        </main>
 
     <main id="homework-page" class="hidden">
-        <div style="text-align: center; padding: 80px 20px; color: #999;">
-            <h2 style="font-size: 1.8em; color: #aaa; margin: 0;">🚧 Page en construction 🚧</h2>
+        <div class="project-card"> <div class="card-header">
+                 <span class="icon">✏️</span>
+                 <h2>Art</h2>
+             </div>
+             <span class="date">mercredi 22 octobre 2025</span> <h3>Dessin perspective (Groupe A1)</h3>
+             <p style="color: var(--orange); font-weight: bold; margin-top: auto;">Non noté</p>
         </div>
     </main>
     
     <div id="choice-modal" class="modal-overlay hidden">
+         <div class="modal-content">
+            <h3>Où ajouter le rappel ?</h3>
+            <div class="modal-buttons">
+                <button id="google-calendar-btn">📅 Google Calendar</button>
+                <button id="apple-reminder-btn">📱 Rappel Apple (iPhone)</button>
+            </div>
+            <button id="close-modal-btn" class="close-btn">Annuler</button>
+        </div>
     </div>
 
     <footer>
@@ -175,27 +160,33 @@
             }
 
             const projects = [
+                { id: 'art_mood', category: 'Art', icon: '🎨', date: '2025-10-24', title: 'Moodboard à finir' }, 
+                { id: 'html_sae', category: 'HTML / Intégration Web', icon: '💻', date: '2025-11-02', time: '23:59', title: 'SAE à rendre' }, // Nom corrigé
+                { id: 'html_ds', category: 'HTML / Intégration Web', icon: '✍️', date: '2025-11-03', title: 'DS sur l\'intégration web' },
+                { id: 'english_ds', category: 'Anglais', icon: '🇬🇧', date: '2025-11-03', title: 'Contrôle en anglais' },
+                { id: 'gp_pub', category: 'Gestion de projet', icon: '📊', date: '2025-11-09', title: 'Projet de pub « à l’envers »' },
                 { id: 'ppp_group', category: 'P.P.P', icon: '📂', date: '2025-11-11', title: 'Rendu du travail de groupe' },
                 { id: 'ppp_pres', category: 'P.P.P', icon: '🎤', date: '2025-11-13', title: 'Présentation du projet' },
-                { id: 'mkt_ds', category: 'Marketing', icon: '✍️', date: '2025-11-13', title: 'DS en marketing (à confirmer)' },
-                { id: 'ppp_interview', category: 'P.P.P', icon: '💼', date: '2026-01-11', title: 'Interview d’un professionnel' },
-                { id: 'english_model', category: 'Anglais', icon: '🇬🇧', date: '2025-10-20', title: 'Maquette à rendre' },
-                { id: 'gp_pub', category: 'Gestion de projet', icon: '📊', date: '2025-11-09', title: 'Projet de pub « à l’envers »' },
-                { id: 'art_mood', category: 'Art', icon: '🎨', date: '2025-10-24', title: 'Moodboard à finir' },
                 { id: 'mkt_company', category: 'Marketing', icon: '📈', date: '2025-11-17', title: 'Projet d’entreprise à rendre' },
-                { id: 'html_sae', category: 'HTML / Intégration Web', icon: '💻', date: '2025-11-02', time: '23:59', title: 'CV HTML/CSS' },
-                { id: 'html_ds', category: 'HTML / Intégration Web', icon: '✍️', date: '2025-11-03', title: 'DS sur l\'intégration web' },
-                { id: 'english_ds', category: 'Anglais', icon: '🇬🇧', date: '2025-11-03', title: 'Contrôle en anglais' }
-            ];
+                { id: 'ppp_interview', category: 'P.P.P', icon: '💼', date: '2026-01-11', title: 'Interview d’un professionnel' },
+             ];
 
             const projectList = document.getElementById('project-list');
-            projects.sort((a, b) => new Date(a.date) - new Date(b.date));
+            const today = new Date();
+            today.setHours(0, 0, 0, 0); 
+            const futureProjects = projects
+                .filter(project => new Date(project.date) >= today)
+                .sort((a, b) => new Date(a.date) - new Date(b.date));
 
-            projects.forEach((project, index) => {
-                const card = createProjectCard(project);
-                card.style.animationDelay = `${index * 100}ms`;
-                projectList.appendChild(card);
-            });
+            if (futureProjects.length > 0) {
+                 futureProjects.forEach((project, index) => {
+                    const card = createProjectCard(project);
+                    card.style.animationDelay = `${index * 100}ms`;
+                    projectList.appendChild(card);
+                });
+            } else {
+                 projectList.innerHTML = '<p style="text-align: center; color: var(--text-secondary);">Aucun projet à venir pour le moment.</p>';
+            }
             
             function createProjectCard(project) {
                 const card = document.createElement('div');
@@ -208,26 +199,31 @@
 
             function updateAllCountdowns() {
                 const fortyEightHoursInSeconds = 48 * 60 * 60;
-                projects.forEach(project => {
+                futureProjects.forEach(project => { // Itère sur les projets affichés
                     const countdownElement = document.getElementById(`countdown-${project.id}`);
                     const geminiButton = document.getElementById(`gemini-${project.id}`);
                     if (!countdownElement || !geminiButton) return;
+
                     let deadlineString = project.date + (project.time ? `T${project.time}:00` : `T23:59:59`);
                     const deadline = new Date(deadlineString);
                     const totalSeconds = (deadline - new Date()) / 1000;
+
                     geminiButton.style.display = (totalSeconds > 0 && totalSeconds < fortyEightHoursInSeconds) ? 'inline-flex' : 'none';
-                    if (totalSeconds < 0) {
-                        countdownElement.innerHTML = 'Échéance dépassée';
-                        countdownElement.className = 'countdown-timer countdown-over';
-                        countdownElement.classList.remove('pulsing');
-                        return;
+
+                    if (totalSeconds < 0) { 
+                         countdownElement.innerHTML = 'Échéance dépassée';
+                         countdownElement.className = 'countdown-timer countdown-over';
+                         countdownElement.classList.remove('pulsing');
+                         return;
                     }
+
                     const days = Math.floor(totalSeconds / 3600 / 24);
                     const hours = Math.floor(totalSeconds / 3600) % 24;
                     const minutes = Math.floor(totalSeconds / 60) % 60;
                     countdownElement.innerHTML = days > 0 ? `Temps restant : ${days}j ${hours}h ${minutes}m` : `Temps restant : ${hours}h ${minutes}m ${Math.floor(totalSeconds) % 60}s`;
-                    countdownElement.classList.toggle('pulsing', days < 3);
-                    if (days < 3) countdownElement.className = 'countdown-timer countdown-red pulsing';
+                    countdownElement.classList.toggle('pulsing', days < 3 && totalSeconds > 0); 
+                    
+                    if (days < 3 && totalSeconds > 0) countdownElement.className = 'countdown-timer countdown-red pulsing';
                     else if (days < 7) countdownElement.className = 'countdown-timer countdown-orange';
                     else countdownElement.className = 'countdown-timer countdown-green';
                 });
@@ -243,7 +239,15 @@
             
             const modal = document.getElementById('choice-modal');
             let activeProject = null;
-            window.openReminderChoice = (project) => { activeProject = project; modal.classList.remove('hidden'); };
+            window.openReminderChoice = (project) => { 
+                activeProject = project; 
+                const modalContent = modal.querySelector('.modal-content');
+                if(modalContent) { 
+                    modal.classList.remove('hidden');
+                } else {
+                     console.error("Le contenu de la modale (.modal-content) est manquant.");
+                }
+            };
             const closeModal = () => { modal.classList.add('hidden'); activeProject = null; };
             document.getElementById('close-modal-btn')?.addEventListener('click', closeModal);
             modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
