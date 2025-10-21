@@ -71,6 +71,18 @@
         #enter-site-btn:hover { transform: scale(1.05); }
         #welcome-overlay.fade-out { opacity: 0; pointer-events: none; }
         
+        /* Styles pour la modale */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.6); display: flex; justify-content: center; align-items: center; z-index: 1000; opacity: 0; transition: opacity 0.3s ease; pointer-events: none; }
+        .modal-overlay:not(.hidden) { opacity: 1; pointer-events: auto; }
+        .modal-content { background: white; padding: 30px; border-radius: 15px; width: 90%; max-width: 400px; text-align: center; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); transform: scale(0.95); transition: transform 0.3s ease; color: var(--text-color); /* Assure la lisibilité en thème clair/sombre */ }
+        .modal-overlay:not(.hidden) .modal-content { transform: scale(1); }
+        .modal-content h3 { margin-top: 0; color: var(--primary-color); }
+        .modal-buttons { display: flex; flex-direction: column; gap: 15px; margin-top: 20px; }
+        .modal-buttons button { padding: 15px; border: none; border-radius: 10px; font-weight: 600; font-size: 1em; cursor: pointer; transition: transform 0.2s ease; }
+        #google-calendar-btn { background-color: #e8f0fe; color: #4285F4; }
+        #apple-reminder-btn { background-color: #e5e5e5; color: #333; }
+        .close-btn { margin-top: 20px; background: none; border: none; color: #888; cursor: pointer; font-weight: 600; }
+
         footer { text-align: center; margin-top: 50px; color: #aaa; }
 
         @media (max-width: 600px) {
@@ -79,7 +91,6 @@
             nav a { padding: 8px 12px; font-size: 0.85em; }
             header h1 { font-size: 1.8em; }
             main { grid-template-columns: 1fr; gap: 12px; }
-
             .project-card { padding: 15px; }
             .card-header { margin-bottom: 10px; }
             .card-header .icon { font-size: 1.4em; }
@@ -118,11 +129,13 @@
         </main>
 
     <main id="homework-page" class="hidden">
-        <div class="project-card"> <div class="card-header">
+         <div class="project-card"> 
+             <div class="card-header">
                  <span class="icon">✏️</span>
                  <h2>Art</h2>
              </div>
-             <span class="date">mercredi 22 octobre 2025</span> <h3>Dessin perspective (Groupe A1)</h3>
+             <span class="date">mercredi 22 octobre 2025</span> 
+             <h3>Dessin perspective (Groupe A1)</h3>
              <p style="color: var(--orange); font-weight: bold; margin-top: auto;">Non noté</p>
         </div>
     </main>
@@ -161,7 +174,7 @@
 
             const projects = [
                 { id: 'art_mood', category: 'Art', icon: '🎨', date: '2025-10-24', title: 'Moodboard à finir' }, 
-                { id: 'html_sae', category: 'HTML / Intégration Web', icon: '💻', date: '2025-11-02', time: '23:59', title: 'SAE à rendre' }, // Nom corrigé
+                { id: 'html_sae', category: 'HTML / Intégration Web', icon: '💻', date: '2025-11-02', time: '23:59', title: 'SAE à rendre' },
                 { id: 'html_ds', category: 'HTML / Intégration Web', icon: '✍️', date: '2025-11-03', title: 'DS sur l\'intégration web' },
                 { id: 'english_ds', category: 'Anglais', icon: '🇬🇧', date: '2025-11-03', title: 'Contrôle en anglais' },
                 { id: 'gp_pub', category: 'Gestion de projet', icon: '📊', date: '2025-11-09', title: 'Projet de pub « à l’envers »' },
@@ -188,18 +201,38 @@
                  projectList.innerHTML = '<p style="text-align: center; color: var(--text-secondary);">Aucun projet à venir pour le moment.</p>';
             }
             
+            // --- CORRECTION : Fonction openReminderChoice définie correctement ---
+            const modal = document.getElementById('choice-modal');
+            let activeProject = null;
+
+            function openReminderChoice(project) {
+                activeProject = project; 
+                const modalContent = modal.querySelector('.modal-content');
+                if(modalContent) { 
+                    modal.classList.remove('hidden');
+                } else {
+                     console.error("Le contenu de la modale (.modal-content) est manquant.");
+                }
+            }
+            // --- FIN CORRECTION ---
+
+
             function createProjectCard(project) {
                 const card = document.createElement('div');
                 card.className = 'project-card';
                 const formattedDate = new Date(project.date).toLocaleDateString('fr-FR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
                 card.innerHTML = `<div class="card-header"><span class="icon">${project.icon}</span><h2>${project.category}</h2></div><span class="date">${formattedDate} ${project.time ? `à ${project.time}` : ''}</span><h3>${project.title}</h3><div id="countdown-${project.id}" class="countdown-timer">Calcul...</div><div class="card-actions"><a id="gemini-${project.id}" href="https://gemini.google.com/" target="_blank" class="gemini-help-btn" style="display: none;">✨ S'aider de Gemini</a><button class="reminder-btn">Créer un rappel</button></div>`;
-                card.querySelector('.reminder-btn').onclick = () => window.openReminderChoice(project);
+                
+                // --- CORRECTION : Attachement de l'événement ---
+                card.querySelector('.reminder-btn').addEventListener('click', () => openReminderChoice(project));
+                // --- FIN CORRECTION ---
+                
                 return card;
             }
 
             function updateAllCountdowns() {
                 const fortyEightHoursInSeconds = 48 * 60 * 60;
-                futureProjects.forEach(project => { // Itère sur les projets affichés
+                futureProjects.forEach(project => {
                     const countdownElement = document.getElementById(`countdown-${project.id}`);
                     const geminiButton = document.getElementById(`gemini-${project.id}`);
                     if (!countdownElement || !geminiButton) return;
@@ -237,22 +270,29 @@
             navProjects.addEventListener('click', (e) => { e.preventDefault(); projectList.classList.remove('hidden'); homeworkPage.classList.add('hidden'); navProjects.classList.add('active'); navHomework.classList.remove('active'); });
             navHomework.addEventListener('click', (e) => { e.preventDefault(); homeworkPage.classList.remove('hidden'); projectList.classList.add('hidden'); navHomework.classList.add('active'); navProjects.classList.remove('active'); });
             
-            const modal = document.getElementById('choice-modal');
-            let activeProject = null;
-            window.openReminderChoice = (project) => { 
-                activeProject = project; 
-                const modalContent = modal.querySelector('.modal-content');
-                if(modalContent) { 
-                    modal.classList.remove('hidden');
-                } else {
-                     console.error("Le contenu de la modale (.modal-content) est manquant.");
-                }
+            // --- CORRECTION : Gestion de la modale ---
+            const closeModal = () => { 
+                modal.classList.add('hidden'); 
+                activeProject = null; 
             };
-            const closeModal = () => { modal.classList.add('hidden'); activeProject = null; };
             document.getElementById('close-modal-btn')?.addEventListener('click', closeModal);
-            modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
-            document.getElementById('google-calendar-btn')?.addEventListener('click', () => { if (!activeProject) return; const startTime = new Date(activeProject.date).toISOString().replace(/-|:|\.\d\d\d/g, ""); let url = `https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent('Rendu: ' + activeProject.title)}&dates=${startTime}/${startTime}&details=${encodeURIComponent(activeProject.details || '')}`; window.open(url, '_blank'); closeModal(); });
-            document.getElementById('apple-reminder-btn')?.addEventListener('click', () => { if (!activeProject) return; createICSFile(activeProject); closeModal(); });
+            modal.addEventListener('click', (e) => { 
+                if (e.target === modal) closeModal(); 
+            });
+            document.getElementById('google-calendar-btn')?.addEventListener('click', () => { 
+                if (!activeProject) return; 
+                const startTime = new Date(activeProject.date).toISOString().replace(/-|:|\.\d\d\d/g, ""); 
+                let url = `https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent('Rendu: ' + activeProject.title)}&dates=${startTime}/${startTime}&details=${encodeURIComponent(activeProject.details || '')}`; 
+                window.open(url, '_blank'); 
+                closeModal(); 
+            });
+            document.getElementById('apple-reminder-btn')?.addEventListener('click', () => { 
+                if (!activeProject) return; 
+                createICSFile(activeProject); 
+                closeModal(); 
+            });
+            // --- FIN CORRECTION ---
+
             function createICSFile(project) { const date = new Date(project.date); if (project.time) { const [h, m] = project.time.split(':'); date.setUTCHours(h, m, 0); } else { date.setUTCHours(9, 0, 0); } const icsDate = date.toISOString().replace(/-|:|\.\d{3}/g, '').slice(0, -1); const icsContent = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'BEGIN:VTODO', `UID:${Date.now()}@mmi.fr`, `SUMMARY:${project.title}`, `DTSTAMP:${icsDate}Z`, `DUE;VALUE=DATE-TIME:${icsDate}Z`, `DESCRIPTION:${(project.details || '').replace(/\n/g, '\\n')}`, 'STATUS:NEEDS-ACTION', 'END:VTODO', 'END:VCALENDAR'].join('\n'); const link = document.createElement('a'); link.href = URL.createObjectURL(new Blob([icsContent], { type: 'text/calendar;charset=utf-8' })); link.download = `rappel_${project.title.replace(/ /g, "_")}.ics`; document.body.appendChild(link); link.click(); document.body.removeChild(link); }
         });
     </script>
