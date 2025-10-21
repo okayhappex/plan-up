@@ -3,253 +3,352 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PlanUp - Tableau de Bord MMI</title>
+    <title>Plan-Up - MMI Dashboard</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-
-    <style>
+    
+<style>
         :root {
-            --primary-color: #6a11cb;
-            --secondary-color: #2575fc;
-            --background-color: #f4f7f6;
-            --card-background: #ffffff;
-            --text-color: #333;
-            --shadow-color: rgba(0, 0, 0, 0.08);
+            --primary-gradient-start: #007bff; 
+            --primary-gradient-end: #6a11cb;   
+            --highlight-blue: #007bff;
             --font-family: 'Poppins', sans-serif;
             --green: #2ecc71;
             --orange: #f39c12;
             --red: #e74c3c;
+            --neutral-grey: #a0a0a0;
+
+            /* Thème Sombre (défaut) */
+            --bg-color: #1a1a2e; 
+            --sidebar-bg: #2a2a4e; 
+            --card-bg: #2a2a4e; 
+            --text-primary: #e0e0e0; 
+            --text-secondary: #a0a0a0; 
+            --border-color: #3a3a5e; 
+            --shadow-color: rgba(0, 0, 0, 0.25); 
+            --hover-bg: rgba(255, 255, 255, 0.08); 
+            --logo-color: #e0e0e0; 
+            --icon-color: #a0a0a0;
         }
 
-        body { font-family: var(--font-family); background-color: var(--background-color); color: var(--text-color); margin: 0; padding: 20px; line-height: 1.5; -webkit-font-smoothing: antialiased; }
-        nav { display: flex; justify-content: center; gap: 15px; background: white; padding: 10px; border-radius: 50px; box-shadow: 0 4px 15px var(--shadow-color); max-width: 400px; margin: 0 auto 30px auto; }
-        nav a { text-decoration: none; color: var(--text-color); font-weight: 600; font-size: 0.9em; padding: 8px 16px; border-radius: 30px; transition: background-color 0.3s, color 0.3s; }
-        nav a.active { background: linear-gradient(90deg, var(--primary-color), var(--secondary-color)); color: white; }
-
-        header { text-align: center; margin-bottom: 40px; }
-        header h1 { font-weight: 700; font-size: 2.2em; color: var(--primary-color); margin-bottom: 5px; }
-
-        main { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 20px; max-width: 1200px; margin: 0 auto; }
-        
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        .project-card {
-            background-color: var(--card-background); border-radius: 12px; box-shadow: 0 6px 15px var(--shadow-color); padding: 20px; display: flex; flex-direction: column; border-left: 4px solid var(--primary-color);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            opacity: 0; animation: fadeIn 0.5s ease-out forwards;
+        body.light-mode {
+            /* Thème Clair */
+            --bg-color: #f4f7f6;
+            --sidebar-bg: #ffffff;
+            --card-bg: #ffffff;
+            --text-primary: #1a1a1a;
+            --text-secondary: #666;
+            --border-color: #ebebeb;
+            --shadow-color: rgba(0, 0, 0, 0.08);
+            --hover-bg: rgba(0, 0, 0, 0.05);
+            --logo-color: #1a1a1a;
+            --icon-color: #666;
         }
-        .project-card:hover { transform: translateY(-8px); box-shadow: 0 12px 25px rgba(0, 0, 0, 0.12); }
-        .card-header { display: flex; align-items: center; margin-bottom: 12px; }
-        .card-header .icon { font-size: 1.6em; margin-right: 12px; }
-        .card-header h2 { margin: 0; font-size: 1.15em; font-weight: 600; color: var(--primary-color); }
-        .project-card .date { font-size: 0.85em; font-weight: 600; color: #555; margin-bottom: 10px; padding: 4px 10px; background-color: #f0f0f0; border-radius: 20px; align-self: flex-start; }
-        .project-card h3 { margin-top: 0; margin-bottom: 15px; font-size: 1.1em; flex-grow: 1; }
-        
-        .countdown-timer { padding: 6px 10px; border-radius: 8px; font-weight: 600; text-align: center; margin-bottom: 15px; transition: background-color 0.5s ease; color: white; font-size: 1em; }
-        .countdown-green { background-color: var(--green); }
-        .countdown-orange { background-color: var(--orange); }
-        .countdown-red { background-color: var(--red); }
-        .countdown-over { background-color: #7f8c8d; }
 
-        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
-        .pulsing { animation: pulse 1.5s infinite ease-in-out; }
+        body { 
+            font-family: var(--font-family); background-color: var(--bg-color); color: var(--text-primary); 
+            margin: 0; -webkit-font-smoothing: antialiased;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            display: flex; min-height: 100vh;
+        }
+
+        .dashboard-layout { display: flex; width: 100%; }
+
+        /* --- Sidebar --- */
+        .sidebar {
+            width: 250px; background-color: var(--sidebar-bg); padding: 20px 0;
+            box-shadow: 2px 0 10px var(--shadow-color); display: flex; flex-direction: column;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            position: fixed; /* Fixe la sidebar */
+            height: 100%;
+            z-index: 100;
+        }
+        .sidebar-logo { display: flex; align-items: center; justify-content: center; margin-bottom: 40px; }
+        .sidebar-logo .logo-icon { background: linear-gradient(45deg, var(--primary-gradient-start), var(--primary-gradient-end)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-size: 2.5em; font-weight: 700; margin-right: 8px; }
+        .sidebar-logo .logo-text { color: var(--logo-color); font-size: 1.8em; font-weight: 700; letter-spacing: -0.05em; }
+        .sidebar-nav ul { list-style: none; padding: 0; margin: 0; }
+        .sidebar-nav li { margin-bottom: 5px; }
+        .sidebar-nav a { display: flex; align-items: center; padding: 12px 20px; color: var(--text-secondary); text-decoration: none; font-size: 1em; font-weight: 500; border-radius: 0 30px 30px 0; margin-right: 15px; transition: all 0.2s ease; }
+        .sidebar-nav a .icon { font-size: 1.2em; margin-right: 15px; width: 20px; text-align: center; }
+        .sidebar-nav a:hover { background-color: var(--hover-bg); color: var(--text-primary); }
+        .sidebar-nav a.active { background: linear-gradient(90deg, var(--primary-gradient-start), var(--primary-gradient-end)); color: white; box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3); }
+        .sidebar-footer { margin-top: auto; padding: 20px; text-align: center; }
+        .sidebar-add-btn { background: linear-gradient(90deg, var(--primary-gradient-start), var(--primary-gradient-end)); color: white; border: none; padding: 12px 25px; border-radius: 30px; font-size: 1em; font-weight: 600; cursor: pointer; width: 100%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3); transition: transform 0.2s ease, box-shadow 0.2s ease; }
+        .sidebar-add-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 12px rgba(0, 123, 255, 0.4); }
+        .sidebar-add-btn .icon { font-size: 1.3em; margin-right: 10px; }
+
+        /* --- Main Content --- */
+        .main-content { 
+            flex-grow: 1; 
+            padding: 30px; 
+            margin-left: 250px; /* Décale le contenu */
+            display: flex; 
+            flex-direction: column; 
+            gap: 30px; 
+            min-height: 100vh; /* S'assure qu'il prend toute la hauteur */
+            box-sizing: border-box; /* Inclut le padding dans la hauteur */
+        }
+        .header-content { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+        .header-left h1 { margin: 0; font-size: 2em; color: var(--text-primary); }
+        .header-right { display: flex; gap: 20px; align-items: center; }
+        .header-right .icon { font-size: 1.4em; color: var(--icon-color); cursor: pointer; transition: color 0.2s ease; }
+        .header-right .icon:hover { color: var(--text-primary); }
+        .header-right .icon.theme-toggle { font-size: 1.2em; padding: 8px; border-radius: 50%; background-color: var(--card-bg); border: 1px solid var(--border-color); box-shadow: 0 2px 5px var(--shadow-color); }
+
+        /* --- Sections --- */
+        .section-title { font-size: 1.3em; font-weight: 600; color: var(--text-primary); margin-bottom: 20px; }
+        .upcoming-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+        .upcoming-card { background-color: var(--card-bg); padding: 20px; border-radius: 12px; box-shadow: 0 4px 10px var(--shadow-color); display: flex; flex-direction: column; position: relative; overflow: hidden; }
+        .upcoming-card::before { 
+            content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; 
+            background: linear-gradient(to bottom, var(--primary-gradient-start), var(--primary-gradient-end)); /* Bordure par défaut */
+        } 
+        .upcoming-card .category-info { display: flex; align-items: center; margin-bottom: 10px; color: var(--text-secondary); font-size: 0.9em; }
+        .upcoming-card .category-info .dot { width: 8px; height: 8px; border-radius: 50%; margin-right: 8px; background-color: var(--highlight-blue); }
+        .upcoming-card h3 { font-size: 1.3em; margin: 0 0 10px 0; color: var(--text-primary); }
+        .upcoming-card .date-info { font-size: 0.9em; color: var(--text-secondary); margin-bottom: 15px; }
+        .upcoming-card .days-left { margin-left: auto; background-color: var(--bg-color); padding: 5px 12px; border-radius: 20px; font-weight: 600; font-size: 0.85em; color: var(--text-primary); border: 1px solid var(--border-color); }
         
-        .card-actions { display: flex; flex-direction: column; align-items: flex-end; gap: 10px; margin-top: auto; }
-        .reminder-btn { background: linear-gradient(90deg, var(--primary-color), var(--secondary-color)); color: white; border: none; padding: 10px 18px; font-size: 0.9em; border-radius: 25px; cursor: pointer; font-weight: 600; transition: transform 0.2s ease, filter 0.2s ease; }
+        /* Placeholder message */
+        .placeholder-message {
+            color: var(--text-secondary);
+            text-align: center;
+            padding: 40px 20px;
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 4px 10px var(--shadow-color);
+            border: 1px dashed var(--border-color);
+        }
+
+        .latest-additions-card { background-color: var(--card-bg); padding: 20px; border-radius: 12px; box-shadow: 0 4px 10px var(--shadow-color); }
         
-        .gemini-help-btn { display: inline-flex; align-items: center; gap: 8px; background-color: transparent; color: var(--primary-color); border: 2px solid transparent; background-image: linear-gradient(white, white), linear-gradient(to right, var(--secondary-color), var(--primary-color)); background-origin: border-box; background-clip: padding-box, border-box; padding: 8px 16px; font-size: 0.85em; font-weight: 600; border-radius: 25px; cursor: pointer; text-decoration: none; transition: all 0.3s ease; }
-        .gemini-help-btn:hover { background-image: linear-gradient(to right, var(--secondary-color), var(--primary-color)), linear-gradient(to right, var(--secondary-color), var(--primary-color)); color: white; transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        
+        footer { text-align: center; margin-top: auto; /* Pousse le footer en bas */ padding-top: 30px; color: var(--text-secondary); font-size: 0.8em; }
         .hidden { display: none; }
-        
-        #welcome-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); z-index: 9999; display: flex; align-items: center; justify-content: center; transition: opacity 0.5s ease-out; color: white; text-align: center; padding: 20px; box-sizing: border-box; }
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-        .welcome-content h1, .welcome-content p, #enter-site-btn { animation: fadeInUp 0.8s ease-out forwards; opacity: 0; }
-        .welcome-content h1 { font-size: 2.8em; margin-bottom: 10px; text-shadow: 0 2px 4px rgba(0,0,0,0.2); }
-        .welcome-content p { font-size: 1.2em; max-width: 500px; margin: 0 auto 30px auto; opacity: 0; animation-delay: 0.2s; }
-        #enter-site-btn { background: white; color: var(--primary-color); border: none; border-radius: 50px; padding: 12px 30px; font-size: 1.1em; font-weight: 600; cursor: pointer; transition: transform 0.2s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.2); opacity: 0; animation-delay: 0.4s; }
-        #enter-site-btn:hover { transform: scale(1.05); }
-        #welcome-overlay.fade-out { opacity: 0; pointer-events: none; }
-        
-        footer { text-align: center; margin-top: 50px; color: #aaa; }
 
-        /* --- NOUVEAUTÉ : Améliorations pour l'interface mobile --- */
-        @media (max-width: 600px) {
-            body { padding: 10px; }
-            nav { max-width: 100%; gap: 5px; }
-            nav a { padding: 8px 12px; font-size: 0.85em; }
-            header h1 { font-size: 1.8em; }
-            main { grid-template-columns: 1fr; gap: 12px; } /* Espace entre cartes réduit */
-
-            .project-card {
-                padding: 15px; /* Moins d'espace intérieur */
-            }
-            .card-header {
-                margin-bottom: 10px;
-            }
-            .card-header .icon {
-                font-size: 1.4em; /* Icône plus petite */
-            }
-            .card-header h2 {
-                font-size: 1em; /* Titre de catégorie plus petit */
-            }
-            .project-card h3 {
-                font-size: 1.05em; /* Titre de projet plus petit */
-                margin-bottom: 12px;
-            }
-            .project-card .date {
-                font-size: 0.8em;
-                padding: 3px 8px;
-            }
-            .countdown-timer {
-                font-size: 0.9em;
-                padding: 5px 10px;
-                margin-bottom: 12px;
-            }
-            .reminder-btn {
-                padding: 9px 16px;
-                font-size: 0.85em;
-            }
-            .gemini-help-btn {
-                padding: 7px 14px;
-                font-size: 0.8em;
-            }
-            .welcome-content h1 { font-size: 2.2em; }
-            .welcome-content p { font-size: 1.1em; }
+        @media (max-width: 768px) {
+            .sidebar { width: 70px; padding: 15px 0; }
+            .sidebar-logo .logo-text { display: none; }
+            .sidebar-nav a { justify-content: center; margin-right: 0; border-radius: 50%; width: 45px; height: 45px; padding: 0; margin: 0 auto 5px auto; }
+            .sidebar-nav a .icon { margin-right: 0; }
+            .sidebar-nav a span:not(.icon) { display: none; }
+            .sidebar-footer { padding: 10px; }
+            .sidebar-add-btn span { display: none; }
+            .sidebar-add-btn { width: 45px; height: 45px; border-radius: 50%; padding: 0; }
+            .sidebar-add-btn .icon { margin-right: 0; }
+            .main-content { margin-left: 70px; padding: 20px 15px; }
+            .header-content { flex-direction: column; align-items: flex-start; margin-bottom: 20px; }
+            .header-left h1 { font-size: 1.5em; } /* Titre principal plus petit sur mobile */
+            .header-right { margin-top: 15px; align-self: flex-end; }
+            .section-title { font-size: 1.1em; margin-bottom: 15px; }
         }
-        /* --- FIN NOUVEAUTÉ --- */
-    </style>
+</style>
 </head>
 <body>
-
-    <div id="welcome-overlay">
-        <div class="welcome-content">
-            <h1>Bienvenue sur PlanUp !</h1>
-            <p>Votre nouvel assistant pour ne plus jamais manquer une date limite. Visualisez tous vos projets, suivez les échéances en temps réel et restez organisé.</p>
-            <button id="enter-site-btn">Commencer</button>
-        </div>
-    </div>
-
-    <nav>
-        <a href="#" id="nav-projects" class="active">Projets Notés</a>
-        <a href="#" id="nav-homework">Devoirs à venir</a>
-    </nav>
-
-    <header>
-        <h1>Tableau de Bord des Projets</h1>
-        <p>Ne manquez plus jamais une date limite !</p>
-    </header>
-
-    <main id="project-list">
-    </main>
-
-    <main id="homework-page" class="hidden">
-        <div style="text-align: center; padding: 80px 20px; color: #999;">
-            <h2 style="font-size: 1.8em; color: #aaa; margin: 0;">🚧 Page en construction 🚧</h2>
-        </div>
-    </main>
     
-    <div id="choice-modal" class="modal-overlay hidden">
+    <div class="dashboard-layout">
+        <aside class="sidebar">
+            <div class="sidebar-logo">
+                <span class="logo-icon">M</span>
+                <span class="logo-text">MI</span>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="#" id="nav-accueil" class="active"><span class="icon">🏠</span> <span>Accueil</span></a></li>
+                    <li><a href="#" id="nav-calendrier"><span class="icon">🗓️</span> <span>Calendrier</span></a></li>
+                    <li><a href="#" id="nav-projects-and-homework"><span class="icon">📚</span> <span>Projets & Devoirs</span></a></li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <button class="sidebar-add-btn"><span class="icon">➕</span> <span>Ajouter</span></button>
+            </div>
+        </aside>
+
+        <div class="main-content">
+            <header class="header-content">
+                <div class="header-left">
+                    <h1>Plan-Up</h1> 
+                </div>
+                <div class="header-right">
+                    
+                    <button id="theme-toggle" class="icon theme-toggle">🌙</button>
+                </div>
+            </header>
+
+            <section>
+                <h2 class="section-title">À venir très prochainement</h2>
+                <div class="upcoming-grid" id="upcoming-list">
+                    
+</div>
+            </section>
+
+            <section>
+                <h2 class="section-title">Prochains tutorats</h2>
+                
+<div class="placeholder-message">
+                    Aucun tutorat prévu pour le moment.
+                </div>
+            </section>
+
+            <section>
+                <h2 class="section-title">Derniers ajouts</h2>
+                
+<div class="latest-additions-card placeholder-message"> 
+                    Aucun ajout récent.
+                </div>
+            </section>
+
+            <footer>
+                <p>Créé avec ❤️ pour les étudiants MMI</p>
+            </footer>
+        </div>
     </div>
-
-    <footer>
-        <p>Créé avec ❤️ pour les étudiants MMI</p>
-    </footer>
-
+    
     <script>
         document.addEventListener('DOMContentLoaded', () => {
 
-            const welcomeOverlay = document.getElementById('welcome-overlay');
-            const enterSiteBtn = document.getElementById('enter-site-btn');
-            if (localStorage.getItem('mmiDashboardVisited')) {
-                welcomeOverlay.style.display = 'none';
+            // --- Dark Mode / Light Mode Toggle ---
+            const themeToggle = document.getElementById('theme-toggle');
+            const savedTheme = localStorage.getItem('theme');
+
+            if (savedTheme === 'light') {
+                document.body.classList.add('light-mode');
+                themeToggle.textContent = '🌙'; 
             } else {
-                enterSiteBtn.addEventListener('click', () => {
-                    localStorage.setItem('mmiDashboardVisited', 'true');
-                    welcomeOverlay.classList.add('fade-out');
-                    setTimeout(() => {
-                        welcomeOverlay.style.display = 'none';
-                    }, 500);
-                });
+                document.body.classList.remove('light-mode'); 
+                themeToggle.textContent = '☀️'; 
             }
 
-            const projects = [
-                { id: 'ppp_group', category: 'P.P.P', icon: '📂', date: '2025-11-11', title: 'Rendu du travail de groupe' },
-                { id: 'ppp_pres', category: 'P.P.P', icon: '🎤', date: '2025-11-13', title: 'Présentation du projet' },
-                { id: 'mkt_ds', category: 'Marketing', icon: '✍️', date: '2025-11-13', title: 'DS en marketing (à confirmer)' },
-                { id: 'ppp_interview', category: 'P.P.P', icon: '💼', date: '2026-01-11', title: 'Interview d’un professionnel' },
-                { id: 'english_model', category: 'Anglais', icon: '🇬🇧', date: '2025-10-20', title: 'Maquette à rendre' },
-                { id: 'gp_pub', category: 'Gestion de projet', icon: '📊', date: '2025-11-09', title: 'Projet de pub « à l’envers »' },
+            themeToggle.addEventListener('click', () => {
+                document.body.classList.toggle('light-mode');
+                let theme = 'dark'; 
+                if (document.body.classList.contains('light-mode')) {
+                    theme = 'light';
+                    themeToggle.textContent = '🌙';
+                } else {
+                    themeToggle.textContent = '☀️';
+                }
+                localStorage.setItem('theme', theme);
+            });
+
+
+            // --- Projects Data ---
+             const projects = [
+                // Dates passées (ne seront pas affichées dans "upcoming")
                 { id: 'com_portrait', category: 'Communication', icon: '💬', date: '2025-10-16', title: 'Portrait à faire' },
-                { id: 'art_mood', category: 'Art', icon: '🎨', date: '2025-10-24', title: 'Moodboard à finir' },
-                { id: 'mkt_company', category: 'Marketing', icon: '📈', date: '2025-11-17', title: 'Projet d’entreprise à rendre' },
+                { id: 'english_model', category: 'Anglais', icon: '🇬🇧', date: '2025-10-20', title: 'Maquette à rendre' },
+                // Dates futures (seront affichées)
+                { id: 'art_mood', category: 'Art', icon: '🎨', date: '2025-10-24', title: 'Moodboard à finir' }, // Vendredi de la semaine du 20/10
                 { id: 'html_sae', category: 'HTML / Intégration Web', icon: '💻', date: '2025-11-02', time: '23:59', title: 'SAE à rendre' },
                 { id: 'html_ds', category: 'HTML / Intégration Web', icon: '✍️', date: '2025-11-03', title: 'DS sur l\'intégration web' },
-                { id: 'english_ds', category: 'Anglais', icon: '🇬🇧', date: '2025-11-03', title: 'Contrôle en anglais' }
-            ];
+                { id: 'english_ds', category: 'Anglais', icon: '🇬🇧', date: '2025-11-03', title: 'Contrôle en anglais' },
+                { id: 'gp_pub', category: 'Gestion de projet', icon: '📊', date: '2025-11-09', title: 'Projet de pub « à l’envers »' },
+                { id: 'ppp_group', category: 'P.P.P', icon: '📂', date: '2025-11-11', title: 'Rendu du travail de groupe' },
+                { id: 'ppp_pres', category: 'P.P.P', icon: '🎤', date: '2025-11-13', title: 'Présentation du projet' },
+                { id: 'mkt_company', category: 'Marketing', icon: '📈', date: '2025-11-17', title: 'Projet d’entreprise à rendre' },
+                { id: 'ppp_interview', category: 'P.P.P', icon: '💼', date: '2026-01-11', title: 'Interview d’un professionnel' },
+             ];
 
-            const projectList = document.getElementById('project-list');
-            projects.sort((a, b) => new Date(a.date) - new Date(b.date));
+            const upcomingList = document.getElementById('upcoming-list');
+            const today = new Date();
+            today.setHours(0, 0, 0, 0); // Met l'heure à minuit pour comparer les jours
 
-            projects.forEach((project, index) => {
-                const card = createProjectCard(project);
-                card.style.animationDelay = `${index * 100}ms`;
-                projectList.appendChild(card);
-            });
+            const upcomingProjects = projects
+                .filter(project => new Date(project.date) >= today) // Garde seulement les projets futurs
+                .sort((a, b) => new Date(a.date) - new Date(b.date)); // Trie par date
+
+            if (upcomingProjects.length > 0) {
+                upcomingProjects.forEach((project, index) => {
+                    const card = createUpcomingCard(project);
+                    // L'animation fadeIn est gérée par CSS, pas besoin d'animationDelay ici
+                    upcomingList.appendChild(card);
+                });
+            } else {
+                 upcomingList.innerHTML = '<div class="placeholder-message">Aucun projet à venir prochainement.</div>'; // Message si aucun projet futur
+            }
             
-            function createProjectCard(project) {
+            function createUpcomingCard(project) {
                 const card = document.createElement('div');
-                card.className = 'project-card';
-                const formattedDate = new Date(project.date).toLocaleDateString('fr-FR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
-                card.innerHTML = `<div class="card-header"><span class="icon">${project.icon}</span><h2>${project.category}</h2></div><span class="date">${formattedDate} ${project.time ? `à ${project.time}` : ''}</span><h3>${project.title}</h3><div id="countdown-${project.id}" class="countdown-timer">Calcul...</div><div class="card-actions"><a id="gemini-${project.id}" href="https://gemini.google.com/" target="_blank" class="gemini-help-btn" style="display: none;">✨ S'aider de Gemini</a><button class="reminder-btn">Créer un rappel</button></div>`;
-                card.querySelector('.reminder-btn').onclick = () => window.openReminderChoice(project);
+                card.className = `upcoming-card`; // On enlève la bordure spécifique pour l'instant
+                
+                const deadlineString = project.date + (project.time ? `T${project.time}:00` : `T23:59:59`);
+                const deadline = new Date(deadlineString);
+                const now = new Date();
+                const diffTime = deadline - now;
+                let diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                
+                let daysLeftText = '';
+                if (diffDays <= 0) {
+                     // Si c'est aujourd'hui mais l'heure n'est pas passée
+                     if (deadline > now) {
+                        daysLeftText = 'Aujourd\'hui';
+                        diffDays = 0; // Pour le style
+                     } else {
+                        daysLeftText = 'Échéance dépassée'; // Ne devrait pas arriver avec le filtre >= today
+                     }
+                } else if (diffDays === 1) {
+                    daysLeftText = 'Demain';
+                } else {
+                    daysLeftText = `J-${diffDays}`;
+                }
+
+
+                const dateOptions = { weekday: 'short', month: 'short', day: 'numeric' };
+                const formattedDate = new Date(project.date).toLocaleDateString('fr-FR', dateOptions);
+
+                card.innerHTML = `
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                        <div class="category-info">
+                            <span class="dot"></span> 
+                            <span>${project.category}</span>
+                        </div>
+                        <span class="days-left">${daysLeftText}</span>
+                    </div>
+                    <h3>${project.title}</h3>
+                    <p class="date-info">
+                        ${formattedDate} ${project.time ? `, ${project.time}` : ''}
+                    </p>
+                    
+`;
+                 // Changement de couleur du J-X en fonction de l'urgence
+                 const daysLeftSpan = card.querySelector('.days-left');
+                 if (diffDays <= 3 && diffDays >= 0) {
+                     daysLeftSpan.style.borderColor = 'var(--red)';
+                     daysLeftSpan.style.color = 'var(--red)';
+                 } else if (diffDays <= 7 && diffDays > 0) {
+                     daysLeftSpan.style.borderColor = 'var(--orange)';
+                     daysLeftSpan.style.color = 'var(--orange)';
+                 }
+
+
+                // Ajouter un bouton rappel si nécessaire (non présent dans l'image)
+                // const reminderButton = document.createElement('button');
+                // reminderButton.textContent = 'Créer rappel';
+                // reminderButton.onclick = () => window.openReminderChoice(project);
+                // card.appendChild(reminderButton);
+
                 return card;
             }
 
-            function updateAllCountdowns() {
-                const fortyEightHoursInSeconds = 48 * 60 * 60;
-                projects.forEach(project => {
-                    const countdownElement = document.getElementById(`countdown-${project.id}`);
-                    const geminiButton = document.getElementById(`gemini-${project.id}`);
-                    if (!countdownElement || !geminiButton) return;
-                    let deadlineString = project.date + (project.time ? `T${project.time}:00` : `T23:59:59`);
-                    const deadline = new Date(deadlineString);
-                    const totalSeconds = (deadline - new Date()) / 1000;
-                    geminiButton.style.display = (totalSeconds > 0 && totalSeconds < fortyEightHoursInSeconds) ? 'inline-flex' : 'none';
-                    if (totalSeconds < 0) {
-                        countdownElement.innerHTML = 'Échéance dépassée';
-                        countdownElement.className = 'countdown-timer countdown-over';
-                        countdownElement.classList.remove('pulsing');
-                        return;
-                    }
-                    const days = Math.floor(totalSeconds / 3600 / 24);
-                    const hours = Math.floor(totalSeconds / 3600) % 24;
-                    const minutes = Math.floor(totalSeconds / 60) % 60;
-                    countdownElement.innerHTML = days > 0 ? `Temps restant : ${days}j ${hours}h ${minutes}m` : `Temps restant : ${hours}h ${minutes}m ${Math.floor(totalSeconds) % 60}s`;
-                    countdownElement.classList.toggle('pulsing', days < 3);
-                    if (days < 3) countdownElement.className = 'countdown-timer countdown-red pulsing';
-                    else if (days < 7) countdownElement.className = 'countdown-timer countdown-orange';
-                    else countdownElement.className = 'countdown-timer countdown-green';
-                });
-            }
-            setInterval(updateAllCountdowns, 1000);
-            updateAllCountdowns();
-
-            const navProjects = document.getElementById('nav-projects');
-            const navHomework = document.getElementById('nav-homework');
-            const homeworkPage = document.getElementById('homework-page');
-            navProjects.addEventListener('click', (e) => { e.preventDefault(); projectList.classList.remove('hidden'); homeworkPage.classList.add('hidden'); navProjects.classList.add('active'); navHomework.classList.remove('active'); });
-            navHomework.addEventListener('click', (e) => { e.preventDefault(); homeworkPage.classList.remove('hidden'); projectList.classList.add('hidden'); navHomework.classList.add('active'); navProjects.classList.remove('active'); });
+            // --- Navigation Sidebar Logic ---
+            const navAccueil = document.getElementById('nav-accueil');
+            const navCalendrier = document.getElementById('nav-calendrier');
+            const navProjectsAndHomework = document.getElementById('nav-projects-and-homework');
             
-            const modal = document.getElementById('choice-modal');
+            function activateNavLink(activeLink) {
+                document.querySelectorAll('.sidebar-nav a').forEach(link => link.classList.remove('active'));
+                activeLink.classList.add('active');
+            }
+
+            navAccueil.addEventListener('click', (e) => { e.preventDefault(); activateNavLink(navAccueil); /* TODO: Logique affichage */ });
+            navCalendrier.addEventListener('click', (e) => { e.preventDefault(); activateNavLink(navCalendrier); /* TODO: Logique affichage */});
+            navProjectsAndHomework.addEventListener('click', (e) => { e.preventDefault(); activateNavLink(navProjectsAndHomework); /* TODO: Logique affichage */ });
+
+            // Fonctions pour les rappels (gardées mais non utilisées pour l'instant)
             let activeProject = null;
-            window.openReminderChoice = (project) => { activeProject = project; modal.classList.remove('hidden'); };
-            const closeModal = () => { modal.classList.add('hidden'); activeProject = null; };
-            document.getElementById('close-modal-btn')?.addEventListener('click', closeModal);
-            modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
-            document.getElementById('google-calendar-btn')?.addEventListener('click', () => { if (!activeProject) return; const startTime = new Date(activeProject.date).toISOString().replace(/-|:|\.\d\d\d/g, ""); let url = `https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent('Rendu: ' + activeProject.title)}&dates=${startTime}/${startTime}&details=${encodeURIComponent(activeProject.details || '')}`; window.open(url, '_blank'); closeModal(); });
-            document.getElementById('apple-reminder-btn')?.addEventListener('click', () => { if (!activeProject) return; createICSFile(activeProject); closeModal(); });
-            function createICSFile(project) { const date = new Date(project.date); if (project.time) { const [h, m] = project.time.split(':'); date.setUTCHours(h, m, 0); } else { date.setUTCHours(9, 0, 0); } const icsDate = date.toISOString().replace(/-|:|\.\d{3}/g, '').slice(0, -1); const icsContent = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'BEGIN:VTODO', `UID:${Date.now()}@mmi.fr`, `SUMMARY:${project.title}`, `DTSTAMP:${icsDate}Z`, `DUE;VALUE=DATE-TIME:${icsDate}Z`, `DESCRIPTION:${(project.details || '').replace(/\n/g, '\\n')}`, 'STATUS:NEEDS-ACTION', 'END:VTODO', 'END:VCALENDAR'].join('\n'); const link = document.createElement('a'); link.href = URL.createObjectURL(new Blob([icsContent], { type: 'text/calendar;charset=utf-8' })); link.download = `rappel_${project.title.replace(/ /g, "_")}.ics`; document.body.appendChild(link); link.click(); document.body.removeChild(link); }
+            window.openReminderChoice = (project) => { console.log("Ouvrir choix rappel pour:", project.title); /* Logique modale ici */ };
+            function createICSFile(project) { console.log("Créer ICS pour:", project.title); /* Logique ICS ici */ }
+
         });
     </script>
 </body>
