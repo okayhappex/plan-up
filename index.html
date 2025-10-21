@@ -127,9 +127,29 @@
 
         footer { text-align: center; margin-top: 50px; color: #aaa; }
 
+        /* ================================================== */
+        /* SECTION MOBILE MODIFIÉE CI-DESSOUS */
+        /* ================================================== */
         @media (max-width: 600px) {
             body { padding: 10px; }
-            nav { max-width: 100%; gap: 5px; flex-wrap: wrap; } /* Flex-wrap ajouté pour mobile */
+            
+            /* C'est ici que la magie opère */
+            nav { 
+                max-width: 100%; 
+                gap: 5px; 
+                /* flex-wrap: wrap; */ /* SUPPRIMÉ - C'est ça qui casse l'indicateur */
+                overflow-x: auto; /* AJOUTÉ - Permet de scroller si les liens dépassent */
+                justify-content: flex-start; /* AJOUTÉ - Aligne au début pour le scroll */
+
+                /* Cache la barre de scroll pour un look plus propre */
+                scrollbar-width: none; /* Firefox */
+                -ms-overflow-style: none; /* IE/Edge */
+            }
+            /* Cache la barre de scroll pour Webkit (Chrome, Safari) */
+            nav::-webkit-scrollbar {
+                display: none;
+            }
+            
             nav a { padding: 8px 12px; font-size: 0.85em; }
             header h1 { font-size: 1.8em; }
             main { grid-template-columns: 1fr; gap: 12px; }
@@ -398,7 +418,7 @@
             modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
             document.getElementById('google-calendar-btn')?.addEventListener('click', () => { if (!activeProject) return; const startTime = new Date(activeProject.date).toISOString().replace(/-|:|\.\d\d\d/g, ""); let url = `https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent('Rendu: ' + activeProject.title)}&dates=${startTime}/${startTime}&details=${encodeURIComponent(activeProject.details || '')}`; window.open(url, '_blank'); closeModal(); });
             document.getElementById('apple-reminder-btn')?.addEventListener('click', () => { if (!activeProject) return; createICSFile(activeProject); closeModal(); });
-            function createICSFile(project) { const date = new Date(project.date); if (project.time) { const [h, m] = project.time.split(':'); date.setUTCHours(h, m, 0); } else { date.setUTCHours(9, 0, 0); } const icsDate = date.toISOString().replace(/-|:|\.\d{3}/g, '').slice(0, -1); const icsContent = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'BEGIN:VTODO', `UID:${Date.now()}@mmi.fr`, `SUMMARY:${project.title}`, `DTSTAMP:${icsDate}Z`, `DUE;VALUE=DATE-TIME:${icsDate}Z`, `DESCRIPTION:${(project.details || '').replace(/\n/g, '\\n')}`, 'STATUS:NEEDS-ACTION', 'END:VTODO', 'END:VCALENDAR'].join('\n'); const link = document.createElement('a'); link.href = URL.createObjectURL(new Blob([icsContent], { type: 'text/calendar;charset=utf-8' })); link.download = `rappel_${project.title.replace(/ /g, "_")}.ics`; document.body.appendChild(link); link.click(); document.body.removeChild(link); }
+            function createICSFile(project) { const date = new Date(project.date); if (project.time) { const [h, m] = project.time.split(':'); date.setUTCHours(h, m, 0); } else { date.setUTCHours(9, 0, 0); } const icsDate = date.toISOString().replace(/-|:|\.\d{3}/g, '').slice(0, -1); const icsContent = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'BEGIN:VTODO', `UID:${Date.now()}@mmi.fr`, `SUMMARY:${project.title}`, `DTSTAMP:${icsDate}Z`, `DUE;VALUE=DATE-TIME:${icsDate}Z`, `DESCRIPTION:${(project.details || '').replace(/\n/g, '\\n')}`, 'STATUS:NEEDS-ACTION', 'END:VTODO', 'END:VCALENDÁR'].join('\n'); const link = document.createElement('a'); link.href = URL.createObjectURL(new Blob([icsContent], { type: 'text/calendar;charset=utf-8' })); link.download = `rappel_${project.title.replace(/ /g, "_")}.ics`; document.body.appendChild(link); link.click(); document.body.removeChild(link); }
         });
     </script>
 </body>
