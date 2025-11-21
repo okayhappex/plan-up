@@ -4,171 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PlanUp - Tableau de Bord MMI</title>
+    <link rel="stylesheet" href="style.css">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-
-    <style>
-        :root {
-            --primary-color: #6a11cb;
-            --secondary-color: #2575fc;
-            --background-color: #f4f7f6;
-            --card-background: #ffffff;
-            --text-color: #333;
-            --shadow-color: rgba(0, 0, 0, 0.08);
-            --font-family: 'Poppins', sans-serif;
-            --green: #2ecc71;
-            --orange: #f39c12;
-            --red: #e74c3c;
-        }
-
-        body { font-family: var(--font-family); background-color: var(--background-color); color: var(--text-color); margin: 0; padding: 20px; line-height: 1.5; -webkit-font-smoothing: antialiased; }
-
-        /* --- NOUVEAUTÉ : Navigation avec indicateur --- */
-        nav {
-            position: relative; /* Nécessaire pour l'indicateur absolu */
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            background: white;
-            padding: 10px;
-            border-radius: 50px;
-            box-shadow: 0 4px 15px var(--shadow-color);
-            max-width: 550px; /* MODIFIÉ - Élargi pour le nouveau lien */
-            margin: 0 auto 30px auto;
-        }
-
-        nav a {
-            position: relative; /* Pour z-index */
-            z-index: 1; /* Pour être au-dessus de l'indicateur */
-            text-decoration: none;
-            color: var(--text-color);
-            font-weight: 600;
-            font-size: 0.9em;
-            padding: 8px 16px;
-            border-radius: 30px;
-            transition: color 0.3s ease; /* Transition pour la couleur du texte */
-            white-space: nowrap; /* Empêche le texte de passer à la ligne */
-        }
-        
-        /* Couleur du texte quand l'onglet est actif */
-        nav a.active {
-             color: white;
-        }
-
-        /* L'indicateur violet */
-        #nav-indicator {
-            position: absolute;
-            height: calc(100% - 10px); /* Hauteur moins le padding haut/bas de nav */
-            top: 5px; /* Pour centrer verticalement */
-            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
-            border-radius: 30px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-            transition: left 0.4s cubic-bezier(0.23, 1, 0.32, 1), width 0.4s cubic-bezier(0.23, 1, 0.32, 1); /* Animation fluide */
-            z-index: 0;
-        }
-        /* --- FIN NOUVEAUTÉ --- */
-
-
-        header { text-align: center; margin-bottom: 40px; }
-        header h1 { font-weight: 700; font-size: 2.2em; color: var(--primary-color); margin-bottom: 5px; }
-
-        main { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 20px; max-width: 1200px; margin: 0 auto; }
-        
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        .project-card {
-            background-color: var(--card-background); border-radius: 12px; box-shadow: 0 6px 15px var(--shadow-color); padding: 20px; display: flex; flex-direction: column; border-left: 4px solid var(--primary-color);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            opacity: 0; animation: fadeIn 0.5s ease-out forwards;
-        }
-        .project-card:hover { transform: translateY(-8px); box-shadow: 0 12px 25px rgba(0, 0, 0, 0.12); }
-        .card-header { display: flex; align-items: center; margin-bottom: 12px; }
-        .card-header .icon { font-size: 1.6em; margin-right: 12px; }
-        .card-header h2 { margin: 0; font-size: 1.15em; font-weight: 600; color: var(--primary-color); }
-        .project-card .date { font-size: 0.85em; font-weight: 600; color: #555; margin-bottom: 10px; padding: 4px 10px; background-color: #f0f0f0; border-radius: 20px; align-self: flex-start; }
-        .project-card h3 { margin-top: 0; margin-bottom: 15px; font-size: 1.1em; flex-grow: 1; }
-        
-        .countdown-timer { padding: 6px 10px; border-radius: 8px; font-weight: 600; text-align: center; margin-bottom: 15px; transition: background-color 0.5s ease; color: white; font-size: 1em; }
-        .countdown-green { background-color: var(--green); }
-        .countdown-orange { background-color: var(--orange); }
-        .countdown-red { background-color: var(--red); }
-        .countdown-over { background-color: #7f8c8d; }
-
-        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
-        .pulsing { animation: pulse 1.5s infinite ease-in-out; }
-        
-        .card-actions { display: flex; flex-direction: column; align-items: flex-end; gap: 10px; margin-top: auto; }
-        .reminder-btn { background: linear-gradient(90deg, var(--primary-color), var(--secondary-color)); color: white; border: none; padding: 10px 18px; font-size: 0.9em; border-radius: 25px; cursor: pointer; font-weight: 600; transition: transform 0.2s ease, filter 0.2s ease; }
-        
-        .gemini-help-btn { display: inline-flex; align-items: center; gap: 8px; background-color: transparent; color: var(--primary-color); border: 2px solid transparent; background-image: linear-gradient(white, white), linear-gradient(to right, var(--secondary-color), var(--primary-color)); background-origin: border-box; background-clip: padding-box, border-box; padding: 8px 16px; font-size: 0.85em; font-weight: 600; border-radius: 25px; cursor: pointer; text-decoration: none; transition: all 0.3s ease; }
-        .gemini-help-btn:hover { background-image: linear-gradient(to right, var(--secondary-color), var(--primary-color)), linear-gradient(to right, var(--secondary-color), var(--primary-color)); color: white; transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        
-        .hidden { display: none; }
-        
-        #welcome-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); z-index: 9999; display: flex; align-items: center; justify-content: center; transition: opacity 0.5s ease-out; color: white; text-align: center; padding: 20px; box-sizing: border-box; }
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-        .welcome-content h1, .welcome-content p, #enter-site-btn { animation: fadeInUp 0.8s ease-out forwards; opacity: 0; }
-        .welcome-content h1 { font-size: 2.8em; margin-bottom: 10px; text-shadow: 0 2px 4px rgba(0,0,0,0.2); }
-        .welcome-content p { font-size: 1.2em; max-width: 500px; margin: 0 auto 30px auto; opacity: 0; animation-delay: 0.2s; }
-        #enter-site-btn { background: white; color: var(--primary-color); border: none; border-radius: 50px; padding: 12px 30px; font-size: 1.1em; font-weight: 600; cursor: pointer; transition: transform 0.2s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.2); opacity: 0; animation-delay: 0.4s; }
-        #enter-site-btn:hover { transform: scale(1.05); }
-        #welcome-overlay.fade-out { opacity: 0; pointer-events: none; }
-        
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.6); display: flex; justify-content: center; align-items: center; z-index: 1000; opacity: 0; transition: opacity 0.3s ease; pointer-events: none; }
-        .modal-overlay:not(.hidden) { opacity: 1; pointer-events: auto; }
-        .modal-content { background: white; padding: 30px; border-radius: 15px; width: 90%; max-width: 400px; text-align: center; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); transform: scale(0.95); transition: transform 0.3s ease; color: var(--text-color); }
-        .modal-overlay:not(.hidden) .modal-content { transform: scale(1); }
-        .modal-content h3 { margin-top: 0; color: var(--primary-color); }
-        .modal-buttons { display: flex; flex-direction: column; gap: 15px; margin-top: 20px; }
-        .modal-buttons button { padding: 15px; border: none; border-radius: 10px; font-weight: 600; font-size: 1em; cursor: pointer; transition: transform 0.2s ease; }
-        #google-calendar-btn { background-color: #e8f0fe; color: #4285F4; }
-        #apple-reminder-btn { background-color: #e5e5e5; color: #333; }
-        .close-btn { margin-top: 20px; background: none; border: none; color: #888; cursor: pointer; font-weight: 600; }
-
-        footer { text-align: center; margin-top: 50px; color: #aaa; }
-
-        /* ================================================== */
-        /* SECTION MOBILE MODIFIÉE CI-DESSOUS */
-        /* ================================================== */
-        @media (max-width: 600px) {
-            body { padding: 10px; }
-            
-            /* C'est ici que la magie opère */
-            nav { 
-                max-width: 100%; 
-                gap: 5px; 
-                /* flex-wrap: wrap; */ /* SUPPRIMÉ - C'est ça qui casse l'indicateur */
-                overflow-x: auto; /* AJOUTÉ - Permet de scroller si les liens dépassent */
-                justify-content: flex-start; /* AJOUTÉ - Aligne au début pour le scroll */
-
-                /* Cache la barre de scroll pour un look plus propre */
-                scrollbar-width: none; /* Firefox */
-                -ms-overflow-style: none; /* IE/Edge */
-            }
-            /* Cache la barre de scroll pour Webkit (Chrome, Safari) */
-            nav::-webkit-scrollbar {
-                display: none;
-            }
-            
-            nav a { padding: 8px 12px; font-size: 0.85em; }
-            header h1 { font-size: 1.8em; }
-            main { grid-template-columns: 1fr; gap: 12px; }
-            .project-card { padding: 15px; }
-            .card-header { margin-bottom: 10px; }
-            .card-header .icon { font-size: 1.4em; }
-            .card-header h2 { font-size: 1em; }
-            .project-card h3 { font-size: 1.05em; margin-bottom: 12px; }
-            .project-card .date { font-size: 0.8em; padding: 3px 8px; }
-            .countdown-timer { font-size: 0.9em; padding: 5px 10px; margin-bottom: 12px; }
-            .reminder-btn { padding: 9px 16px; font-size: 0.85em; }
-            .gemini-help-btn { padding: 7px 14px; font-size: 0.8em; }
-            .welcome-content h1 { font-size: 2.2em; }
-            .welcome-content p { font-size: 1.1em; }
-        }
-    </style>
 </head>
 <body>
-
     <div id="welcome-overlay">
         <div class="welcome-content">
             <h1>Bienvenue sur PlanUp !</h1>
@@ -193,48 +35,46 @@
         </main>
 
     <main id="homework-page" class="hidden">
-         <div class="project-card"> 
-             <div class="card-header">
-                 <span class="icon">✏️</span>
-                 <h2>Art</h2>
-             </div>
-             <span class="date">vendredi 24 octobre 2025</span> 
-             <h3>Dessin perspective (Groupe A1)</h3>
-             <p style="color: var(--orange); font-weight: bold; margin-top: auto;">Non noté</p>
+        <div class="project-card"> 
+            <div class="card-header">
+                <span class="icon">✏️</span>
+                <h2>Art</h2>
+            </div>
+            <span class="date">vendredi 24 octobre 2025</span> 
+            <h3>Dessin perspective (Groupe A1)</h3>
+            <p style="color: var(--orange); font-weight: bold; margin-top: auto;">Non noté</p>
         </div>
     </main>
-    
-    <main id="gemini-page" class="hidden" style="text-align: center; max-width: 700px; margin: 0 auto; grid-template-columns: 1fr;">
-         <div class="project-card" style="border-left-color: var(--secondary-color); animation-delay: 0s; opacity: 1; transform: none;">
-             <div class="card-header" style="justify-content: center;">
-                 <span class="icon">✨</span>
-                 <h2 style="color: var(--secondary-color);">Offre Spéciale Gemini Étudiant</h2>
-             </div>
-             <h3 style="font-size: 1.6em; margin-bottom: 15px; flex-grow: 0;">1 AN GRATUIT</h3>
-             <p style="font-size: 1.1em; line-height: 1.6;">
-                 Les étudiants MMI bénéficient d'un an d'abonnement gratuit à <strong>Google Gemini (Google One)</strong>.
-             </p>
-             <p style="margin-top: 15px;">Profitez de tous les avantages :</p>
-             <ul style="text-align: left; display: inline-block; margin-top: 10px; margin-bottom: 20px; padding-left: 20px;">
-                 <li style="list-style: '✅ '; padding-left: 5px;">Analyse IA de vos projets</li>
-                 <li style="list-style: '✅ '; padding-left: 5px;">Suggestions de planning</li>
-                 <li style="list-style: '✅ '; padding-left: 5px;">Rappels intelligents</li>
-                 <li style="list-style: '✅ '; padding-left: 5px;">Personnalisez vos révisions</li>
-                  <li style="list-style: '✅ '; padding-left: 5px;">Gagnez du temps avec Deep Research</li>
-                  <li style="list-style: '✅ '; padding-left: 5px;">Écoutez vos notes grâce aux résumés audio</li>
-                <li style="list-style: '✅ '; padding-left: 5px;">Préparation aux examens</li>
 
-                 
-             </ul>
-             
-             <div class="card-actions" style="align-items: center;">
-                 <a href="https://gemini.google/fr/students/?hl=fr" target="_blank" class="reminder-btn" style="text-decoration: none;">Activer mon année gratuite</a>
-             </div>
-         </div>
+    <main id="gemini-page" class="hidden" style="text-align: center; max-width: 700px; margin: 0 auto; grid-template-columns: 1fr;">
+        <div class="project-card" style="border-left-color: var(--secondary-color); animation-delay: 0s; opacity: 1; transform: none;">
+            <div class="card-header" style="justify-content: center;">
+                <span class="icon">✨</span>
+                <h2 style="color: var(--secondary-color);">Offre Spéciale Gemini Étudiant</h2>
+            </div>
+            <h3 style="font-size: 1.6em; margin-bottom: 15px; flex-grow: 0;">1 AN GRATUIT</h3>
+            <p style="font-size: 1.1em; line-height: 1.6;">
+                Les étudiants MMI bénéficient d'un an d'abonnement gratuit à <strong>Google Gemini (Google One)</strong>.
+            </p>
+            <p style="margin-top: 15px;">Profitez de tous les avantages :</p>
+            <ul style="text-align: left; display: inline-block; margin-top: 10px; margin-bottom: 20px; padding-left: 20px;">
+                <li style="list-style: '✅ '; padding-left: 5px;">Analyse IA de vos projets</li>
+                <li style="list-style: '✅ '; padding-left: 5px;">Suggestions de planning</li>
+                <li style="list-style: '✅ '; padding-left: 5px;">Rappels intelligents</li>
+                <li style="list-style: '✅ '; padding-left: 5px;">Personnalisez vos révisions</li>
+                <li style="list-style: '✅ '; padding-left: 5px;">Gagnez du temps avec Deep Research</li>
+                <li style="list-style: '✅ '; padding-left: 5px;">Écoutez vos notes grâce aux résumés audio</li>
+                <li style="list-style: '✅ '; padding-left: 5px;">Préparation aux examens</li>
+            </ul>
+
+            <div class="card-actions" style="align-items: center;">
+                <a href="https://gemini.google/fr/students/?hl=fr" target="_blank" class="reminder-btn" style="text-decoration: none;">Activer mon année gratuite</a>
+            </div>
+        </div>
     </main>
-    
+
     <div id="choice-modal" class="modal-overlay hidden">
-         <div class="modal-content">
+        <div class="modal-content">
             <h3>Où ajouter le rappel ?</h3>
             <div class="modal-buttons">
                 <button id="google-calendar-btn">📅 Google Calendar</button>
@@ -248,190 +88,6 @@
         <p>Créé avec ❤️ pour les étudiants MMI</p>
     </footer>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-
-            const welcomeOverlay = document.getElementById('welcome-overlay');
-            const enterSiteBtn = document.getElementById('enter-site-btn');
-            if (localStorage.getItem('mmiDashboardVisited')) {
-                welcomeOverlay.style.display = 'none';
-            } else {
-                enterSiteBtn.addEventListener('click', () => {
-                    localStorage.setItem('mmiDashboardVisited', 'true');
-                    welcomeOverlay.classList.add('fade-out');
-                    setTimeout(() => {
-                        welcomeOverlay.style.display = 'none';
-                    }, 500);
-                });
-            }
-
-            const projects = [
-        { id: 'art_mood', category: 'Art', icon: '🎨', date: '2025-10-24', title: 'Moodboard à finir' }, 
-        { id: 'html_sae', category: 'HTML / Intégration Web', icon: '💻🇬🇧', date: '2025-11-02', time: '23:59', title: 'SAE à rendre (CV)' },
-        { id: 'html_ds', category: 'HTML / Intégration Web', icon: '✍️', date: '2025-11-03', title: 'DS sur l\'intégration web' },
-        { id: 'english_ds', category: 'Anglais', icon: '🇬🇧', date: '2025-11-03', title: 'Contrôle en anglais' },
-        { id: 'gp_pub', category: 'Gestion de projet', icon: '📊', date: '2025-11-09', title: 'Projet de pub' },
-        { id: 'ppp_group', category: 'P.P.P', icon: '📂', date: '2025-11-11', title: 'Rendu du travail de groupe' },
-        { id: 'ppp_pres', category: 'P.P.P', icon: '🎤', date: '2025-11-13', title: 'Présentation du projet' },
-        { id: 'mkt_company', category: 'Marketing', icon: '📈', date: '2025-11-17', title: 'Projet d’entreprise à rendre' },
-        
-        
-        { id: 'fournerie_ds', category: 'Culture Numérique', icon: '🧠', date: '2025-11-25', title: 'DS Fournerie' },
-        { id: 'comm_ds', category: 'Communication', icon: '🗣️', date: '2025-11-25', title: 'DS sur le CM de communication (à la place du cours de portfolio)' },
-        
-        
-        { id: 'ppp_interview', category: 'P.P.P', icon: '💼', date: '2026-01-11', title: 'Interview d’un professionnel' },
-        { id: 'ppp_oral', category: 'P.P.P', icon: '🎤', date: '2025-11-13', title: 'Oral de PPP (après-midi)' }
-    ];
-
-            const projectList = document.getElementById('project-list');
-            const today = new Date();
-            today.setHours(0, 0, 0, 0); 
-            const futureProjects = projects
-                .filter(project => new Date(project.date) >= today)
-                .sort((a, b) => new Date(a.date) - new Date(b.date));
-
-            if (futureProjects.length > 0) {
-                 futureProjects.forEach((project, index) => {
-                    const card = createProjectCard(project);
-                    card.style.animationDelay = `${index * 100}ms`;
-                    projectList.appendChild(card);
-                });
-            } else {
-                 projectList.innerHTML = '<p style="text-align: center; color: var(--text-secondary);">Aucun projet à venir pour le moment.</p>';
-            }
-            
-            const modal = document.getElementById('choice-modal');
-            let activeProject = null;
-
-            function openReminderChoice(project) {
-                activeProject = project; 
-                const modalContent = modal.querySelector('.modal-content');
-                if(modalContent) { 
-                    modal.classList.remove('hidden');
-                } else {
-                     console.error("Le contenu de la modale (.modal-content) est manquant.");
-                }
-            }
-
-            function createProjectCard(project) {
-                const card = document.createElement('div');
-                card.className = 'project-card';
-                const formattedDate = new Date(project.date).toLocaleDateString('fr-FR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
-                card.innerHTML = `<div class="card-header"><span class="icon">${project.icon}</span><h2>${project.category}</h2></div><span class="date">${formattedDate} ${project.time ? `à ${project.time}` : ''}</span><h3>${project.title}</h3><div id="countdown-${project.id}" class="countdown-timer">Calcul...</div><div class="card-actions"><a id="gemini-${project.id}" href="https://gemini.google.com/" target="_blank" class="gemini-help-btn" style="display: none;">✨ S'aider de Gemini</a><button class="reminder-btn">Créer un rappel</button></div>`;
-                
-                card.querySelector('.reminder-btn').addEventListener('click', () => openReminderChoice(project));
-                
-                return card;
-            }
-
-            function updateAllCountdowns() {
-                const fortyEightHoursInSeconds = 48 * 60 * 60;
-                futureProjects.forEach(project => {
-                    const countdownElement = document.getElementById(`countdown-${project.id}`);
-                    const geminiButton = document.getElementById(`gemini-${project.id}`);
-                    if (!countdownElement || !geminiButton) return;
-
-                    let deadlineString = project.date + (project.time ? `T${project.time}:00` : `T23:59:59`);
-                    const deadline = new Date(deadlineString);
-                    const totalSeconds = (deadline - new Date()) / 1000;
-
-                    geminiButton.style.display = (totalSeconds > 0 && totalSeconds < fortyEightHoursInSeconds) ? 'inline-flex' : 'none';
-
-                    if (totalSeconds < 0) { 
-                         countdownElement.innerHTML = 'Échéance dépassée';
-                         countdownElement.className = 'countdown-timer countdown-over';
-                         countdownElement.classList.remove('pulsing');
-                         return;
-                    }
-
-                    const days = Math.floor(totalSeconds / 3600 / 24);
-                    const hours = Math.floor(totalSeconds / 3600) % 24;
-                    const minutes = Math.floor(totalSeconds / 60) % 60;
-                    countdownElement.innerHTML = days > 0 ? `Temps restant : ${days}j ${hours}h ${minutes}m` : `Temps restant : ${hours}h ${minutes}m ${Math.floor(totalSeconds) % 60}s`;
-                    countdownElement.classList.toggle('pulsing', days < 3 && totalSeconds > 0); 
-                    
-                    if (days < 3 && totalSeconds > 0) countdownElement.className = 'countdown-timer countdown-red pulsing';
-                    else if (days < 7) countdownElement.className = 'countdown-timer countdown-orange';
-                    else countdownElement.className = 'countdown-timer countdown-green';
-                });
-            }
-            setInterval(updateAllCountdowns, 1000);
-            updateAllCountdowns();
-
-            // --- SECTION NAVIGATION MODIFIÉE ET CORRIGÉE ---
-            
-            // Sélection des éléments de navigation et des pages
-            const navProjects = document.getElementById('nav-projects');
-            const navHomework = document.getElementById('nav-homework');
-            const navGemini = document.getElementById('nav-gemini'); 
-            
-            // projectList est déjà déclaré plus haut
-            const homeworkPage = document.getElementById('homework-page');
-            const geminiPage = document.getElementById('gemini-page'); 
-            
-            const navIndicator = document.getElementById('nav-indicator');
-
-            // Fonction pour mettre à jour l'indicateur
-            function updateNavIndicator(activeTab) {
-                if (!activeTab) return; 
-                navIndicator.style.width = `${activeTab.offsetWidth}px`;
-                navIndicator.style.left = `${activeTab.offsetLeft}px`;
-            }
-
-            // Clic sur "Projets Notés"
-            navProjects.addEventListener('click', (e) => { 
-                e.preventDefault(); 
-                projectList.classList.remove('hidden'); 
-                homeworkPage.classList.add('hidden'); 
-                geminiPage.classList.add('hidden');
-                
-                navProjects.classList.add('active'); 
-                navHomework.classList.remove('active'); 
-                navGemini.classList.remove('active');
-                
-                updateNavIndicator(navProjects);
-            });
-
-            // Clic sur "Devoirs à venir"
-            navHomework.addEventListener('click', (e) => { 
-                e.preventDefault(); 
-                homeworkPage.classList.remove('hidden'); 
-                projectList.classList.add('hidden'); 
-                geminiPage.classList.add('hidden');
-                
-                navHomework.classList.add('active'); 
-                navProjects.classList.remove('active'); 
-                navGemini.classList.remove('active');
-
-                updateNavIndicator(navHomework);
-            });
-            
-            // Clic sur "Offre Gemini"
-            navGemini.addEventListener('click', (e) => { 
-                e.preventDefault(); 
-                geminiPage.classList.remove('hidden'); 
-                projectList.classList.add('hidden'); 
-                homeworkPage.classList.add('hidden'); 
-                
-                navGemini.classList.add('active'); 
-                navProjects.classList.remove('active'); 
-                navHomework.classList.remove('active'); 
-                
-                updateNavIndicator(navGemini);
-            });
-            
-            // Met à jour l'indicateur au chargement initial
-            updateNavIndicator(document.querySelector('nav a.active')); 
-            // --- FIN SECTION NAVIGATION MODIFIÉE ---
-            
-            const closeModal = () => { modal.classList.add('hidden'); activeProject = null; };
-            document.getElementById('close-modal-btn')?.addEventListener('click', closeModal);
-            modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
-            document.getElementById('google-calendar-btn')?.addEventListener('click', () => { if (!activeProject) return; const startTime = new Date(activeProject.date).toISOString().replace(/-|:|\.\d\d\d/g, ""); let url = `https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent('Rendu: ' + activeProject.title)}&dates=${startTime}/${startTime}&details=${encodeURIComponent(activeProject.details || '')}`; window.open(url, '_blank'); closeModal(); });
-            document.getElementById('apple-reminder-btn')?.addEventListener('click', () => { if (!activeProject) return; createICSFile(activeProject); closeModal(); });
-            function createICSFile(project) { const date = new Date(project.date); if (project.time) { const [h, m] = project.time.split(':'); date.setUTCHours(h, m, 0); } else { date.setUTCHours(9, 0, 0); } const icsDate = date.toISOString().replace(/-|:|\.\d{3}/g, '').slice(0, -1); const icsContent = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'BEGIN:VTODO', `UID:${Date.now()}@mmi.fr`, `SUMMARY:${project.title}`, `DTSTAMP:${icsDate}Z`, `DUE;VALUE=DATE-TIME:${icsDate}Z`, `DESCRIPTION:${(project.details || '').replace(/\n/g, '\\n')}`, 'STATUS:NEEDS-ACTION', 'END:VTODO', 'END:VCALENDÁR'].join('\n'); const link = document.createElement('a'); link.href = URL.createObjectURL(new Blob([icsContent], { type: 'text/calendar;charset=utf-8' })); link.download = `rappel_${project.title.replace(/ /g, "_")}.ics`; document.body.appendChild(link); link.click(); document.body.removeChild(link); }
-        });
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
