@@ -1,33 +1,36 @@
 document.addEventListener('DOMContentLoaded', () => {
+    const welcomeOverlay = document.getElementById('welcome-overlay');
+    const enterSiteBtn = document.getElementById('enter-site-btn');
 
-const welcomeOverlay = document.getElementById('welcome-overlay');
-const enterSiteBtn = document.getElementById('enter-site-btn');
-if (localStorage.getItem('mmiDashboardVisited')) {
-    welcomeOverlay.style.display = 'none';
-} else {
-    enterSiteBtn.addEventListener('click', () => {
-        localStorage.setItem('mmiDashboardVisited', 'true');
-        welcomeOverlay.classList.add('fade-out');
-        setTimeout(() => {
-            welcomeOverlay.style.display = 'none';
-        }, 500);
-    });
-}
+    if (localStorage.getItem('mmiDashboardVisited')) {
+        welcomeOverlay.style.display = 'none';
+    } else {
+        enterSiteBtn.addEventListener('click', () => {
+            localStorage.setItem('mmiDashboardVisited', 'true');
+            welcomeOverlay.classList.add('fade-out');
+            setTimeout(() => {
+                welcomeOverlay.style.display = 'none';
+            }, 500);
+        });
+    }
 
-const projects = [
-    { id: 'art_mood', category: 'Art', icon: '🎨', date: '2025-10-24', title: 'Moodboard à finir' }, 
-    { id: 'sae105', category: 'HTML / Intégration Web', icon: '💻🇬🇧', date: '2025-11-02', time: '23:59', title: 'SAE à rendre (CV)' },
-    { id: 'html_ds', category: 'HTML / Intégration Web', icon: '✍️', date: '2025-11-03', title: 'DS sur l\'intégration web' },
-    { id: 'english_ds', category: 'Anglais', icon: '🇬🇧', date: '2025-11-03', title: 'Contrôle en anglais' },
-    { id: 'gp_pub', category: 'Gestion de projet', icon: '📊', date: '2025-11-09', title: 'Projet de pub' },
-    { id: 'ppp_group', category: 'P.P.P', icon: '📂', date: '2025-11-11', title: 'Rendu du travail de groupe' },
-    { id: 'ppp_pres', category: 'P.P.P', icon: '🎤', date: '2025-11-13', title: 'Présentation du projet' },
-    { id: 'mkt_company', category: 'Marketing', icon: '📈', date: '2025-11-17', title: 'Projet d’entreprise à rendre' },
-    { id: 'fournerie_ds', category: 'Hébergement', icon: '🧠', date: 'unknown', title: 'DS Fournerie' },
-    { id: 'comm_ds', category: 'Communication', icon: '🗣️', date: 'unknown', title: 'DS sur le CM de communication (à la place du cours de portfolio)' },
-    { id: 'ppp_interview', category: 'P.P.P', icon: '💼', date: '2026-01-11', title: 'Interview d’un professionnel' },
-    { id: 'ppp_oral', category: 'P.P.P', icon: '🎤', date: '2025-11-13', title: 'Oral de PPP (après-midi)' }
-];
+    const projects = [
+        { id: 'art_mood',       category: 'Art',                      icon: '🎨', date: '2025-10-24',                  title: 'Moodboard à finir' }, 
+        { id: 'sae105',         category: 'HTML / Intégration Web',   icon: '💻🇬🇧', date: '2025-11-02', time: '23:59', title: 'SAE à rendre (CV)' },
+        { id: 'html_ds',        category: 'HTML / Intégration Web',   icon: '✍️', date: '2025-11-03',                  title: 'DS sur l\'intégration web' },
+        { id: 'english_ds',     category: 'Anglais',                  icon: '🇬🇧', date: '2025-11-03',                  title: 'Contrôle en anglais' },
+        { id: 'gp_pub',         category: 'Gestion de projet',        icon: '📊', date: '2025-11-09',                  title: 'Projet de pub' },
+        { id: 'ppp_group',      category: 'P.P.P',                    icon: '📂', date: '2025-11-11',                  title: 'Rendu du travail de groupe' },
+        { id: 'ppp_pres',       category: 'P.P.P',                    icon: '🎤', date: '2025-11-13',                  title: 'Présentation du projet' },
+        { id: 'mkt_company',    category: 'Marketing',                icon: '📈', date: '2025-11-17',                  title: 'Projet d’entreprise à rendre' },
+        { id: 'pinoza_oral',    category: 'Culture artistique',       icon: '🎨', date: 'unknown',                     title: 'Présenter une oeuvre choisie pendant la sortie du 21 novembre' },
+        { id: 'clech_vecteurs', category: 'Photoshop',                icon: '✒️', date: '2025-11-28',                  title: 'Faire une feuille à plusieurs branches' },
+        { id: 'reyss_analyse',  category: 'Recommandation numérique', icon: '🗣️', date: '2025-11-27',                  title: 'Présentation avec Mme. REYSS' },
+        { id: 'fournerie_ds',   category: 'Hébergement',              icon: '💻', date: 'unknown',                     title: 'DS Fournerie (décembre)' },
+        { id: 'comm_ds',        category: 'Communication',            icon: '🗣️', date: 'unknown',                     title: 'DS Communication (début décembre)' },
+        { id: 'ppp_interview',  category: 'P.P.P',                    icon: '💼', date: '2026-01-11',                  title: 'Interview d’un professionnel' },
+        { id: 'ppp_oral',       category: 'P.P.P',                    icon: '🎤', date: '2025-11-13',                  title: 'Oral de PPP (après-midi)' }
+    ];
 
     const projectList = document.getElementById('project-list');
     const today = new Date();
