@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
         { id: 'clech_vecteurs',   module: 'SAE 1.03', category: 'Photoshop',                icon: '✒️', date: '2025-11-30',                  title: 'Faire une feuille à plusieurs branches' },
         { id: 'reyss_analyse',    module: 'SAE 1.02', category: 'Recommandation numérique', icon: '🗣️', date: '2025-11-27',                  title: 'Présentation avec Mme. REYSS' },
         { id: 'fournerie_ds',     module: 'R 1.13',   category: 'Hébergement',              icon: '💻', date: '2025-12-18',                  title: 'DS Fournerie (décembre)' },
-        { id: 'comm_ds',          module: 'R 1.06',   category: 'Communication',            icon: '🗣️', date: 'unknown',                     title: 'DS Communication (début décembre)' },
+        { id: 'comm_ds',          module: 'R 1.06',   category: 'Communication',            icon: '🗣️', date: '2025-12-01',                  title: 'DS Communication (début décembre)' },
         { id: 'ppp_interview',    module: 'R 1.17',   category: 'P.P.P',                    icon: '💼', date: '2026-01-11',                  title: 'Interview d’un professionnel' },
         { id: 'ppp_oral',         module: 'R 1.17',   category: 'P.P.P',                    icon: '🎤', date: '2025-11-13',                  title: 'Oral de PPP (après-midi)' },
         { id: 'sae_wablomingrat', module: 'SAE 1.04', category: 'Audiovisuel',              icon: '🎥', date: '2026-01-11',                  title: 'Produire une scène théâtrale, accompagnée de: soit un clip musical, soit le spectacle pour enfants, et des contenus pour l’un des groupes invités ainsi qu’un contenu de type linkedin.' }
