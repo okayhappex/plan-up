@@ -15,27 +15,38 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const projects = [
-        { id: 'art_mood',       category: 'Art',                      icon: '🎨', date: '2025-10-24',                  title: 'Moodboard à finir' }, 
-        { id: 'sae105',         category: 'HTML / Intégration Web',   icon: '💻🇬🇧', date: '2025-11-02', time: '23:59', title: 'SAE à rendre (CV)' },
-        { id: 'html_ds',        category: 'HTML / Intégration Web',   icon: '✍️', date: '2025-11-03',                  title: 'DS sur l\'intégration web' },
-        { id: 'english_ds',     category: 'Anglais',                  icon: '🇬🇧', date: '2025-11-03',                  title: 'Contrôle en anglais' },
-        { id: 'gp_pub',         category: 'Gestion de projet',        icon: '📊', date: '2025-11-09',                  title: 'Projet de pub' },
-        { id: 'ppp_group',      category: 'P.P.P',                    icon: '📂', date: '2025-11-11',                  title: 'Rendu du travail de groupe' },
-        { id: 'ppp_pres',       category: 'P.P.P',                    icon: '🎤', date: '2025-11-13',                  title: 'Présentation du projet' },
-        { id: 'mkt_company',    category: 'Marketing',                icon: '📈', date: '2025-11-17',                  title: 'Projet d’entreprise à rendre' },
-        { id: 'pinoza_oral',    category: 'Culture artistique',       icon: '🎨', date: 'unknown',                     title: 'Présenter une oeuvre choisie pendant la sortie du 21 novembre' },
-        { id: 'clech_vecteurs', category: 'Photoshop',                icon: '✒️', date: '2025-11-28',                  title: 'Faire une feuille à plusieurs branches' },
-        { id: 'reyss_analyse',  category: 'Recommandation numérique', icon: '🗣️', date: '2025-11-27',                  title: 'Présentation avec Mme. REYSS' },
-        { id: 'fournerie_ds',   category: 'Hébergement',              icon: '💻', date: 'unknown',                     title: 'DS Fournerie (décembre)' },
-        { id: 'comm_ds',        category: 'Communication',            icon: '🗣️', date: 'unknown',                     title: 'DS Communication (début décembre)' },
-        { id: 'ppp_interview',  category: 'P.P.P',                    icon: '💼', date: '2026-01-11',                  title: 'Interview d’un professionnel' },
-        { id: 'ppp_oral',       category: 'P.P.P',                    icon: '🎤', date: '2025-11-13',                  title: 'Oral de PPP (après-midi)' }
+        { id: 'art_mood',       module: 'R 1.09',   category: 'Art',                      icon: '🎨', date: '2025-10-24',                  title: 'Moodboard à finir' }, 
+        { id: 'sae105',         module: 'SAE 1.05', category: 'HTML / Intégration Web',   icon: '💻🇬🇧', date: '2025-11-02', time: '23:59', title: 'SAE à rendre (CV)' },
+        { id: 'html_ds',        module: 'R 1.11',   category: 'HTML / Intégration Web',   icon: '✍️', date: '2025-11-03',                  title: 'DS sur l\'intégration web' },
+        { id: 'english_ds',     module: 'R 1.02',   category: 'Anglais',                  icon: '🇬🇧', date: '2025-11-03',                  title: 'Contrôle en anglais' },
+        { id: 'gp_pub',         module: 'SAE 1.01', category: 'Gestion de projet',        icon: '📊', date: '2025-11-09',                  title: 'Projet de pub' },
+        { id: 'ppp_group',      module: 'R 1.17',   category: 'P.P.P',                    icon: '📂', date: '2025-11-11',                  title: 'Rendu du travail de groupe' },
+        { id: 'ppp_pres',       module: 'R 1.17',   category: 'P.P.P',                    icon: '🎤', date: '2025-11-13',                  title: 'Présentation du projet' },
+        { id: 'mkt_company',    module: 'SAE 1.02', category: 'Marketing',                icon: '📈', date: '2025-11-17',                  title: 'Projet d’entreprise à rendre' },
+        { id: 'pinoza_oral',    module: 'R 1.09',   category: 'Culture artistique',       icon: '🎨', date: 'unknown',                     title: 'Présenter une oeuvre choisie pendant la sortie du 21 novembre' },
+        { id: 'clech_vecteurs', module: 'SAE 1.03', category: 'Photoshop',                icon: '✒️', date: '2025-11-28',                  title: 'Faire une feuille à plusieurs branches' },
+        { id: 'reyss_analyse',  module: 'SAE 1.02', category: 'Recommandation numérique', icon: '🗣️', date: '2025-11-27',                  title: 'Présentation avec Mme. REYSS' },
+        { id: 'fournerie_ds',   module: 'R 1.13',   category: 'Hébergement',              icon: '💻', date: 'unknown',                     title: 'DS Fournerie (décembre)' },
+        { id: 'comm_ds',        module: 'R 1.06',   category: 'Communication',            icon: '🗣️', date: 'unknown',                     title: 'DS Communication (début décembre)' },
+        { id: 'ppp_interview',  module: 'R 1.17',   category: 'P.P.P',                    icon: '💼', date: '2026-01-11',                  title: 'Interview d’un professionnel' },
+        { id: 'ppp_oral',       module: 'R 1.17',   category: 'P.P.P',                    icon: '🎤', date: '2025-11-13',                  title: 'Oral de PPP (après-midi)' }
     ];
 
     const projectList = document.getElementById('project-list');
     const today = new Date();
-    today.setHours(0, 0, 0, 0); 
-    const futureProjects = projects
+    today.setHours(0, 0, 0, 0);
+
+    let filteredProjects = projects;
+
+    const params = new URLSearchParams(window.location.search);
+    if (params.has('module')) {
+        console.log(params.get('module'));
+        filteredProjects = projects.filter(
+            project => project.module.toLowerCase().includes(params.get('module').toLowerCase())
+        );
+    }
+
+    const futureProjects = filteredProjects
         .filter(project => project.date == 'unknown' || new Date(project.date) >= today)
         .sort((a, b) => [a.date, b.date].includes('unknown') ? 999999999999 : new Date(a.date) - new Date(b.date));
 
@@ -188,5 +199,33 @@ document.addEventListener('DOMContentLoaded', () => {
     modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
     document.getElementById('google-calendar-btn')?.addEventListener('click', () => { if (!activeProject) return; const startTime = new Date(activeProject.date).toISOString().replace(/-|:|\.\d\d\d/g, ""); let url = `https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent('Rendu: ' + activeProject.title)}&dates=${startTime}/${startTime}&details=${encodeURIComponent(activeProject.details || '')}`; window.open(url, '_blank'); closeModal(); });
     document.getElementById('apple-reminder-btn')?.addEventListener('click', () => { if (!activeProject) return; createICSFile(activeProject); closeModal(); });
-    function createICSFile(project) { const date = new Date(project.date); if (project.time) { const [h, m] = project.time.split(':'); date.setUTCHours(h, m, 0); } else { date.setUTCHours(9, 0, 0); } const icsDate = date.toISOString().replace(/-|:|\.\d{3}/g, '').slice(0, -1); const icsContent = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'BEGIN:VTODO', `UID:${Date.now()}@mmi.fr`, `SUMMARY:${project.title}`, `DTSTAMP:${icsDate}Z`, `DUE;VALUE=DATE-TIME:${icsDate}Z`, `DESCRIPTION:${(project.details || '').replace(/\n/g, '\\n')}`, 'STATUS:NEEDS-ACTION', 'END:VTODO', 'END:VCALENDÁR'].join('\n'); const link = document.createElement('a'); link.href = URL.createObjectURL(new Blob([icsContent], { type: 'text/calendar;charset=utf-8' })); link.download = `rappel_${project.title.replace(/ /g, "_")}.ics`; document.body.appendChild(link); link.click(); document.body.removeChild(link); }
+    function createICSFile(project) {
+        const date = new Date(project.date);
+        if (project.time) {
+            const [h, m] = project.time.split(':');
+            date.setUTCHours(Number(h), Number(m), 0);
+        } else {
+            date.setUTCHours(9, 0, 0);
+        }
+        const icsDate = date.toISOString().replace(/-|:|\.\d{3}/g, '').slice(0, -1);
+        const icsContent = [
+            'BEGIN:VCALENDAR',
+            'VERSION:2.0',
+            'BEGIN:VTODO',
+            `UID:${Date.now()}@mmi.fr`,
+            `SUMMARY:${project.title}`,
+            `DTSTAMP:${icsDate}Z`,
+            `DUE;VALUE=DATE-TIME:${icsDate}Z`,
+            `DESCRIPTION:${(project.details || '').replace(/\n/g, '\\n')}`,
+            'STATUS:NEEDS-ACTION',
+            'END:VTODO',
+            'END:VCALENDAR'
+        ].join('\n');
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(new Blob([icsContent], { type: 'text/calendar;charset=utf-8' }));
+        link.download = `rappel_${project.title.replace(/ /g, "_")}.ics`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
 });
