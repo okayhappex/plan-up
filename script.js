@@ -15,21 +15,22 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const projects = [
-        { id: 'art_mood',       module: 'R 1.09',   category: 'Art',                      icon: '🎨', date: '2025-10-24',                  title: 'Moodboard à finir' }, 
-        { id: 'sae105',         module: 'SAE 1.05', category: 'HTML / Intégration Web',   icon: '💻🇬🇧', date: '2025-11-02', time: '23:59', title: 'SAE à rendre (CV)' },
-        { id: 'html_ds',        module: 'R 1.11',   category: 'HTML / Intégration Web',   icon: '✍️', date: '2025-11-03',                  title: 'DS sur l\'intégration web' },
-        { id: 'english_ds',     module: 'R 1.02',   category: 'Anglais',                  icon: '🇬🇧', date: '2025-11-03',                  title: 'Contrôle en anglais' },
-        { id: 'gp_pub',         module: 'SAE 1.01', category: 'Gestion de projet',        icon: '📊', date: '2025-11-09',                  title: 'Projet de pub' },
-        { id: 'ppp_group',      module: 'R 1.17',   category: 'P.P.P',                    icon: '📂', date: '2025-11-11',                  title: 'Rendu du travail de groupe' },
-        { id: 'ppp_pres',       module: 'R 1.17',   category: 'P.P.P',                    icon: '🎤', date: '2025-11-13',                  title: 'Présentation du projet' },
-        { id: 'mkt_company',    module: 'SAE 1.02', category: 'Marketing',                icon: '📈', date: '2025-11-17',                  title: 'Projet d’entreprise à rendre' },
-        { id: 'pinoza_oral',    module: 'R 1.09',   category: 'Culture artistique',       icon: '🎨', date: '2025-12-02',                  title: '(A1 et B1: 26/11) Présenter une oeuvre choisie pendant la sortie du 21 novembre' },
-        { id: 'clech_vecteurs', module: 'SAE 1.03', category: 'Photoshop',                icon: '✒️', date: '2025-11-30',                  title: 'Faire une feuille à plusieurs branches' },
-        { id: 'reyss_analyse',  module: 'SAE 1.02', category: 'Recommandation numérique', icon: '🗣️', date: '2025-11-27',                  title: 'Présentation avec Mme. REYSS' },
-        { id: 'fournerie_ds',   module: 'R 1.13',   category: 'Hébergement',              icon: '💻', date: '2025-12-18',                  title: 'DS Fournerie (décembre)' },
-        { id: 'comm_ds',        module: 'R 1.06',   category: 'Communication',            icon: '🗣️', date: 'unknown',                     title: 'DS Communication (début décembre)' },
-        { id: 'ppp_interview',  module: 'R 1.17',   category: 'P.P.P',                    icon: '💼', date: '2026-01-11',                  title: 'Interview d’un professionnel' },
-        { id: 'ppp_oral',       module: 'R 1.17',   category: 'P.P.P',                    icon: '🎤', date: '2025-11-13',                  title: 'Oral de PPP (après-midi)' }
+        { id: 'art_mood',         module: 'R 1.09',   category: 'Art',                      icon: '🎨', date: '2025-10-24',                  title: 'Moodboard à finir' }, 
+        { id: 'sae105',           module: 'SAE 1.05', category: 'HTML / Intégration Web',   icon: '💻🇬🇧', date: '2025-11-02', time: '23:59', title: 'SAE à rendre (CV)' },
+        { id: 'html_ds',          module: 'R 1.11',   category: 'HTML / Intégration Web',   icon: '✍️', date: '2025-11-03',                  title: 'DS sur l\'intégration web' },
+        { id: 'english_ds',       module: 'R 1.02',   category: 'Anglais',                  icon: '🇬🇧', date: '2025-11-03',                  title: 'Contrôle en anglais' },
+        { id: 'gp_pub',           module: 'SAE 1.01', category: 'Gestion de projet',        icon: '📊', date: '2025-11-09',                  title: 'Projet de pub' },
+        { id: 'ppp_group',        module: 'R 1.17',   category: 'P.P.P',                    icon: '📂', date: '2025-11-11',                  title: 'Rendu du travail de groupe' },
+        { id: 'ppp_pres',         module: 'R 1.17',   category: 'P.P.P',                    icon: '🎤', date: '2025-11-13',                  title: 'Présentation du projet' },
+        { id: 'mkt_company',      module: 'SAE 1.02', category: 'Marketing',                icon: '📈', date: '2025-11-17',                  title: 'Projet d’entreprise à rendre' },
+        { id: 'pinoza_oral',      module: 'R 1.09',   category: 'Culture artistique',       icon: '🎨', date: '2025-12-02',                  title: '(A1 et B1: 26/11) Présenter une oeuvre choisie pendant la sortie du 21 novembre' },
+        { id: 'clech_vecteurs',   module: 'SAE 1.03', category: 'Photoshop',                icon: '✒️', date: '2025-11-30',                  title: 'Faire une feuille à plusieurs branches' },
+        { id: 'reyss_analyse',    module: 'SAE 1.02', category: 'Recommandation numérique', icon: '🗣️', date: '2025-11-27',                  title: 'Présentation avec Mme. REYSS' },
+        { id: 'fournerie_ds',     module: 'R 1.13',   category: 'Hébergement',              icon: '💻', date: '2025-12-18',                  title: 'DS Fournerie (décembre)' },
+        { id: 'comm_ds',          module: 'R 1.06',   category: 'Communication',            icon: '🗣️', date: 'unknown',                     title: 'DS Communication (début décembre)' },
+        { id: 'ppp_interview',    module: 'R 1.17',   category: 'P.P.P',                    icon: '💼', date: '2026-01-11',                  title: 'Interview d’un professionnel' },
+        { id: 'ppp_oral',         module: 'R 1.17',   category: 'P.P.P',                    icon: '🎤', date: '2025-11-13',                  title: 'Oral de PPP (après-midi)' },
+        { id: 'sae_wablomingrat', module: 'SAE 1.04', category: 'Audiovisuel',              icon: '🎥', date: '2026-01-11',                  title: 'Produire une scène théâtrale, accompagnée de: soit un clip musical, soit le spectacle pour enfants, et des contenus pour l’un des groupes invités ainsi qu’un contenu de type linkedin.' }
     ];
 
     const projectList = document.getElementById('project-list');
