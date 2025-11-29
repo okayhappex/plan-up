@@ -23,10 +23,10 @@ document.addEventListener('DOMContentLoaded', () => {
         { id: 'ppp_group',      module: 'R 1.17',   category: 'P.P.P',                    icon: '📂', date: '2025-11-11',                  title: 'Rendu du travail de groupe' },
         { id: 'ppp_pres',       module: 'R 1.17',   category: 'P.P.P',                    icon: '🎤', date: '2025-11-13',                  title: 'Présentation du projet' },
         { id: 'mkt_company',    module: 'SAE 1.02', category: 'Marketing',                icon: '📈', date: '2025-11-17',                  title: 'Projet d’entreprise à rendre' },
-        { id: 'pinoza_oral',    module: 'R 1.09',   category: 'Culture artistique',       icon: '🎨', date: 'unknown',                     title: 'Présenter une oeuvre choisie pendant la sortie du 21 novembre' },
-        { id: 'clech_vecteurs', module: 'SAE 1.03', category: 'Photoshop',                icon: '✒️', date: '2025-11-28',                  title: 'Faire une feuille à plusieurs branches' },
+        { id: 'pinoza_oral',    module: 'R 1.09',   category: 'Culture artistique',       icon: '🎨', date: '2025-12-02',                  title: '(A1 et B1: 26/11) Présenter une oeuvre choisie pendant la sortie du 21 novembre' },
+        { id: 'clech_vecteurs', module: 'SAE 1.03', category: 'Photoshop',                icon: '✒️', date: '2025-11-30',                  title: 'Faire une feuille à plusieurs branches' },
         { id: 'reyss_analyse',  module: 'SAE 1.02', category: 'Recommandation numérique', icon: '🗣️', date: '2025-11-27',                  title: 'Présentation avec Mme. REYSS' },
-        { id: 'fournerie_ds',   module: 'R 1.13',   category: 'Hébergement',              icon: '💻', date: 'unknown',                     title: 'DS Fournerie (décembre)' },
+        { id: 'fournerie_ds',   module: 'R 1.13',   category: 'Hébergement',              icon: '💻', date: '2025-12-18',                  title: 'DS Fournerie (décembre)' },
         { id: 'comm_ds',        module: 'R 1.06',   category: 'Communication',            icon: '🗣️', date: 'unknown',                     title: 'DS Communication (début décembre)' },
         { id: 'ppp_interview',  module: 'R 1.17',   category: 'P.P.P',                    icon: '💼', date: '2026-01-11',                  title: 'Interview d’un professionnel' },
         { id: 'ppp_oral',       module: 'R 1.17',   category: 'P.P.P',                    icon: '🎤', date: '2025-11-13',                  title: 'Oral de PPP (après-midi)' }
