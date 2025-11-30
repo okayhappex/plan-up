@@ -1,0 +1,326 @@
+{
+	"modules": {
+		"R 1.01": {
+			"title": "Anglais",
+			"emoji": "🇬🇧",
+			"short": "Anglais",
+			"description": "Cours d'anglais pour améliorer vos compétences linguistiques.",
+			"coeff": 1
+		},
+		"R 1.02": {
+			"title": "Anglais",
+			"emoji": "🇬🇧",
+			"short": "Anglais",
+			"description": "Cours d'anglais pour améliorer vos compétences linguistiques.",
+			"coeff": 1
+		},
+		"R 1.03": {
+			"title": "Ergonomie et Accessibilité",
+			"emoji": "♿️",
+			"short": "Ergo. & Accessibilité",
+			"description": "Apprenez les principes de l'ergonomie et de l'accessibilité dans le design numérique.",
+			"coeff": 3
+		},
+		"R 1.04": {
+			"title": "Culture Numérique",
+			"emoji": "🌐",
+			"short": "Cult. Numérique",
+			"description": "Explorez l'impact de la culture numérique sur la société moderne.",
+			"coeff": 3
+		},
+		"R 1.05": {
+			"title": "Stratégies de Communication",
+			"emoji": "📣",
+			"short": "Strat. Communication",
+			"description": "Développez des stratégies efficaces de communication dans divers contextes.",
+			"coeff": 2
+		},
+		"R 1.06": {
+			"title": "Expression & Communication",
+			"emoji": "🗣️",
+			"short": "Expr. Communication",
+			"description": "Améliorez vos compétences en expression orale et écrite.",
+			"coeff": 2
+		},
+		"R 1.07": {
+			"title": "Écriture Multimédia et Narration",
+			"emoji": "✍️",
+			"short": "Écriture & Narr.",
+			"description": "Apprenez à créer des contenus narratifs pour les médias numériques.",
+			"coeff": 3
+		},
+		"R 1.08": {
+			"title": "Graphisme",
+			"emoji": "🎨",
+			"short": "Graphisme",
+			"description": "Découvrez les bases du design graphique et de la création visuelle.",
+			"coeff": 4
+		},
+		"R 1.09": {
+			"title": "Culture Artistique",
+			"emoji": "🖼️",
+			"short": "Cult. Artistique",
+			"description": "Explorez l'histoire et les mouvements de l'art à travers les âges.",
+			"coeff": 2
+		},
+		"R 1.10": {
+			"title": "Audiovisuel",
+			"emoji": "🎬",
+			"short": "Audiovisuel",
+			"description": "Apprenez les techniques de production audiovisuelle.",
+			"coeff": 4
+		},
+		"R 1.11": {
+			"title": "Intégration",
+			"emoji": "🧩",
+			"short": "Intégration",
+			"description": "Intégrez des maquettes en pages web fidèles, structurées et compatibles avec les standards du web.",
+			"coeff": 5
+		},
+		"R 1.12": {
+			"title": "Développement Web",
+			"emoji": "💻",
+			"short": "Dev. Web",
+			"description": "Développez des fonctionnalités interactives et dynamiques pour donner vie à vos interfaces.",
+			"coeff": 4
+		},
+		"R 1.13": {
+			"title": "Hébergement",
+			"emoji": "☁️",
+			"short": "Hébergement",
+			"description": "Mettez vos projets en ligne en configurant des solutions d'hébergement fiables et performantes.",
+			"coeff": 3
+		},
+		"R 1.14": {
+			"title": "Représentation et Traitement Informatique",
+			"emoji": "🧮",
+			"short": "Repr. & Trait. Info",
+			"description": "Comprenez et manipulez les données numériques pour mieux les représenter, les structurer et les exploiter.",
+			"coeff": 3
+		},
+		"R 1.15": {
+			"title": "Gestion de Projet",
+			"emoji": "📋",
+			"short": "Gestion de Projet",
+			"description": "Apprenez à organiser, planifier et piloter efficacement un projet numérique en équipe.",
+			"coeff": 2
+		},
+		"R 1.16": {
+			"title": "Économie & Droit",
+			"emoji": "⚖️",
+			"short": "Économie & Droit",
+			"description": "Découvrez les bases juridiques et économiques liées au secteur du numérique et à ses acteurs.",
+			"coeff": 1.5
+		},
+		"R 1.17": {
+			"title": "Projet Personnel Professionnel",
+			"emoji": "🎯",
+			"short": "Projet Perso. Pro.",
+			"description": "Identifiez vos objectifs professionnels et construisez progressivement votre parcours de formation.",
+			"coeff": 0.5
+		},
+		"R201": {
+			"title": "Anglais",
+			"emoji": "🇬🇧",
+			"short": "Anglais",
+			"description": "Perfectionnez vos compétences orales et écrites en anglais appliquées au contexte professionnel.",
+			"coeff": 1
+		},
+		"R202": {
+			"title": "Anglais",
+			"emoji": "🇬🇧",
+			"short": "Anglais",
+			"description": "Consolidez le vocabulaire technique et la pratique de l'anglais pour le multimédia et le web.",
+			"coeff": 1
+		},
+		"R203": {
+			"title": "Ergonomie et Accessibilité",
+			"emoji": "♿️",
+			"short": "Ergo. & Accessibilité",
+			"description": "Étudiez les principes d'ergonomie et d'accessibilité pour concevoir des interfaces utilisables par tous.",
+			"coeff": 3
+		},
+		"R204": {
+			"title": "Culture Numérique",
+			"emoji": "🛰️",
+			"short": "Cult. Numérique",
+			"description": "Comprenez les enjeux sociaux et techniques de la société numérique contemporaine.",
+			"coeff": 3
+		},
+		"R205": {
+			"title": "Stratégies de Communication",
+			"emoji": "📣",
+			"short": "Strat. Communication",
+			"description": "Apprenez à élaborer des messages, cibles et plans de communication pour des projets numériques.",
+			"coeff": 2
+		},
+		"R206": {
+			"title": "Expression & Communication",
+			"emoji": "🗣️",
+			"short": "Expr. Communication",
+			"description": "Travaillez techniques d'expression écrite et orale pour présenter des projets et contenus professionnels.",
+			"coeff": 2
+		},
+		"R207": {
+			"title": "Écriture Multimédia et Narration",
+			"emoji": "✍️",
+			"short": "Écriture & Narr.",
+			"description": "Créez des récits et scripts multimédias adaptés aux formats web, vidéo et interactifs.",
+			"coeff": 3
+		},
+		"R208": {
+			"title": "Graphisme",
+			"emoji": "🎨",
+			"short": "Graphisme",
+			"description": "Apprenez les fondamentaux du graphisme : composition, couleur, typographie et outils de création.",
+			"coeff": 4
+		},
+		"R209": {
+			"title": "Culture Artistique",
+			"emoji": "🖼️",
+			"short": "Cult. Artistique",
+			"description": "Explorez l'histoire de l'art et ses applications contemporaines au design et au multimédia.",
+			"coeff": 2
+		},
+		"R210": {
+			"title": "Audiovisuel",
+			"emoji": "🎬",
+			"short": "Audiovisuel",
+			"description": "Maîtrisez les bases de la production audiovisuelle : prise de vue, son, montage et diffusion.",
+			"coeff": 4
+		},
+		"R211": {
+			"title": "Gestion de contenus",
+			"emoji": "🗂️",
+			"short": "Gestion de Contenus",
+			"description": "Organisez, structurez et administrez des contenus numériques (CMS, workflow, médiathèque, métadonnées).",
+			"coeff": 4
+		},
+		"R212": {
+			"title": "Intégration",
+			"emoji": "🧩",
+			"short": "Intégration",
+			"description": "Intégrez des maquettes en pages web fidèles, accessibles et compatibles avec les standards du Web.",
+			"coeff": 5
+		},
+		"R213": {
+			"title": "Gestion de Projet",
+			"emoji": "📋",
+			"short": "Gestion de Projet",
+			"description": "Apprenez à organiser, planifier et piloter efficacement un projet numérique en équipe.",
+			"coeff": 2
+		},
+		"R214": {
+			"title": "Économie & Droit",
+			"emoji": "⚖️",
+			"short": "Économie & Droit",
+			"description": "Découvrez les bases juridiques, économiques et contractuelles du secteur numérique.",
+			"coeff": 1.5
+		},
+		"R215": {
+			"title": "Hébergement",
+			"emoji": "☁️",
+			"short": "Hébergement",
+			"description": "Comprenez les solutions d'hébergement, déploiement et mise en ligne d'applications et sites.",
+			"coeff": 3
+		},
+		"R216": {
+			"title": "Représentation et Traitement Informatique",
+			"emoji": "🧮",
+			"short": "Repr. & Trait. Info",
+			"description": "Apprenez à représenter, traiter et transformer des données numériques pour des usages multimédia.",
+			"coeff": 3
+		},
+		"R217": {
+			"title": "Projet Personnel Professionnel",
+			"emoji": "🎯",
+			"short": "Projet Perso. Pro.",
+			"description": "Identifiez vos objectifs professionnels et construisez progressivement votre projet de formation et portfolio.",
+			"coeff": 0.5
+		},
+		"R219": {
+			"title": "Projet Personnel Professionnel",
+			"emoji": "🎯",
+			"short": "Projet Perso. Pro.",
+			"description": "Identifiez vos objectifs professionnels et construisez progressivement votre projet de formation et portfolio.",
+			"coeff": 0.5
+		},
+		"Portfolio": {
+			"title": "Portfolio",
+			"emoji": "💼",
+			"short": "Portfolio",
+			"description": "Présentez vos compétences à travers un projet complet, structuré et argumenté, reflétant votre progression et votre savoir-faire.",
+			"coeff": 1
+		},
+		"SAE 1.02": {
+			"title": "Recommandation Numérique",
+			"emoji": "📊",
+			"short": "Recomm. Numérique",
+			"description": "Analysez des besoins et proposez des solutions numériques adaptées à un contexte donné.",
+			"coeff": 6
+		},
+		"SAE 1.03": {
+			"title": "Design Graphique",
+			"emoji": "🎨",
+			"short": "Design Graphique",
+			"description": "Concevez des visuels cohérents et esthétiques en appliquant les principes fondamentaux du design.",
+			"coeff": 6
+		},
+		"SAE 1.04": {
+			"title": "Audiovisuel",
+			"emoji": "🎬",
+			"short": "Audiovisuel",
+			"description": "Réalisez des contenus audiovisuels en maîtrisant la prise de vue, le montage et la narration visuelle.",
+			"coeff": 6
+		},
+		"SAE 1.05": {
+			"title": "Site Web",
+			"emoji": "🖥️",
+			"short": "Site Web",
+			"description": "Créez un site web complet en combinant conception graphique, intégration et développement.",
+			"coeff": 12
+		},
+		"SAE 1.06": {
+			"title": "Gestion de Projet & Recommandation",
+			"emoji": "🧠",
+			"short": "Gest. Projet & Recomm.",
+			"description": "Menez un projet de bout en bout en produisant une recommandation argumentée et structurée.",
+			"coeff": 10
+		},
+		"SAE201": {
+			"title": "Explorer les Usages du Numérique",
+			"emoji": "📊",
+			"short": "Expl. Usages Numérique",
+			"description": "Analysez des besoins et proposez des solutions numériques adaptées à un contexte donné.",
+			"coeff": 6
+		},
+		"SAE202": {
+			"title": "Concevoir un service ou un produit et sa communication",
+			"emoji": "🛠️",
+			"short": "Concevoir Service & Com.",
+			"description": "Concevez et prototypez un service ou produit numérique, définissez son positionnement, ses fonctionnalités et la stratégie de communication associée.",
+			"coeff": 6
+		},
+		"SAE203": {
+			"title": "Concevoir un site Web avec une source de données",
+			"emoji": "🖥️",
+			"short": "Concevoir Site avec src.",
+			"description": "Créez un site web dynamique connecté à une source de données (API ou base), en concevant l'architecture, la récupération et l'affichage des données.",
+			"coeff": 6
+		},
+		"SAE204": {
+			"title": "Construire sa présence en ligne",
+			"emoji": "🌐",
+			"short": "Présence en ligne",
+			"description": "Créez un site web complet en combinant conception graphique, intégration et développement.",
+			"coeff": 12
+		},
+		"SAE210": {
+			"title": "Gestion de Projet & Recommandation",
+			"emoji": "🧠",
+			"short": "Gest. Projet & Recomm.",
+			"description": "Menez un projet de bout en bout en produisant une recommandation argumentée et structurée.",
+			"coeff": 10
+		}
+	}
+}

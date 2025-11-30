@@ -1,0 +1,149 @@
+{
+    "projects": [
+        {
+            "id": "art_mood",
+            "module": "R 1.09",
+            "category": "Art",
+            "title": "Moodboard à finir",
+            "icon": "🎨",
+            "date": "2025-10-24",
+            "description": "Compléter le moodboard avec références et couleurs finales."
+        },
+        {
+            "id": "sae105",
+            "module": "SAE 1.05",
+            "category": "HTML / Intégration Web",
+            "title": "SAE à rendre (CV)",
+            "icon": "💻",
+            "date": "2025-11-02",
+            "time": "23:59",
+            "description": "Intégration d'un CV responsive en HTML/CSS, livrable sur la plateforme."
+        },
+        {
+            "id": "html_ds",
+            "module": "R 1.11",
+            "category": "HTML / Intégration Web",
+            "title": "DS sur l'intégration web",
+            "icon": "✍️",
+            "date": "2025-11-03",
+            "description": "Contrôle écrit portant sur les bonnes pratiques d'intégration et sémantique HTML/CSS."
+        },
+        {
+            "id": "english_ds",
+            "module": "R 1.02",
+            "category": "Anglais",
+            "title": "Contrôle en anglais",
+            "icon": "🇬🇧",
+            "date": "2025-11-03",
+            "description": "Évaluation des compétences orales et écrites (compréhension et expression)."
+        },
+        {
+            "id": "gp_pub",
+            "module": "SAE 1.01",
+            "category": "Gestion de projet",
+            "title": "Projet de pub",
+            "icon": "📊",
+            "date": "2025-11-09",
+            "description": "Réaliser une proposition de campagne publicitaire et son planning."
+        },
+        {
+            "id": "ppp_group",
+            "module": "R 1.17",
+            "category": "P.P.P",
+            "title": "Rendu du travail de groupe",
+            "icon": "📂",
+            "date": "2025-11-11",
+            "description": "Soumission du dossier de projet collectif (documents et livrables)."
+        },
+        {
+            "id": "ppp_pres",
+            "module": "R 1.17",
+            "category": "P.P.P",
+            "title": "Présentation du projet",
+            "icon": "🎤",
+            "date": "2025-11-13",
+            "description": "Exposé oral du projet devant le jury, support visuel obligatoire."
+        },
+        {
+            "id": "mkt_company",
+            "module": "SAE 1.02",
+            "category": "Marketing",
+            "title": "Projet d’entreprise à rendre",
+            "icon": "📈",
+            "date": "2025-11-17",
+            "description": "Dossier complet présentant l'idée d'entreprise et sa stratégie marketing."
+        },
+        {
+            "id": "pinoza_oral",
+            "module": "R 1.09",
+            "category": "Culture artistique",
+            "title": "Analyse de compo",
+            "icon": "🎨",
+            "date": "2025-12-02",
+            "description": "(A1 et B1: 26/11) Présenter une œuvre choisie lors de la sortie du 21 novembre."
+        },
+        {
+            "id": "clech_vecteurs",
+            "module": "SAE 1.03",
+            "category": "Photoshop",
+            "title": "Faire une feuille à plusieurs branches",
+            "icon": "✒️",
+            "date": "2025-11-30",
+            "description": "Créer une feuille de travail vectorielle avec plusieurs branches thématiques."
+        },
+        {
+            "id": "reyss_analyse",
+            "module": "SAE 1.02",
+            "category": "Recommandation numérique",
+            "title": "Présentation avec Mme. REYSS",
+            "icon": "🗣️",
+            "date": "2025-11-27",
+            "description": "Analyse et présentation des recommandations numériques préparées pour le cours."
+        },
+        {
+            "id": "fournerie_ds",
+            "module": "R 1.13",
+            "category": "Hébergement",
+            "title": "DS Fournerie",
+            "icon": "💻",
+            "date": "2025-12-18",
+            "description": "Contrôle sur les notions d'hébergement et déploiement (date à confirmer)."
+        },
+        {
+            "id": "comm_ds",
+            "module": "R 1.06",
+            "category": "Communication",
+            "title": "DS Communication",
+            "icon": "🗣️",
+            "date": "2025-12-01",
+            "description": "Épreuve écrite sur les techniques et pratiques de communication."
+        },
+        {
+            "id": "ppp_interview",
+            "module": "R 1.17",
+            "category": "P.P.P",
+            "title": "Interview d’un professionnel",
+            "icon": "💼",
+            "date": "2026-01-11",
+            "description": "Réaliser et analyser une interview avec un professionnel du secteur."
+        },
+        {
+            "id": "ppp_oral",
+            "module": "R 1.17",
+            "category": "P.P.P",
+            "title": "Oral de PPP (après-midi)",
+            "icon": "🎤",
+            "date": "2025-11-13",
+            "description": "Session orale finale du PPP, préparation à l'oral et aux questions."
+        },
+        {
+            "id": "sae_wablomingrat",
+            "module": "SAE 1.04",
+            "category": "Audiovisuel",
+            "title": "Scène théâtrale",
+            "icon": "🎥",
+            "date": "2026-01-11",
+            "description": "Produire une scène théâtrale accompagnée de contenus vidéo et supports pour diffusion."
+        }
+    ]
+}
