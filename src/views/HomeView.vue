@@ -4,7 +4,7 @@
 
 	import Task from '../components/Task.vue'
 
-	import { ref, computed, watch, reactive } from 'vue';
+	import { ref, computed, watch, reactive, onMounted } from 'vue';
 
 
 	const modules = ref([]);
@@ -19,26 +19,12 @@
 
 	const all = ref([]);
 	const tasks = ref([]);
-
-	fetch('/tasks.json')
-			.then(res => res.json())
-			.then(data => {
-				all.value = data.projects
-
-				tasks.value = data.projects.filter(task => {
-					// use reactive `settings` (defined below) for consistent access
-					let matches = settings.filter === 'all' || task[settings.filter] === settings.filterValue;
-					return (matches && new Date(task.date) >= new Date());
-				});
-			})
-			.catch(err => console.error('Failed to load tasks.json', err));
-
-
 	const settings = reactive(JSON.parse(localStorage.getItem('settings')) || {
 		viewMode: 'list',
 		filter: 'all',
 		filterValue: ''
 	})
+
 
 	watch(settings, (newSettings) => {
 		localStorage.setItem('settings', JSON.stringify(newSettings));
@@ -49,6 +35,18 @@
 		});
 	}, { deep: true });
 
+	fetch('/tasks.json')
+		.then(res => res.json())
+		.then(data => {
+			all.value = data.projects
+
+			tasks.value = data.projects.filter(task => {
+				// use reactive `settings` (defined below) for consistent access
+				let matches = settings.filter === 'all' || task[settings.filter] === settings.filterValue;
+				return (matches && new Date(task.date) >= new Date());
+			});
+		})
+		.catch(err => console.error('Failed to load tasks.json', err));
 
 	const groupedByDate = computed(() => {
 		const map = new Map();
@@ -69,6 +67,15 @@
 
 		return arr;
 	});
+
+	onMounted(() => {
+		const params = new URLSearchParams(window.location.search)
+
+		if (params.get('module')) {
+			settings.filter = 'module'
+			settings.filterValue = params.get('module')
+		}
+	})
 </script>
 <template>
 	<header class="xl:w-3/4 xl:mx-auto">
