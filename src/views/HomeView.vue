@@ -80,31 +80,36 @@
 <template>
 	<header class="xl:w-3/4 xl:mx-auto">
 		<h1 class="bg-linear-to-br from-indigo-700 to-purple-700 bg-clip-text text-transparent text-5xl text-center font-black w-fit mx-auto">Plan-Up MMI</h1>
-		<div class="text-center text-sm text-slate-500">Gérez vos tâches et projets facilement</div>
-		<div class="flex mt-4 text-center text-sm">
-			<div class="shrink-0 flex bg-slate-100 text-sm rounded-xl w-fit p-1 overflow-hidden dark:bg-zinc-900">
+		<div class="text-center text-sm text-zinc-500">Gérez vos tâches et projets facilement</div>
+		<div class="flex mt-4 text-center text-sm max-sm:overflow-x-scroll">
+			<div class="shrink-0 flex bg-zinc-100 text-sm rounded-xl w-fit p-1 overflow-hidden dark:bg-zinc-900">
 				<button
 					@click="settings.viewMode = 'list'"
-					:class="settings.viewMode == 'list' ? 'bg-indigo-500/10' : 'bg-transparent text-slate-500'"
+					:class="settings.viewMode == 'list' ? 'bg-indigo-500/10' : 'bg-transparent text-zinc-500'"
 					class="cursor-pointer rounded-lg px-2 py-1 font-medium"
 				>
-					<ListIcon :color="settings.viewMode == 'list' ? '#615fff' : '#62748ea0'" class="inline w-5 h-5" />
+					<ListIcon :color="settings.viewMode == 'list' ? '#615fff' : '#71717ba0'" class="inline w-5 h-5" />
 				</button>
 				<button
 					@click="settings.viewMode = 'grid'"
-					:class="settings.viewMode == 'grid' ? 'bg-indigo-600/10 text-indigo-600' : 'bg-transparent text-slate-500'"
+					:class="settings.viewMode == 'grid' ? 'bg-indigo-600/10 text-indigo-600' : 'bg-transparent text-zinc-500'"
 					class="cursor-pointer rounded-lg px-2 py-1 font-medium"
 				>
-					<GridIcon :color="settings.viewMode == 'grid' ? '#615fff' : '#62748ea0'" class="inline w-5 h-5" />
+					<GridIcon :color="settings.viewMode == 'grid' ? '#615fff' : '#71717ba0'" class="inline w-5 h-5" />
 				</button>
+			</div>
+			<div v-if="settings.filter != 'all'" class="shrink flex flex-col items-center justify-center px-4">
+				<p>
+					<a @click="settings.filter = 'all'; settings.filterValue = ''" class="cursor-pointer text-indigo-500">Réinitialiser</a>
+				</p>
 			</div>
 			<div class="grow"></div>
 			<div class="shrink-0 flex items-center text-sm w-fit gap-2 overflow-hidden">
-				<span class="text-slate-500 font-semibold">Module:</span>
+				<span class="text-zinc-500 font-semibold max-sm:hidden">Module:</span>
 				<select
 					v-model="settings.filterValue"
 					@change="settings.filter = settings.filterValue ? 'module' : 'all'"
-					class="bg-slate-100 rounded-xl px-2 py-2 w-48 dark:bg-zinc-900"
+					class="bg-zinc-100 rounded-xl px-2 py-2 w-48 dark:bg-zinc-900"
 				>
 					<option value="">-- Tous les modules --</option>
 					<option v-for="md in Object.entries(modules)" :value="md[0]">{{ md[0] }} - {{ md[1].title }}</option>

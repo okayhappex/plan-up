@@ -38,7 +38,7 @@
     }
 </script>
 <template>
-    <div :data-id="task.id" class="cursor-pointer bg-white border border-slate-200 rounded-3xl p-6 duration-300 dark:bg-zinc-900 dark:border-zinc-800 hover:scale-102">
+    <div :data-id="task.id" class="cursor-pointer bg-white border border-zinc-200 rounded-3xl p-6 duration-300 dark:bg-zinc-900 dark:border-zinc-800 hover:scale-102">
         <div class="flex">
             <div class="shrink-0 flex items-center w-10">
                 <span class="text-2xl">{{ task.icon }}</span>
