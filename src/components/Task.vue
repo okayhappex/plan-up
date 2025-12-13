@@ -45,14 +45,16 @@
             </div>
             <div class="-space-y-2">
                 <h3 class="text-lg font-bold">{{ task.title }}</h3>
-                <span class="text-zinc-400 text-xs">Pour le {{ formatDateString(task.date) }}</span>
+                <span class="text-zinc-400 text-xs font-semibold">Pour le {{ formatDateString(task.date) }}</span>
             </div>
         </div>
         <div>
-            <p class="text-zinc-600 font-semibold">{{ task.description }}</p>
+            <p class="font-semibold">{{ task.description }}</p>
         </div>
-        <div class="mt-4">
-            <span class="text-indigo-500 text-sm">{{ task.module || '' }} - {{ mod ? mod.title : '' }}</span>
+        <div class="flex items-center mt-4">
+            <span class="shrink-0 text-indigo-500 text-sm">{{ task.module || '' }} - {{ mod ? mod.title : '' }}</span>
+            <span class="grow"></span>
+            <span class="shrink-0 bg-emerald-300/30 text-emerald-300 font-semibold rounded-full px-3 py-0.5 min-w-8">{{ task.format }}</span>
         </div>
     </div>
 </template>
